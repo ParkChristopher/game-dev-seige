@@ -12,6 +12,9 @@ package
 	 */
 	public class Main extends MovieClip
 	{
+		//Screens
+		public var mcTitleScreen			:MovieClip;
+		public var mcInstructionsScreen		:MovieClip;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
