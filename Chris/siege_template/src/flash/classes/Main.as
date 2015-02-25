@@ -2,6 +2,7 @@ package
 {
 	import com.chrisp.screens.CastleSelectScreen;
 	import com.chrisp.screens.CreditsScreen;
+	import com.chrisp.screens.GameScreen;
 	import com.chrisp.screens.InstructionsScreen;
 	import com.chrisp.screens.ResultsScreen;
 	import com.chrisp.screens.TitleScreen;
@@ -24,6 +25,7 @@ package
 		public var mcCastleSelectScreen		:MovieClip;
 		public var mcResultsScreen			:MovieClip;
 		public var mcCreditsScreen			:MovieClip;
+		public var mcGameScreen				:MovieClip;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -72,6 +74,10 @@ package
 			this.mcCreditsScreen = new CreditsScreen();
 			this.mcCreditsScreen.returnClickedSignal.add(titleState);
 			this.addChild(mcCreditsScreen);
+			
+			this.mcGameScreen = new GameScreen();
+			this.mcGameScreen.quitClickedSignal.add(titleState);
+			this.addChild(mcGameScreen);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -79,8 +85,8 @@ package
 		protected function titleState():void
 		{
 			trace("Main: Transitioning to Title Screen.");
-			//end game screen
 			
+			this.mcGameScreen.end();
 			this.mcCastleSelectScreen.end();
 			this.mcInstructionsScreen.end();
 			this.mcResultsScreen.end();
@@ -145,9 +151,8 @@ package
 		{
 			trace("Main: Transitioning to Game Screen.");
 			mcCastleSelectScreen.end();
-			//end end results screen
 			
-			this.resultsState();
+			this.mcGameScreen.begin();
 			trace("Main: Game Screen Transition Complete.");
 		}
 		
