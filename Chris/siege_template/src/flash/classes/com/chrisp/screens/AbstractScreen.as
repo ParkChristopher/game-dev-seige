@@ -1,6 +1,8 @@
 package com.chrisp.screens
 {
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
+	import org.osflash.signals.Signal;
 
 	
 	/**
@@ -11,6 +13,9 @@ package com.chrisp.screens
 	public class AbstractScreen extends MovieClip
 	{
 		
+		//Signals
+		public var screenCompleteSignal	:Signal = new Signal();
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		//Constructs the AbstractScreen object.
@@ -20,6 +25,8 @@ package com.chrisp.screens
 			
 			this.mouseEnabled	= true;
 			this.mouseChildren	= true;
+			this.visible = false;
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		
