@@ -1,0 +1,43 @@
+/***************************************/
+/Team Physics: Prototype delivery notes.
+/***************************************/
+
+/*************************/
+/Gameplay Instructions:
+/*************************/
+
+To fire the cannon press 'A' to lock an angle, then 'A' again to lock the power bar and release the cannon ball.
+
+/*************************/
+/Delivery State:
+/*************************/
+
+All Prototype deliverables have been met. Additionally, the cannon graphic is in this build, as well as some of the graphics for blocks and the king.
+The win condition only signals a trace to ensure it triggers properly at this time.
+
+/*************************/
+/(FPOs)
+/*************************/
+
+-The positions of the castles, and their block composition and structure are temporary. Only one block type (wood) is being used right now.
+-The Cannon power bar, Cannonball, and cannon placement are temporary though this is a beta concern.
+-Background and ground textures are temporary.
+
+/*************************/
+/Known Bugs/Issues:
+/*************************/
+
+-There appears to be an issue with keyboard input with flash across browsers. Looking for a workaround. The prototype has been successfully tested in Internet Explorer, but does not respond to keyboard input inside FireFox. This may be local to my machine only -Chris
+
+-Minor tweaking of physics space gravity was required to get both castles to settle without falling over, This change became necessary with the addition of a second tower. -Chris
+
+-Vertically rotated rectangles are done so statically, and cause the graphic on these blocks to be stretched. Rotation of the blocks physics body has to be lined up with its image on creation to fix this. -Chris
+
+-The Cannon is placed in between the structures in this build. Implementation of cannon ball phasing through blocks of that cannons related castle are not in place yet. -Chris
+
+
+/*************************/
+Alpha Expectations:
+/*************************/
+
+We are on track for alpha. The state transitions, screens art, and button events are finished and functioning properly. and are currently being integrated with the physics space in the prototype. -Chris
