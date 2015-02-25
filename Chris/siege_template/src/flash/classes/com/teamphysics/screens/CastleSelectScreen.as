@@ -1,5 +1,4 @@
-package com.chrisp.screens
-{
+package com.teamphysics.screens {
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;

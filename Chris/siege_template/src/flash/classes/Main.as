@@ -1,11 +1,11 @@
 package 
 {
-	import com.chrisp.screens.CastleSelectScreen;
-	import com.chrisp.screens.CreditsScreen;
-	import com.chrisp.screens.GameScreen;
-	import com.chrisp.screens.InstructionsScreen;
-	import com.chrisp.screens.ResultsScreen;
-	import com.chrisp.screens.TitleScreen;
+	import com.teamphysics.screens.CastleSelectScreen;
+	import com.teamphysics.screens.CreditsScreen;
+	import com.teamphysics.screens.GameScreen;
+	import com.teamphysics.screens.InstructionsScreen;
+	import com.teamphysics.screens.ResultsScreen;
+	import com.teamphysics.screens.TitleScreen;
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
 	import flash.display.MovieClip;

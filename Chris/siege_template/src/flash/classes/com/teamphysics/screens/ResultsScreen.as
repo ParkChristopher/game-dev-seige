@@ -1,5 +1,4 @@
-package com.chrisp.screens
-{
+package com.teamphysics.screens {
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
