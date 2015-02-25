@@ -1,0 +1,2 @@
+cannon: 
+	https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/cannon.png

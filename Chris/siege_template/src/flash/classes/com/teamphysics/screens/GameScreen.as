@@ -28,7 +28,6 @@ package com.teamphysics.screens {
 		//Signals
 		public var quitClickedSignal		:Signal = new Signal();
 		
-		
 		//Arrays
 		public var p1Array					:Array;
 		public var p2Array					:Array;
@@ -46,7 +45,7 @@ package com.teamphysics.screens {
 		protected var nCannonRotateAmount	:Number;
 		
 		//Cannon
-		//public var mcCannon					:Cannon;
+		//public var mcCannon				:Cannon;
 		//public var mcPowerBar				:PowerBar;
 		
 		//Physics Parts
@@ -58,7 +57,6 @@ package com.teamphysics.screens {
 		protected var kingCollisionType		:CbType = new CbType();
 		protected var ballCollisionType		:CbType = new CbType();
 		protected var interactionListener	:InteractionListener;
-		
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
