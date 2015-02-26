@@ -1,15 +1,16 @@
 package 
 {
-	import com.teamphysics.screens.CastleSelectScreen;
-	import com.teamphysics.screens.CreditsScreen;
-	import com.teamphysics.screens.GameScreen;
-	import com.teamphysics.screens.InstructionsScreen;
-	import com.teamphysics.screens.ResultsScreen;
-	import com.teamphysics.screens.TitleScreen;
+	import com.teamphysics.chrisp.screens.CastleSelectScreen;
+	import com.teamphysics.chrisp.screens.CreditsScreen;
+	import com.teamphysics.chrisp.screens.GameScreen;
+	import com.teamphysics.chrisp.screens.InstructionsScreen;
+	import com.teamphysics.chrisp.screens.ResultsScreen;
+	import com.teamphysics.chrisp.screens.TitleScreen;
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import com.natejc.utils.StageRef;
 	
 	
 	/**
@@ -35,7 +36,7 @@ package
 		public function Main()
 		{
 			KeyboardManager.init(this.stage);
-			
+			StageRef.stage = this.stage;
 			// start your stuff here
 			trace("it's working");
 			
@@ -77,7 +78,8 @@ package
 			
 			this.mcGameScreen = new GameScreen();
 			this.mcGameScreen.quitClickedSignal.add(titleState);
-			this.addChild(mcGameScreen);
+			this.mcGameScreen.screenCompleteSignal.add(resultsState);
+			this.addChildAt(mcGameScreen, 1);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -137,9 +139,8 @@ package
 		protected function resultsState():void
 		{
 			trace("Main: Transitioning to Results Screen.");
+			this.mcGameScreen.end();
 			
-			//NOTE: temporary bypass of game screen from castle select.
-			this.mcCastleSelectScreen.end();
 			this.mcResultsScreen.begin();
 			
 			trace("Main: Results Screen Transition Complete");

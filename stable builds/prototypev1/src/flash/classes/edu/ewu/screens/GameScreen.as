@@ -269,11 +269,7 @@
 		{
 			space.step(1 / stage.frameRate);
 			space.bodies.foreach(updateGraphics);
-			
-			//debug.clear();
-			//debug.draw(space);
-			//debug.flush();
-			
+
 			if (this.bRotating)
 			{
 				if (this.bRotatingUp)
@@ -298,11 +294,6 @@
 						this.bRotatingUp = true;
 					}
 				}
-				
-				//debug.clear();
-				//debug.draw(space);
-				//debug.flush();
-				
 			}
 			
 			mcCannon.rotate(nCannonRotateAmount);
