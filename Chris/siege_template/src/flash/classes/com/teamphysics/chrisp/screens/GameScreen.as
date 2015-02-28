@@ -49,8 +49,13 @@ package com.teamphysics.chrisp.screens {
 		
 		//Signals
 		public var quitClickedSignal		:Signal = new Signal();
+		public var pauseClickedSignal		:Signal = new Signal();
 		
 		//Arrays
+		public var aPlayerOneBlocks			:Array;
+		public var aPlayerTwoBlocks			:Array;
+		public var aOnScreenObjects			:Array;
+		
 		public var p1Array					:Array;
 		public var p2Array					:Array;
 		public var placementArray			:Array;
@@ -101,6 +106,9 @@ package com.teamphysics.chrisp.screens {
 		{
 			super.begin();
 			
+			this.aOnScreenObjects = new Array();
+			
+			
 			//Power Bar
 			this.mcPowerBar = new PowerBar();
 			this.addChildAt(mcPowerBar, 1);
@@ -142,6 +150,7 @@ package com.teamphysics.chrisp.screens {
 			mcCannon.y = 485;
 			mcPowerBar.x = mcCannon.x - 40;
 			mcPowerBar.y = mcCannon.y + 20;
+			aOnScreenObjects.push(mcCannon);
 			this.addChildAt(mcCannon, 1);
 			mcCannon.begin();
 			
@@ -166,7 +175,6 @@ package com.teamphysics.chrisp.screens {
 			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, addCannonBall);
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -191,16 +199,19 @@ package com.teamphysics.chrisp.screens {
 				if (p1Array[i] == "lsb")
 				{
 					block = new LargeSquareBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "rww")
 				{
 					block = new RectangleBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "lww")
 				{
 					block = new RectangleBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}				
 				else if (p1Array[i] == "si")
@@ -208,17 +219,20 @@ package com.teamphysics.chrisp.screens {
 					block = new RectangleBlock();
 					block.width = 250;
 					block.height = 10;
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "ssb")
 				{
 					block = new SquareBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "kb")
 				{
 					block = new KingBlock();
 					
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				
@@ -241,16 +255,19 @@ package com.teamphysics.chrisp.screens {
 				if (p1Array[i] == "lsb")
 				{
 					block = new LargeSquareBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "rww")
 				{
 					block = new RectangleBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "lww")
 				{
 					block = new RectangleBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}				
 				else if (p1Array[i] == "si")
@@ -258,17 +275,19 @@ package com.teamphysics.chrisp.screens {
 					block = new RectangleBlock();
 					block.width = 250;
 					block.height = 10;
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "ssb")
 				{
 					block = new SquareBlock();
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 				else if (p1Array[i] == "kb")
 				{
 					block = new KingBlock();
-					
+					aOnScreenObjects.push(block);
 					this.addChild(block);
 				}
 			
@@ -293,6 +312,7 @@ package com.teamphysics.chrisp.screens {
 			
 			
 			this.space.clear();
+			this.cleanScreen();
 			
 		}
 		/* ---------------------------------------------------------------------------------------- */
@@ -358,6 +378,7 @@ package com.teamphysics.chrisp.screens {
 				mcPowerBar.stopMoving();
 				var s:CannonBall = new CannonBall();
 				s.begin();
+				aOnScreenObjects.push(s);
 				this.addChildAt(s, 1);
 			
 				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(mcCannon.x, mcCannon.y));
@@ -382,7 +403,19 @@ package com.teamphysics.chrisp.screens {
 			}
 			
 		}
-
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		//Removes all movieclips on screen end
+		public function cleanScreen():void
+		{
+			for (var i:uint = 0; i < aOnScreenObjects.length; i++)
+			{
+				this.aOnScreenObjects[i].end();
+				this.removeChild(aOnScreenObjects[i]);
+			}
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		//[ BUTTON EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
@@ -390,6 +423,7 @@ package com.teamphysics.chrisp.screens {
 		{
 			trace("Game Screen: Quit Clicked.");
 			this.space.clear();
+			this.cleanScreen();
 			
 			this.quitClickedSignal.dispatch();
 		}

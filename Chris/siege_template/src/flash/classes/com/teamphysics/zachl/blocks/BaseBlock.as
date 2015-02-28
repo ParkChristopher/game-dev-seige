@@ -18,12 +18,11 @@ package com.teamphysics.zachl.blocks
 	public class BaseBlock extends MovieClip
 	{
 		
-		private var _nBlockHealth: int = 1;
-		
+		private var _nBlockHealth	:int = 1;		
 		protected var _nHeight		:int;
-		
 		protected var _nWidth		:int;
 		
+		//Bodies
 		private var body		:Body;
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
@@ -36,15 +35,22 @@ package com.teamphysics.zachl.blocks
 			this.stop();
 		}
 		
-		/* ---------------------------------------------------------------------------------------- */				
-		/**
-		 * Turns on visabilty for any collectible that calls it's super function.
-		 */
+		/* ---------------------------------------------------------------------------------------- */
 		public function begin() :void
 		{
 			this.play();
 			this.visible = true;
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function end():void
+		{
+			this.stop();
+			this.visible = false;
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function buildBlock($xPlacement:int, $yPlacement:int):void
 		{	

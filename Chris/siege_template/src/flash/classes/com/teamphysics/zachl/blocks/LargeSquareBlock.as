@@ -35,8 +35,15 @@ package com.teamphysics.zachl.blocks
 			super.begin();
 		}
 		
-
+		/* ---------------------------------------------------------------------------------------- */
+		
+		override public function end():void
+		{
+			super.end();
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */				
+		
 		/**
 		 * Calls CollectibleManagers destroy function
 		 */

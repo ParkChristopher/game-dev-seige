@@ -28,7 +28,7 @@ package com.teamphysics.samg
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
-		public override function end()
+		public override function end():void
 		{
 			super.end();
 			this.scaleX = 0;

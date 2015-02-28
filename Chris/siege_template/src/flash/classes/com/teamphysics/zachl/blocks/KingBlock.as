@@ -53,6 +53,15 @@ package com.teamphysics.zachl.blocks
 			super.begin();
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		override public function end():void
+		{
+			super.end();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function get body():Body
 		{
 			return kingBody;

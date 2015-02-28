@@ -58,7 +58,7 @@ package com.teamphysics.samg
 		 * makes the object not visible and stops any animations
 		 *
 		 */
-		public function end()
+		public function end():void
 		{
 			objectFinishedSignal.dispatch(this);
 			CollisionManager.instance.remove(this);
