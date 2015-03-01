@@ -1,4 +1,4 @@
-package com.teamphysics.zachl.blocks
+﻿package com.teamphysics.zachl.blocks
 {
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
@@ -12,7 +12,7 @@ package com.teamphysics.zachl.blocks
 	import nape.phys.BodyType;
 	import nape.shape.Polygon;
 	import org.osflash.signals.Signal;
-	
+	import nape.phys.Material;
 
 	
 	public class BaseBlock extends MovieClip
@@ -23,7 +23,7 @@ package com.teamphysics.zachl.blocks
 		protected var _nWidth		:int;
 		
 		//Bodies
-		private var body		:Body;
+		private var body		:Body = new Body(BodyType.DYNAMIC);
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Constructs the BaseCollectible object.
@@ -59,9 +59,9 @@ package com.teamphysics.zachl.blocks
 			s.width = _nWidth
 			s.height = _nHeight;
 			addChild(s);
-		
-			body = new Body(BodyType.DYNAMIC);
-			body.shapes.add(new Polygon(Polygon.box(_nWidth, _nHeight)));
+			var material :Material = new Material(0,10,2,10);
+			//body = new Body(BodyType.DYNAMIC);
+			body.shapes.add((new Polygon(Polygon.box(_nWidth, _nHeight), material)));
 			body.position.setxy($xPlacement, $yPlacement);
 
 			body.space = SpaceRef.space;
@@ -88,6 +88,10 @@ package com.teamphysics.zachl.blocks
 			return  _nBlockHealth;
 		}
 		
+		public function get blockBody(): Body
+		{
+			return  body;
+		}
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Basic set for _nValue

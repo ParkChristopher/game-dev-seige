@@ -1,4 +1,4 @@
-package com.teamphysics.chrisp.screens {
+﻿package com.teamphysics.chrisp.screens {
 	
 	
 	
@@ -13,6 +13,7 @@ package com.teamphysics.chrisp.screens {
 	import com.teamphysics.zachl.blocks.LargeSquareBlock;
 	import com.teamphysics.zachl.blocks.RectangleBlock;
 	import com.teamphysics.zachl.blocks.SquareBlock;
+	import com.teamphysics.zachl.blocks.Castle;
 	import flash.display.DisplayObject;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -33,7 +34,7 @@ package com.teamphysics.chrisp.screens {
 	import nape.util.Debug;
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
-	
+	import com.teamphysics.util.SpaceRef;
 	
 	
 	/**
@@ -76,15 +77,22 @@ package com.teamphysics.chrisp.screens {
 		public var mcCannon					:Cannon;
 		public var mcPowerBar				:PowerBar;
 		
+		//Castles
+		public var player1Castle: Castle = new Castle();
+		public var player2Castle: Castle = new Castle();
+		
 		//Physics Parts
 		public var debug					:Debug;
 		protected var space					:Space;
 		protected var floorPhysicsBody		:Body;
 		protected var wallPhysicsBody		:Body;
 		protected var handJoint				:PivotJoint;
-		protected var kingCollisionType		:CbType = new CbType();
+		protected var king1CollisionType		:CbType = new CbType();
+		protected var king2CollisionType		:CbType = new CbType();
 		protected var ballCollisionType		:CbType = new CbType();
-		protected var interactionListener	:InteractionListener;
+		protected var interactionListener1	:InteractionListener;
+		protected var interactionListener2	:InteractionListener;
+
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -116,28 +124,14 @@ package com.teamphysics.chrisp.screens {
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
 			
-			this.castle = String("lsb lsb lsb lsb kb rww lww rww lww si ssb ssb ssb ssb rww lww rww lww si");
-			this.castle2 = String("rww lww rww lww si rww rww si");
-			p1Array = this.castle.split(" ");
-			p2Array = this.castle2.split(" ");
-			placementArray = [stage.stageWidth - 50, stage.stageWidth - 100,
-				stage.stageWidth - 150, stage.stageWidth - 200, stage.stageWidth - 125,
-				stage.stageWidth - 200, stage.stageWidth - 50, stage.stageWidth - 200,
-				stage.stageWidth - 50, stage.stageWidth - 125, stage.stageWidth - 75,
-				stage.stageWidth - 75, stage.stageWidth - 175, stage.stageWidth - 175,
-				stage.stageWidth - 200, stage.stageWidth - 50, stage.stageWidth - 200,
-				stage.stageWidth - 50, stage.stageWidth - 125];
-			placementArray2 = [50, 100, 150, 200, 125, 200, 50, 200, 50, 125, 75, 75,
-				175, 175, 200, 50, 200, 50, 125];
-			
 			//Create the space
 			space = new Space(new Vec2(0, 500));
-			
-			
+
+			SpaceRef.space = space;
 			
 			//Create Floor
 			floorPhysicsBody = new Body(BodyType.STATIC);
-			var p:Polygon = new Polygon ( Polygon.rect(0, stage.stageHeight - 82,
+			var p:Polygon = new Polygon ( Polygon.rect(0, stage.stageHeight - 95,
 				stage.stageWidth, 100));
 				
 			floorPhysicsBody.shapes.add(p);
@@ -153,16 +147,19 @@ package com.teamphysics.chrisp.screens {
 			aOnScreenObjects.push(mcCannon);
 			this.addChildAt(mcCannon, 1);
 			mcCannon.begin();
-			
-			//Listeners King/Ball Collision, Enter Frame, Cannon Keyboard Input
-			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
-			interactionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
-				ballCollisionType, kingCollisionType, kingHit);
-			space.listeners.add(interactionListener);
-			
+
 			//Build Castles
 			buildCastles();
+
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
+			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
+				ballCollisionType, king1CollisionType, kingHit);
+			space.listeners.add(interactionListener1);
+			
+			interactionListener2 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
+				ballCollisionType, king2CollisionType, kingHit);
+			space.listeners.add(interactionListener2);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -181,127 +178,11 @@ package com.teamphysics.chrisp.screens {
 		
 		private function buildCastles()
 		{
-			var w:int = stage.stageWidth;
-			var h:int = stage.stageHeight;
-			
-			
-			var i:int = 0;
-			var block:BaseBlock;
-			var largeSquareBlock:LargeSquareBlock;
-			var smallSquareBlock:SquareBlock;
-			var kingBlock:KingBlock;
-			var material:Material;
-			
-			trace(p1Array.length);
-			
-			for ( i = 0; i < p1Array.length; i++)
-			{
-				if (p1Array[i] == "lsb")
-				{
-					block = new LargeSquareBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "rww")
-				{
-					block = new RectangleBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "lww")
-				{
-					block = new RectangleBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}				
-				else if (p1Array[i] == "si")
-				{
-					block = new RectangleBlock();
-					block.width = 250;
-					block.height = 10;
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "ssb")
-				{
-					block = new SquareBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "kb")
-				{
-					block = new KingBlock();
-					
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				
-				//Once block is determined and created, make a body for it and add it to the space
-				var blockPhysicsBody:Body = new Body(BodyType.DYNAMIC);
-				blockPhysicsBody.shapes.add(new Polygon(Polygon.box(block.width, block.height)));
-				blockPhysicsBody.position.setxy(placementArray[i], h - ((i+1) * 100));				
-				
-				if (block is KingBlock)
-					blockPhysicsBody.cbTypes.add(kingCollisionType);
-				
-				space.bodies.add(blockPhysicsBody);
-				blockPhysicsBody.userData.graphic = block;
-				
-			}
-			
-			//Add second castle here
-			for ( i = 0; i < p1Array.length; i++)
-			{
-				if (p1Array[i] == "lsb")
-				{
-					block = new LargeSquareBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "rww")
-				{
-					block = new RectangleBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "lww")
-				{
-					block = new RectangleBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}				
-				else if (p1Array[i] == "si")
-				{
-					block = new RectangleBlock();
-					block.width = 250;
-					block.height = 10;
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "ssb")
-				{
-					block = new SquareBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-				else if (p1Array[i] == "kb")
-				{
-					block = new KingBlock();
-					aOnScreenObjects.push(block);
-					this.addChild(block);
-				}
-			
-				var blockPhysicsBody:Body = new Body(BodyType.DYNAMIC);
-				blockPhysicsBody.shapes.add(new Polygon(Polygon.box(block.width, block.height)));
-				blockPhysicsBody.position.setxy(placementArray2[i], h - ((i+1) * 100));				
-				
-				if (block is KingBlock)
-					blockPhysicsBody.cbTypes.add(kingCollisionType);
-					
-				space.bodies.add(blockPhysicsBody);
-				blockPhysicsBody.userData.graphic = block;
-			}
-			//End add second castle
+			player1Castle.begin("Player1");
+			this.king1CollisionType = player1Castle.kingHitBox;
+
+			player2Castle.begin("Player2");
+			this.king2CollisionType = player2Castle.kingHitBox;
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -309,7 +190,8 @@ package com.teamphysics.chrisp.screens {
 		{
 			trace("King collision detected");
 			this.screenCompleteSignal.dispatch();
-			
+			this.player1Castle.end();
+			this.player2Castle.end();
 			
 			this.space.clear();
 			this.cleanScreen();
@@ -423,6 +305,8 @@ package com.teamphysics.chrisp.screens {
 		{
 			trace("Game Screen: Quit Clicked.");
 			this.space.clear();
+			this.player1Castle.end();
+			this.player2Castle.end();
 			this.cleanScreen();
 			
 			this.quitClickedSignal.dispatch();
