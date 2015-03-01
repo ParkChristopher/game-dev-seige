@@ -15,6 +15,7 @@ package com.teamphysics.chrisp.screens {
 		//Signals
 		public var screenCompleteSignal	:Signal = new Signal();
 		
+		public var bActive				:Boolean;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		//Constructs the AbstractScreen object.
@@ -24,6 +25,7 @@ package com.teamphysics.chrisp.screens {
 			
 			this.mouseEnabled	= true;
 			this.mouseChildren	= true;
+			this.bActive = false;
 			this.visible = false;
 			
 		}
@@ -43,6 +45,7 @@ package com.teamphysics.chrisp.screens {
 		public function begin():void
 		{
 			this.show();
+			this.bActive = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -51,6 +54,7 @@ package com.teamphysics.chrisp.screens {
 		public function end():void
 		{
 			this.hide();
+			this.bActive = false;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

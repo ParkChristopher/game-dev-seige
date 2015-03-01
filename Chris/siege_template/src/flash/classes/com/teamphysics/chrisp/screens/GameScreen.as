@@ -4,6 +4,8 @@
 	
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
+	import com.teamphysics.chrisp.powerups.AbstractPowerup;
+	import com.teamphysics.chrisp.powerups.ShieldPowerup;
 	import com.teamphysics.chrisp.screens.AbstractScreen;
 	import com.teamphysics.samg.Cannon;
 	import com.teamphysics.samg.CannonBall;
@@ -15,9 +17,11 @@
 	import com.teamphysics.zachl.blocks.SquareBlock;
 	import com.teamphysics.zachl.blocks.Castle;
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.Timer;
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
@@ -35,6 +39,7 @@
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.SpaceRef;
+	import flash.events.TimerEvent;
 	
 	
 	/**
@@ -52,13 +57,14 @@
 		public var quitClickedSignal		:Signal = new Signal();
 		public var pauseClickedSignal		:Signal = new Signal();
 		
+		//Timers
+		public var powerupTimer				:Timer;
+		
 		//Arrays
-		public var aPlayerOneBlocks			:Array;
-		public var aPlayerTwoBlocks			:Array;
 		public var aOnScreenObjects			:Array;
 		
-		public var p1Array					:Array;
-		public var p2Array					:Array;
+		//public var p1Array					:Array;
+		//public var p2Array					:Array;
 		public var placementArray			:Array;
 		public var placementArray2			:Array;
 		
@@ -69,6 +75,7 @@
 		//Booleans
 		protected var bRotatingUp			:Boolean;
 		protected var bRotating				:Boolean;
+		protected var bPowerupActive		:Boolean;
 		
 		//Numbers
 		protected var nCannonRotateAmount	:Number;
@@ -81,14 +88,20 @@
 		public var player1Castle: Castle = new Castle();
 		public var player2Castle: Castle = new Castle();
 		
+		//Powerup Indicators
+		public var mcP1SpeedIndicator		:MovieClip;
+		public var mcP1ShieldIndicator		:MovieClip;
+		public var mcP2SpeedIndicator		:MovieClip;
+		public var mcP2ShieldIndicator		:MovieClip;
+		
 		//Physics Parts
 		public var debug					:Debug;
 		protected var space					:Space;
 		protected var floorPhysicsBody		:Body;
 		protected var wallPhysicsBody		:Body;
 		protected var handJoint				:PivotJoint;
-		protected var king1CollisionType		:CbType = new CbType();
-		protected var king2CollisionType		:CbType = new CbType();
+		protected var king1CollisionType	:CbType = new CbType();
+		protected var king2CollisionType	:CbType = new CbType();
 		protected var ballCollisionType		:CbType = new CbType();
 		protected var interactionListener1	:InteractionListener;
 		protected var interactionListener2	:InteractionListener;
@@ -113,6 +126,19 @@
 		override public function begin():void
 		{
 			super.begin();
+			
+			
+			//Turn off indicators until a powerup is acquired.
+			this.mcP1ShieldIndicator.visible = false;
+			this.mcP1SpeedIndicator.visible = false;
+			this.mcP2ShieldIndicator.visible = false;
+			this.mcP2SpeedIndicator.visible = false;
+			this.bPowerupActive = false;
+			
+			//Set up and start the powerup timer.
+			this.powerupTimer = new Timer(5000);
+			this.powerupTimer.addEventListener(TimerEvent.TIMER, spawnPowerup);
+			this.powerupTimer.start();
 			
 			this.aOnScreenObjects = new Array();
 			
@@ -172,6 +198,10 @@
 			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, addCannonBall);
+			
+			//Stop and remove timers
+			this.powerupTimer.removeEventListener(TimerEvent.TIMER, spawnPowerup);
+			this.powerupTimer.stop();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -299,7 +329,7 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		//[ BUTTON EVENT TRIGGERS ]
+		//[ EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
 		protected function quitClicked($e:MouseEvent):void
 		{
@@ -319,8 +349,28 @@
 			trace("Game Screen: Pause Clicked.");
 			//TODO: Pause game logic or call here
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
-		//[ / BUTTON EVENT TRIGGERS ]
+		
+		protected function spawnPowerup($e:TimerEvent):void
+		{
+			if (bPowerupActive)
+				return;
+			
+			trace("GameScreen: Spawning Powerup");
+			
+			var powerup :AbstractPowerup = new ShieldPowerup();
+			
+			this.bPowerupActive = true;
+			this.aOnScreenObjects.push(powerup);
+			//this.space.bodies.add(powerup.getPhysicsBody);
+			this.addChild(powerup);
+			powerup.begin();
+			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		//[ / EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
 	}
 }

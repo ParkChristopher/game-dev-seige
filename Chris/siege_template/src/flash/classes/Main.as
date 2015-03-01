@@ -88,11 +88,20 @@ package
 		{
 			trace("Main: Transitioning to Title Screen.");
 			
-			this.mcGameScreen.end();
-			this.mcCastleSelectScreen.end();
-			this.mcInstructionsScreen.end();
-			this.mcResultsScreen.end();
-			this.mcCreditsScreen.end();
+			if(this.mcGameScreen.bActive)
+				this.mcGameScreen.end();
+			
+			if(this.mcCastleSelectScreen.bActive)
+				this.mcCastleSelectScreen.end();
+			
+			if(this.mcInstructionsScreen.bActive)
+				this.mcInstructionsScreen.end();
+			
+			if(this.mcResultsScreen.bActive)
+				this.mcResultsScreen.end();
+			
+			if(this.mcCreditsScreen.bActive)
+				this.mcCreditsScreen.end();
 			
 			
 			this.mcTitleScreen.begin();
@@ -104,8 +113,12 @@ package
 		protected function creditsState():void
 		{
 			trace("Main: Transitioning to Credits Screen.");
-			this.mcTitleScreen.end();
-			this.mcResultsScreen.end();
+			
+			if (this.mcTitleScreen.bActive)
+				this.mcTitleScreen.end();
+			
+			if(this.mcResultsScreen.bActive)
+				this.mcResultsScreen.end();
 			
 			this.mcCreditsScreen.begin();
 			trace("Main: Credits Screen Transition Complete.");
@@ -116,7 +129,8 @@ package
 		protected function instructionsState():void
 		{
 			trace("Main: Transitioning to Instructions Screen.");
-			this.mcTitleScreen.end();
+			if(this.mcTitleScreen.bActive)
+				this.mcTitleScreen.end();
 			
 			this.mcInstructionsScreen.begin();
 			trace("Main: Instrucitons Screen Transition Complete.");
@@ -127,8 +141,12 @@ package
 		protected function castleSelectState():void
 		{
 			trace("Main: Transitioning to Castle Select Screen"); 
-			this.mcTitleScreen.end();
-			this.mcResultsScreen.end();
+			
+			if (this.mcTitleScreen.bActive)
+				this.mcTitleScreen.end();
+			
+			if (this.mcResultsScreen.bActive)
+				this.mcResultsScreen.end();
 			
 			this.mcCastleSelectScreen.begin();
 			trace("Main: Castle Select Screen Transition Complete.");
@@ -139,7 +157,9 @@ package
 		protected function resultsState():void
 		{
 			trace("Main: Transitioning to Results Screen.");
-			this.mcGameScreen.end();
+			
+			if(this.mcGameScreen.bActive)
+				this.mcGameScreen.end();
 			
 			this.mcResultsScreen.begin();
 			
@@ -161,4 +181,3 @@ package
 		
 	}
 }
-

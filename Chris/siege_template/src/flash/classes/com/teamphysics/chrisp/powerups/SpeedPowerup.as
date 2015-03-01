@@ -18,9 +18,7 @@ package com.teamphysics.chrisp.powerups
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		/**
-		 * Constructs the SpeedPowerup object.
-		 */
+		//Constructs the SpeedPowerup object.
 		public function SpeedPowerup()
 		{
 			super("Speed");
@@ -29,6 +27,13 @@ package com.teamphysics.chrisp.powerups
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		
+		
+		override protected function init():void
+		{
+			super.init();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function begin():void
 		{
@@ -52,8 +57,8 @@ package com.teamphysics.chrisp.powerups
 			//set that speed multiplier to this objects contained speed value
 			
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 	}
 }
-

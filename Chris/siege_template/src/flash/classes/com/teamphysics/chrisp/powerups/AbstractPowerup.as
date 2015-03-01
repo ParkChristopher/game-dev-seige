@@ -1,8 +1,12 @@
+
 package com.teamphysics.chrisp.powerups
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import nape.phys.Body;
+	import nape.phys.BodyType;
+	import nape.shape.Circle;
+	import nape.shape.Polygon;
 
 	
 	/**
@@ -30,17 +34,24 @@ package com.teamphysics.chrisp.powerups
 			this.mouseChildren	= false;
 			
 			this.sType = $sType;
+			this.visible = false;
+			
+			init();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		protected function init():void
 		{	
+			this.x = MIN_POS_X + Math.random() * (MAX_POS_X - MIN_POS_X);
+			this.y = MIN_POS_Y + Math.random() * (MAX_POS_Y - MIN_POS_Y);
+			
 			//Create body and set position somewhere between castles.
-			this.physicsBody = new Body(BodyType.DYNAMIC);
+			this.physicsBody = new Body(BodyType.KINEMATIC);
 			physicsBody.shapes.add(new Circle(this.width * 0.5, null));
-			physicsBody.position.setxy(MIN_POS_X + Math.random() * (MAX_POS_X - MIN_POS_X),
-			MIN_POS_Y + Math.random() * (MAX_POS_Y - MIN_POS_Y));
+			physicsBody.position.setxy(this.x, this.y);
+			physicsBody.userData.graphic = this;
+			
 			
 		}
 		
@@ -60,15 +71,15 @@ package com.teamphysics.chrisp.powerups
 		
 		/* ---------------------------------------------------------------------------------------- */		
 		
-		//
-		public function get getPhysicsBody():String
+		
+		public function get getPhysicsBody():Body
 		{
 			return this.physicsBody;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function set setPhysicsBody($value:String):void
+		public function set setPhysicsBody($value:Body):void
 		{
 			physicsBody = $value;
 		}
@@ -92,4 +103,3 @@ package com.teamphysics.chrisp.powerups
 		
 	}
 }
-
