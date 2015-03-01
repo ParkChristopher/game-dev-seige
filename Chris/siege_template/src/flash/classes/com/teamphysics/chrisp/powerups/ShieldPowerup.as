@@ -2,6 +2,7 @@ package com.teamphysics.chrisp.powerups
 {
 	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.util.CollisionManager;
+	import flash.display.MovieClip;
 
 	
 	/**
@@ -28,7 +29,7 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.init();
 			this._sObjectType = GameObjectType.TYPE_SHIELD_POWERUP;
-			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -47,9 +48,9 @@ package com.teamphysics.chrisp.powerups
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		override public function activate():void
+		override public function activate($object:MovieClip):void
 		{
-			super.activate();
+			super.activate($object);
 			
 			//Create a static body in front of castle of cannon owner
 			//Remove that body once it is hit by the other cannons fire.

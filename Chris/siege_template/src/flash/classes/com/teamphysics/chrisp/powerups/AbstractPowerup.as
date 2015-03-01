@@ -10,6 +10,7 @@ package com.teamphysics.chrisp.powerups
 	import nape.shape.Polygon;
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.teamphysics.util.GameObjectType;
 
 	
 	/**
@@ -46,11 +47,17 @@ package com.teamphysics.chrisp.powerups
 			this.x = MIN_POS_X + Math.random() * (MAX_POS_X - MIN_POS_X);
 			this.y = MIN_POS_Y + Math.random() * (MAX_POS_Y - MIN_POS_Y);
 			
+			
+			/******NOTE CURRENTLY USED REMOVE IF NECESSARY***********/
 			//Create body and set position somewhere between castles.
 			this.physicsBody = new Body(BodyType.KINEMATIC);
 			physicsBody.shapes.add(new Circle(this.width * 0.5, null));
 			physicsBody.position.setxy(this.x, this.y);
 			physicsBody.userData.graphic = this;
+			/********************************************************/
+			
+			
+			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			
 			
 		}
@@ -104,9 +111,9 @@ package com.teamphysics.chrisp.powerups
 		/* ---------------------------------------------------------------------------------------- */
 		
 		//Set up a powerups ability when it is picked up
-		public function activate():void
+		override public function activate($object:MovieClip):void
 		{
-			
+			super.activate($object);
 		}
 		
 		//Relinquishes all memory used by this object.

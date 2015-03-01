@@ -1,27 +1,26 @@
-﻿package com.teamphysics.chrisp.screens {
-	
-	
+﻿package com.teamphysics.chrisp.screens 
+{
 	
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.chrisp.powerups.AbstractPowerup;
 	import com.teamphysics.chrisp.powerups.ShieldPowerup;
+	import com.teamphysics.chrisp.powerups.SpeedPowerup;
 	import com.teamphysics.chrisp.screens.AbstractScreen;
 	import com.teamphysics.samg.Cannon;
 	import com.teamphysics.samg.CannonBall;
 	import com.teamphysics.samg.PowerBar;
-	import com.teamphysics.zachl.blocks.BaseBlock;
-	import com.teamphysics.zachl.blocks.KingBlock;
-	import com.teamphysics.zachl.blocks.LargeSquareBlock;
-	import com.teamphysics.zachl.blocks.RectangleBlock;
-	import com.teamphysics.zachl.blocks.SquareBlock;
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.SpaceRef;
 	import com.teamphysics.zachl.blocks.Castle;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -38,11 +37,6 @@
 	import nape.space.Space;
 	import nape.util.Debug;
 	import org.osflash.signals.Signal;
-	import com.natejc.utils.StageRef;
-	import com.teamphysics.util.SpaceRef;
-	import flash.events.TimerEvent;
-	import com.teamphysics.util.CollisionManager;
-	import com.teamphysics.util.GameObjectType;
 	
 	/**
 	 * Game Screen
@@ -65,11 +59,6 @@
 		//Arrays
 		public var aOnScreenObjects			:Array;
 		
-		//public var p1Array					:Array;
-		//public var p2Array					:Array;
-		public var placementArray			:Array;
-		public var placementArray2			:Array;
-		
 		//Strings
 		public var castle					:String;
 		public var castle2					:String;
@@ -81,6 +70,7 @@
 		
 		//Numbers
 		protected var nCannonRotateAmount	:Number;
+		public var nSpeedMultiplier			:Number = 0;
 		
 		//Cannon
 		public var mcCannon					:Cannon;
@@ -95,6 +85,8 @@
 		public var mcP1ShieldIndicator		:MovieClip;
 		public var mcP2SpeedIndicator		:MovieClip;
 		public var mcP2ShieldIndicator		:MovieClip;
+		
+		
 		
 		//Physics Parts
 		public var debug					:Debug;
@@ -314,7 +306,7 @@
 				
 					
 				var velocityVec:Vec2 = new Vec2(mcCannon.frontPoint.x - mcCannon.backPoint.x, mcCannon.frontPoint.y - mcCannon.backPoint.y);
-				var scaler:Number = this.mcPowerBar.scaleX * 30;
+				var scaler:Number = (this.mcPowerBar.scaleX * 30) + this.nSpeedMultiplier;
 				velocityVec = velocityVec.mul(scaler);
 				trace(velocityVec.x + ", " + velocityVec.y);
 					
@@ -322,6 +314,9 @@
 				
 				bRotating = true;
 				mcPowerBar.end();
+				
+				this.nSpeedMultiplier = 0;
+				this.mcP1SpeedIndicator.visible = false;
 			}
 			
 		}
@@ -346,7 +341,8 @@
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP ||
 				$object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 				{
-					trace("Powerup hit");
+					$object.activate(this);
+					$object.cleanupSignal.remove(removeObject);
 					this.bPowerupActive = false;
 				}
 				
@@ -386,17 +382,23 @@
 		
 		protected function spawnPowerup($e:TimerEvent):void
 		{
+			var choice	:int = 1 + Math.random() * 2;
+			var powerup :AbstractPowerup;
+		
+			
 			if (bPowerupActive)
 				return;
 			
 			trace("GameScreen: Spawning Powerup");
 			
-			var powerup :AbstractPowerup = new ShieldPowerup();
 			
+			if (choice == 1)
+				powerup = new ShieldPowerup();
+			else
+				powerup = new SpeedPowerup();
+				
 			this.bPowerupActive = true;
 			this.aOnScreenObjects.push(powerup);
-			//this.space.bodies.add(powerup.getPhysicsBody);
-			
 			CollisionManager.instance.add(powerup);
 			powerup.cleanupSignal.add(removeObject);
 			this.addChild(powerup);

@@ -47,6 +47,7 @@ package com.teamphysics.samg
 			
 			if ($object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 			{
+				trace("--is a speed boost");
 				//set up speed
 				
 			}

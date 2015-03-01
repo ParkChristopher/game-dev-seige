@@ -60,6 +60,12 @@ package com.teamphysics.chrisp
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function activate($object:MovieClip):void
+		{
+			
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
 		/**
 		 * Parses the relevant data from the xml config file for this object.
 		 */
