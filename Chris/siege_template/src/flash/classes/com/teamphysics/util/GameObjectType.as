@@ -10,7 +10,9 @@ package com.teamphysics.util
 	{
 		/** Strings that represent types of objects to be used in collision. */
 		public static const TYPE_BLOCK				:String = "BLOCK";
-		public static const TYPE_POWERUP			:String = "POWERUP";
+		public static const TYPE_SHIELD_POWERUP		:String = "SHIELD";
+		public static const TYPE_SPEED_POWERUP		:String = "SPEED";
+		public static const TYPE_CANNONBALL			:String = "CANNONBALL";
 		
 		
 		/* ---------------------------------------------------------------------------------------- */

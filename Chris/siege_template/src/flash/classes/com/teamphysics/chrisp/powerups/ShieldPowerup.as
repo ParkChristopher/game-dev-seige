@@ -1,6 +1,7 @@
 package com.teamphysics.chrisp.powerups
 {
-	import flash.display.Sprite;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.CollisionManager;
 
 	
 	/**
@@ -26,6 +27,8 @@ package com.teamphysics.chrisp.powerups
 		override protected function init():void
 		{
 			super.init();
+			this._sObjectType = GameObjectType.TYPE_SHIELD_POWERUP;
+			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

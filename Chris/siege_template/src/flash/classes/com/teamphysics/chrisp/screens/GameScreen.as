@@ -4,6 +4,7 @@
 	
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.chrisp.powerups.AbstractPowerup;
 	import com.teamphysics.chrisp.powerups.ShieldPowerup;
 	import com.teamphysics.chrisp.screens.AbstractScreen;
@@ -40,7 +41,8 @@
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.SpaceRef;
 	import flash.events.TimerEvent;
-	
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
 	
 	/**
 	 * Game Screen
@@ -127,6 +129,8 @@
 		{
 			super.begin();
 			
+			CollisionManager.instance.reset();
+			CollisionManager.instance.begin();
 			
 			//Turn off indicators until a powerup is acquired.
 			this.mcP1ShieldIndicator.visible = false;
@@ -193,6 +197,9 @@
 		override public function end():void
 		{
 			super.end();
+			
+			CollisionManager.instance.end();
+			
 			this.btQuit.removeEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.removeEventListener(MouseEvent.CLICK, pauseClicked);
 			
@@ -289,10 +296,13 @@
 			{
 				mcPowerBar.stopMoving();
 				var s:CannonBall = new CannonBall();
-				s.begin();
-				aOnScreenObjects.push(s);
+				this.aOnScreenObjects.push(s);
+				
+				CollisionManager.instance.add(s);
+				s.cleanupSignal.add(removeObject);
 				this.addChildAt(s, 1);
-			
+				s.begin();
+				
 				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(mcCannon.x, mcCannon.y));
 				var material:Material = new Material(0.5);
 				cannonBallPhysicsBody.shapes.add(new Circle(s.width / 2, null, material));
@@ -326,6 +336,28 @@
 				this.aOnScreenObjects[i].end();
 				this.removeChild(aOnScreenObjects[i]);
 			}
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function removeObject($object:AbstractGameObject):void
+		{
+			var objectIndex :int = aOnScreenObjects.indexOf($object);
+			
+			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP ||
+				$object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
+				{
+					trace("Powerup hit");
+					this.bPowerupActive = false;
+				}
+				
+			if (objectIndex >= 0)
+			{
+				trace("GameScreen: Removing Object");
+				$object.end();
+				this.removeChild($object);
+				aOnScreenObjects.splice(objectIndex, 1);
+			}
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -364,11 +396,13 @@
 			this.bPowerupActive = true;
 			this.aOnScreenObjects.push(powerup);
 			//this.space.bodies.add(powerup.getPhysicsBody);
+			
+			CollisionManager.instance.add(powerup);
+			powerup.cleanupSignal.add(removeObject);
 			this.addChild(powerup);
 			powerup.begin();
 			
 		}
-		
 		/* ---------------------------------------------------------------------------------------- */
 		//[ / EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
