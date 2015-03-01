@@ -1,6 +1,6 @@
 package com.teamphysics.samg 
 {
-	import com.teamphysics.samg.AbstractObject;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import nape.geom.Vec2;
@@ -8,7 +8,7 @@ package com.teamphysics.samg
 	 * ...
 	 * @author Sam Gronhovd
 	 */
-	public class Cannon extends AbstractObject
+	public class Cannon extends AbstractGameObject
 	{
 		public var backPoint	:Point;
 		
@@ -30,7 +30,7 @@ package com.teamphysics.samg
 		
 		}
 		
-		public override function begin()
+		override public function begin():void
 		{
 			super.begin();
 			backPoint.x = this.x - (this.width / 2);

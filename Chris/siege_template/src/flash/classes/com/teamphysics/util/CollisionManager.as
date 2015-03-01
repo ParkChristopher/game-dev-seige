@@ -1,22 +1,20 @@
 package com.teamphysics.util
 {
-	import com.teamphysics.samg.AbstractObject;
-	import flash.display.MovieClip;
+	import com.teamphysics.chrisp.AbstractGameObject;
+	import com.natejc.utils.StageRef;
 	import flash.events.Event;
-	import com.teamphysics.util.CollisionType;
-
 
 	/**
+	 * Manages collisions between game objects.
 	 * 
-	 * 
-	 * @author Sam Gronhovd
+	 * @author Chris Park
 	 */
-	public class CollisionManager extends MovieClip
+	public class CollisionManager
 	{
 		/** Stores a reference to the singleton instance. */  
 		private static const _instance	:CollisionManager = new CollisionManager( SingletonLock );
-		
-		private var _aObjectsBeingTracked:Array = new Array();
+		/** Lists of objects checked for collision. */
+		protected var _aTrackedObjects	:Array = new Array();
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -29,7 +27,6 @@ package com.teamphysics.util
 		{
 			if ($lock != SingletonLock)
 				throw new Error("CollisionManager is a singleton and should not be instantiated. Use CollisionManager.instance instead");
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -40,141 +37,136 @@ package com.teamphysics.util
 		 * @return		An instance to this class.
 		 */
 		public static function get instance():CollisionManager
-		{
+		{		
 			return _instance;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
-		 * Sets the Manager back to a blank state
-		 *
+		 * Resets the collision manager.
 		 */
-		public function reset()
+		public function reset():void
 		{
-			_aObjectsBeingTracked = new Array();//this seems gross...
+			this._aTrackedObjects = new Array();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
-		 * Starts checking collisions
-		 *
+		 * Starts the collision manager.
 		 */
-		public function begin()
+		public function begin():void
 		{
-			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			//_aObjectsBeingTracked[CollisionType.TYPE_COLLECTIBLE] = new Array();
-			//_aObjectsBeingTracked[CollisionType.TYPE_ENEMY] = new Array();
-			//_aObjectsBeingTracked[CollisionType.TYPE_HERO] = new Array();
+			StageRef.stage.addEventListener(Event.ENTER_FRAME, this.testAllCollisions);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
-		 * Stops Checking collisions
-		 *
+		 * Ends the collision manager.
 		 */
-		public function end()
+		public function end():void
 		{
-			this.reset();
+			StageRef.stage.removeEventListener(Event.ENTER_FRAME, this.testAllCollisions);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
-		 * adds an item to check collisions for
-		 *
-		 * @param The object to be added to the manager
+		 * Adds an object to the tracked collisions
+		 * 
+		 * @param	$object	AbstractGameObject.
 		 */
-		public function add($oGameObject:AbstractObject)
+		public function add($object:AbstractGameObject):void
 		{
-			var aObjectsOfSameType:Array = _aObjectsBeingTracked[$oGameObject.sObjectType];
+			var aObjectsOfSameType :Array = this._aTrackedObjects[$object.objectType];
 			
-			if (!aObjectsOfSameType)
-			{
+			if (aObjectsOfSameType == null)
 				aObjectsOfSameType = new Array();
-			}
 			
-			aObjectsOfSameType.push($oGameObject);
-			_aObjectsBeingTracked[$oGameObject.sObjectType] = aObjectsOfSameType;
+			aObjectsOfSameType.push($object);
+			this._aTrackedObjects[$object.objectType] = aObjectsOfSameType;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
-		 * Sets the Manager back to a blank state
-		 *
-		 * @param The object to be removed from the manager
+		 * Removes an object from the tracked collisions
 		 * 
-		 * @return boolean stating whether the item was removed successfully or not
+		 * @param	$object AbstractGameObject.
 		 */
-		public function remove($oGameObject:AbstractObject):Boolean
+		public function remove($object:AbstractGameObject):void
 		{
-			var aObjectsOfSameType:Array = _aObjectsBeingTracked[$oGameObject.sObjectType];
+			var aObjectsOfSameType :Array = this._aTrackedObjects[$object.objectType];
 			
-			if (!aObjectsOfSameType)
+			if (aObjectsOfSameType == null)
+				return;
+			
+			var nObjectRemoveIndex :int = aObjectsOfSameType.indexOf($object);
+			
+			if (nObjectRemoveIndex >= 0)
+				aObjectsOfSameType.splice(nObjectRemoveIndex, 1);
+			
+			this._aTrackedObjects[$object.objectType] = aObjectsOfSameType;
+			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		/**
+		 * Tests collision for all tracked objects
+		 * 
+		 * @param	$e Stage instance event.
+		 */
+		public function testAllCollisions($e:Event):void
+		{
+			var aObjectsOfSameType	:Array;
+			
+			for (var sObjectType:String in this._aTrackedObjects)
 			{
-				aObjectsOfSameType = new Array();
-			}
-			
-			var nObjectsToBeRemovedIndex:int = aObjectsOfSameType.indexOf($oGameObject);
-			if (nObjectsToBeRemovedIndex >= 0)
-			{
-				aObjectsOfSameType.splice(nObjectsToBeRemovedIndex, 1);
-				_aObjectsBeingTracked[$oGameObject.sObjectType] = aObjectsOfSameType;
-				return true;
-			
-				}
-			return false;
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-		/**
-		 * Gets an array of all of the objects of the given type
-		 * 
-		 * @param The type of object to get all the instances of
-		 * 
-		 * @return the array of all of the objects of the given type
-		 *
-		 */
-		private function getAddedObjectsOfType($sType:String):Array
-		{
-			return _aObjectsBeingTracked[$sType];
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-		/**
-		 * happens every frame
-		 * 
-		 * 
-		 */
-		public function enterFrameHandler(e:Event)
-		{
-			testAllCollisions();
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-		/**
-		 * Tests the collisions of all of the objects in the manager
-		 * 
-		 * 
-		 */
-		public function testAllCollisions()
-		{
-			var aObjectsOfSameType:Array;
-			//trace("_aObjectsBeingTracked[CollisionType.TYPE_COLLECTIBLE].length: " + _aObjectsBeingTracked[CollisionType.TYPE_COLLECTIBLE].length);
-			for (var sObjectType:String in _aObjectsBeingTracked)
-			{
-				aObjectsOfSameType = _aObjectsBeingTracked[sObjectType];
-				if (aObjectsOfSameType)
+				aObjectsOfSameType = this._aTrackedObjects[sObjectType];
+				
+				if (aObjectsOfSameType != null)
 				{
-					for (var i:int = 0; i < aObjectsOfSameType.length; i++)
+					for (var i:uint = 0; i < aObjectsOfSameType.length; i++)
+						this.testSingleCollision(aObjectsOfSameType[i]);
+					
+				}
+			}
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		/**
+		 * Tests collision for a single object
+		 * 
+		 * @param	$object AbstractGameObject.
+		 */
+		public function testSingleCollision($object:AbstractGameObject):void
+		{
+			var aCollidesWithTypes	:Array = $object.collidableTypes;
+			var aCollidesAgainst	:Array;
+			var sTypeIndex			:String;
+			var mcObjectInstance	:AbstractGameObject;
+			
+			for (var i:uint = 0; i < aCollidesWithTypes.length; i++)
+			{
+				sTypeIndex = aCollidesWithTypes[i];
+				aCollidesAgainst = this._aTrackedObjects[sTypeIndex];
+				
+				if (aCollidesAgainst != null)
+				{
+					for (var j:uint = 0; j < aCollidesAgainst.length; j++)
 					{
-						this.testCollisionsSingleObject(aObjectsOfSameType[i]);
+						mcObjectInstance = aCollidesAgainst[j];
+						
+						if (mcObjectInstance == null)
+							break;
+							
+						if ($object.Hitbox.hitTestObject(mcObjectInstance.Hitbox))
+							$object.collidedWith(mcObjectInstance);
+						
 					}
 				}
 			}
@@ -182,42 +174,8 @@ package com.teamphysics.util
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		/**
-		 * Sets the Manager back to a blank state
-		 *
-		 */
-		private function testCollisionsSingleObject($oGameObject:AbstractObject)//TODO throwing null object error
-		{
-			var aCollidesWithTypes:Array = $oGameObject.getCollidesWithTypes();
-			var aObjectsToTestAgainst:Array;
-			var sCollidesWithTypeIndex:String;
-			var mcObjectToTestAgainst:AbstractObject;
-			for (var i:int = 0; i < aCollidesWithTypes.length; i++)
-			{
-				sCollidesWithTypeIndex = aCollidesWithTypes[i];
-				if (!_aObjectsBeingTracked[sCollidesWithTypeIndex])
-				{
-					_aObjectsBeingTracked[sCollidesWithTypeIndex] = new Array();
-				}
-				aObjectsToTestAgainst = _aObjectsBeingTracked[sCollidesWithTypeIndex];
-				//trace("aObjectsToTestAgainst.length: " + aObjectsToTestAgainst.length);
-				for (var j:int = 0; j < aObjectsToTestAgainst.length; j++)
-				{
-					mcObjectToTestAgainst = aObjectsToTestAgainst[j];
-					if ($oGameObject.mcHitBox.hitTestObject(mcObjectToTestAgainst.mcHitBox))//Null reference error on this line
-					{
-						$oGameObject.collidedWith(mcObjectToTestAgainst);
-					}
-				}
-			}
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-
 	}
 }
-
-
 
 class SingletonLock {} // Do nothing, this is just to prevent external instantiation.
 

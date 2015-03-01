@@ -1,12 +1,15 @@
 
 package com.teamphysics.chrisp.powerups
 {
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
+	import com.greensock.*;
+	import com.greensock.easing.*;
 
 	
 	/**
@@ -14,7 +17,7 @@ package com.teamphysics.chrisp.powerups
 	 * 
 	 * @author Chris Park
 	 */
-	public class AbstractPowerup extends MovieClip
+	public class AbstractPowerup extends AbstractGameObject
 	{
 		protected const MIN_POS_X = 400;
 		protected const MAX_POS_X = 500;
@@ -29,9 +32,6 @@ package com.teamphysics.chrisp.powerups
 		public function AbstractPowerup($sType:String)
 		{
 			super();
-			
-			this.mouseEnabled	= false;
-			this.mouseChildren	= false;
 			
 			this.sType = $sType;
 			this.visible = false;
@@ -57,20 +57,37 @@ package com.teamphysics.chrisp.powerups
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function begin():void
+		override public function begin():void
 		{
-			this.visible = true;
+			super.begin();
+			this.show();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function end():void
+		override public function end():void
 		{
-			this.visible = false;
+			super.end();
+			this.hide();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		
 		
+		//Controls Tweening for this powerup
+		protected function show():void
+		{
+			TweenMax.to(this, 2, {y:this.y + 100, repeat:-1, yoyo:true, ease:Quad.easeInOut}  );
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		//Stops tweening for this powerup
+		protected function hide():void
+		{
+			TweenMax.killTweensOf(this);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function get getPhysicsBody():Body
 		{

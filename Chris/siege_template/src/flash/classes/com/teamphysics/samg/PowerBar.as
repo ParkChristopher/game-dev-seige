@@ -1,13 +1,13 @@
 package com.teamphysics.samg 
 {
-	import com.teamphysics.samg.AbstractObject;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import flash.events.Event;
 	
 	/**
 	 * ...
 	 * @author Sam Gronhovd
 	 */
-	public class PowerBar extends AbstractObject 
+	public class PowerBar extends AbstractGameObject 
 	{
 		public var bPowerBarFilling		:Boolean;
 		
@@ -19,7 +19,7 @@ package com.teamphysics.samg
 			this.scaleX = 0;
 		}
 		
-		public override function begin()
+		override public function begin():void
 		{
 			super.begin();
 			this.scaleX = 0;

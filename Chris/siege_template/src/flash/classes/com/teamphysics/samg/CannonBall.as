@@ -1,12 +1,12 @@
 package com.teamphysics.samg 
 {
-	import com.teamphysics.samg.AbstractObject;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	
 	/**
 	 * ...
 	 * @author Sam Gronhovd
 	 */
-	public class CannonBall extends AbstractObject 
+	public class CannonBall extends AbstractGameObject 
 	{
 		
 		public function CannonBall() 
@@ -16,7 +16,7 @@ package com.teamphysics.samg
 			this.mouseEnabled = false;
 		}
 		
-		public override function begin()
+		override public function begin():void
 		{
 			super.begin();
 		}
