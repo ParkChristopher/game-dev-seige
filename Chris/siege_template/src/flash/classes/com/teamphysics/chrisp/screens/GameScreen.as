@@ -64,17 +64,23 @@
 		public var castle2					:String;
 		
 		//Booleans
-		protected var bRotatingUp			:Boolean;
-		protected var bRotating				:Boolean;
+		protected var bCannonP1RotatingUp	:Boolean;
+		protected var bCannonP1IsRotating	:Boolean;
+		protected var bCannonP2RotatingUp	:Boolean;
+		protected var bCannonP2IsRotating	:Boolean;
+		
 		protected var bPowerupActive		:Boolean;
 		
 		//Numbers
-		protected var nCannonRotateAmount	:Number;
+		protected var nCannonOneRotateAmount	:Number;
+		protected var nCannonTwoRotateAmount	:Number;
 		public var nSpeedMultiplier			:Number = 0;
 		
 		//Cannon
-		public var mcCannon					:Cannon;
-		public var mcPowerBar				:PowerBar;
+		public var player1Cannon			:Cannon;
+		public var player2Cannon			:Cannon;
+		public var player1PowerBar			:PowerBar;
+		public var player2PowerBar			:PowerBar;
 		
 		//Castles
 		public var player1Castle: Castle = new Castle();
@@ -110,9 +116,12 @@
 		{
 			super();
 			
-			nCannonRotateAmount = 0;
-			bRotatingUp = true;
-			bRotating = true;
+			nCannonOneRotateAmount = 0;
+			nCannonTwoRotateAmount = 0;
+			bCannonP1RotatingUp = true;
+			bCannonP1IsRotating = true;
+			bCannonP2RotatingUp = true;
+			bCannonP2IsRotating = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -139,16 +148,18 @@
 			this.aOnScreenObjects = new Array();
 			
 			
-			//Power Bar
-			this.mcPowerBar = new PowerBar();
-			this.addChildAt(mcPowerBar, 1);
+			//Power Bars
+			this.player1PowerBar = new PowerBar();
+			this.addChildAt(player1PowerBar, 1);
+			this.player2PowerBar = new PowerBar();
+			this.addChildAt(player2PowerBar, 1);
 			
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
 			
 			//Create the space
 			space = new Space(new Vec2(0, 500));
-
+			
 			SpaceRef.space = space;
 			
 			//Create Floor
@@ -160,19 +171,30 @@
 			space.bodies.add(floorPhysicsBody);
 			floorPhysicsBody.space = space;
 			
-			//Start Cannon
-			mcCannon = new Cannon();
-			mcCannon.x = 260;
-			mcCannon.y = 485;
-			mcPowerBar.x = mcCannon.x - 40;
-			mcPowerBar.y = mcCannon.y + 20;
-			aOnScreenObjects.push(mcCannon);
-			this.addChildAt(mcCannon, 1);
-			mcCannon.begin();
-
+			//Start Cannons
+			player1Cannon = new Cannon();
+			player1Cannon.x = 260;
+			player1Cannon.y = 485;
+			player1PowerBar.x = player1Cannon.x - 40;
+			player1PowerBar.y = player1Cannon.y + 20;
+			aOnScreenObjects.push(player1Cannon);
+			this.addChildAt(player1Cannon, 1);
+			player1Cannon.begin();
+			
+			//Cannon 2
+			player2Cannon = new Cannon();
+			player2Cannon.scaleX = -1;
+			player2Cannon.x = 900 - 260;
+			player2Cannon.y = 485;
+			player2PowerBar.x = player2Cannon.x + 40;
+			player2PowerBar.y = player2Cannon.y + 20;
+			aOnScreenObjects.push(player2Cannon);
+			this.addChildAt(player2Cannon, 1);
+			player2Cannon.begin();
+			
 			//Build Castles
 			buildCastles();
-
+			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
 			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
@@ -233,33 +255,58 @@
 			space.step(1 / stage.frameRate);
 			space.bodies.foreach(updateGraphics);
 
-			if (this.bRotating)
+			this.player1Rotation();
+			this.player2Rotation();
+			
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function player1Rotation():void
+		{
+			if (this.bCannonP1IsRotating)
 			{
-				if (this.bRotatingUp)
+				if (this.bCannonP1RotatingUp)
 				{	
-					if (this.nCannonRotateAmount > -66)
-					{
-						this.nCannonRotateAmount--;
-					}
+					if (this.nCannonOneRotateAmount > -66)
+						this.nCannonOneRotateAmount--;
 					else 
-					{
-						this.bRotatingUp = false;
-					}
+						this.bCannonP1RotatingUp = false;
 				}
 				else //rotating down
 				{
-					if (this.nCannonRotateAmount < 30)
-					{
-						this.nCannonRotateAmount++;
-					}
+					if (this.nCannonOneRotateAmount < 30)
+						this.nCannonOneRotateAmount++;
 					else
-					{
-						this.bRotatingUp = true;
-					}
+						this.bCannonP1RotatingUp = true;
 				}
 			}
 			
-			mcCannon.rotate(nCannonRotateAmount);
+			player1Cannon.rotate(nCannonOneRotateAmount);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function player2Rotation():void
+		{
+			if (this.bCannonP2IsRotating)
+			{
+				if (this.bCannonP2RotatingUp)
+				{	
+					if (this.nCannonTwoRotateAmount > -66)
+						this.nCannonTwoRotateAmount--;
+					else 
+						this.bCannonP2RotatingUp = false;
+				}
+				else //rotating down
+				{
+					if (this.nCannonTwoRotateAmount < 30)
+						this.nCannonTwoRotateAmount++;
+					else
+						this.bCannonP2RotatingUp = true;
+				}
+			}
+			
+			player2Cannon.rotate(nCannonTwoRotateAmount);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -279,14 +326,14 @@
 		
 		private function addCannonBall()
 		{
-			if (bRotating)
+			if (bCannonP1IsRotating)
 			{
-				bRotating = false;
-				mcPowerBar.begin();
+				bCannonP1IsRotating = false;
+				player1PowerBar.begin();
 			}
-			else if(!bRotating && mcPowerBar.bIsMoving)
+			else if(!bCannonP1IsRotating && player1PowerBar.bIsMoving)
 			{
-				mcPowerBar.stopMoving();
+				player1PowerBar.stopMoving();
 				var s:CannonBall = new CannonBall();
 				this.aOnScreenObjects.push(s);
 				
@@ -295,7 +342,7 @@
 				this.addChildAt(s, 1);
 				s.begin();
 				
-				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(mcCannon.x, mcCannon.y));
+				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(player1Cannon.x, player1Cannon.y));
 				var material:Material = new Material(0.5);
 				cannonBallPhysicsBody.shapes.add(new Circle(s.width / 2, null, material));
 				cannonBallPhysicsBody.cbTypes.add(ballCollisionType);
@@ -305,15 +352,15 @@
 				cannonBallPhysicsBody.mass = 1;
 				
 					
-				var velocityVec:Vec2 = new Vec2(mcCannon.frontPoint.x - mcCannon.backPoint.x, mcCannon.frontPoint.y - mcCannon.backPoint.y);
-				var scaler:Number = (this.mcPowerBar.scaleX * 30) + this.nSpeedMultiplier;
+				var velocityVec:Vec2 = new Vec2(player1Cannon.frontPoint.x - player1Cannon.backPoint.x, player1Cannon.frontPoint.y - player1Cannon.backPoint.y);
+				var scaler:Number = (this.player1PowerBar.scaleX * 30) + this.nSpeedMultiplier;
 				velocityVec = velocityVec.mul(scaler);
 				trace(velocityVec.x + ", " + velocityVec.y);
 					
 				cannonBallPhysicsBody.velocity = velocityVec;
 				
-				bRotating = true;
-				mcPowerBar.end();
+				bCannonP1IsRotating = true;
+				player1PowerBar.end();
 				
 				this.nSpeedMultiplier = 0;
 				this.mcP1SpeedIndicator.visible = false;
