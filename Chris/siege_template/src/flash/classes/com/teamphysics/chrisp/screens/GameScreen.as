@@ -174,29 +174,34 @@
 			//Start Cannons
 			player1Cannon = new Cannon();
 			player1Cannon.x = 260;
-			player1Cannon.y = 485;
-			player1PowerBar.x = player1Cannon.x - 40;
-			player1PowerBar.y = player1Cannon.y + 20;
+			player1Cannon.y = 450;
+			player1Cannon.setBallCollision(ballCollisionType);
+			//player1PowerBar.x = player1Cannon.x - 40;
+			//player1PowerBar.y = player1Cannon.y + 20;
 			aOnScreenObjects.push(player1Cannon);
 			this.addChildAt(player1Cannon, 1);
+			player1Cannon.setLeftness(true);
 			player1Cannon.begin();
 			
 			//Cannon 2
 			player2Cannon = new Cannon();
-			player2Cannon.scaleX = -1;
+			//player2Cannon.scaleX = -1;
 			player2Cannon.x = 900 - 260;
-			player2Cannon.y = 485;
-			player2PowerBar.x = player2Cannon.x + 40;
-			player2PowerBar.y = player2Cannon.y + 20;
+			player2Cannon.y = 450;
+			//trace("ball collision: " + ballCollisionType);
+			player2Cannon.setBallCollision(ballCollisionType);
+			//player2PowerBar.x = player2Cannon.x + 40;
+			//player2PowerBar.y = player2Cannon.y + 20;
 			aOnScreenObjects.push(player2Cannon);
 			this.addChildAt(player2Cannon, 1);
+			player2Cannon.setLeftness(false);
 			player2Cannon.begin();
 			
 			//Build Castles
 			buildCastles();
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
+			//KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
 			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
 				ballCollisionType, king1CollisionType, kingHit);
 			space.listeners.add(interactionListener1);
@@ -255,8 +260,8 @@
 			space.step(1 / stage.frameRate);
 			space.bodies.foreach(updateGraphics);
 
-			this.player1Rotation();
-			this.player2Rotation();
+			//this.player1Rotation();
+			//this.player2Rotation();
 			
 		}
 		/* ---------------------------------------------------------------------------------------- */
@@ -326,7 +331,7 @@
 		
 		private function addCannonBall()
 		{
-			if (bCannonP1IsRotating)
+			/*if (bCannonP1IsRotating)
 			{
 				bCannonP1IsRotating = false;
 				player1PowerBar.begin();
@@ -364,7 +369,7 @@
 				
 				this.nSpeedMultiplier = 0;
 				this.mcP1SpeedIndicator.visible = false;
-			}
+			}*/
 			
 		}
 		
