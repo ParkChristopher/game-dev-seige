@@ -204,10 +204,10 @@
 				trace(frontPoint.x + ", " + frontPoint.y);
 				trace(backPoint.x + ", " + backPoint.y);
 				var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
-				var scaler:Number = 7 + (this.mcPowerBar.scaleX * 10) + _nSpeedBonus;
-				trace("scaler: " + scaler);
+				var scaler:Number = 5 + (this.mcPowerBar.mcMask.scaleX * 9) + _nSpeedBonus;
+				
+				trace("speed bonus: " + +_nSpeedBonus);
 				velocityVec = velocityVec.mul(scaler);
-				trace("velocityVec: " + velocityVec.x + ", " + velocityVec.y);
 					
 				cannonBallPhysicsBody.velocity = velocityVec;
 				

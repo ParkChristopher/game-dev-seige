@@ -1,6 +1,7 @@
 package com.teamphysics.samg 
 {
 	import com.teamphysics.chrisp.AbstractGameObject;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	
 	/**
@@ -13,16 +14,22 @@ package com.teamphysics.samg
 		
 		public var bIsMoving			:Boolean;
 		
+		public var mcMask				:MovieClip;
+		
 		public function PowerBar() 
 		{
 			super();
 			this.scaleX = 0;
+			mcMask.visible = false;
+			
 		}
 		
 		override public function begin():void
 		{
 			super.begin();
-			this.scaleX = 0;
+			mcMask.scaleX = .5;
+			this.mask = mcMask;
+			this.scaleX = 1;
 			bPowerBarFilling = true;
 			bIsMoving = true;
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
@@ -31,7 +38,7 @@ package com.teamphysics.samg
 		public override function end():void
 		{
 			super.end();
-			this.scaleX = 0;
+			//this.scaleX = 0;
 		}
 		
 		public function stopMoving()
@@ -42,6 +49,26 @@ package com.teamphysics.samg
 		private function enterFrameHandler(e:Event)
 		{
 			if (this.bIsMoving)
+			{
+				if (this.bPowerBarFilling && this.mcMask.scaleX < 1.0)
+				{
+					this.mcMask.scaleX += .02;
+				}
+				else if (this.bPowerBarFilling && this.mcMask.scaleX >= 1.0)
+				{
+					this.bPowerBarFilling = false;
+				}
+				else if (!this.bPowerBarFilling && this.mcMask.scaleX > 0)
+				{
+					this.mcMask.scaleX -= .02;
+				}
+				else if (!this.bPowerBarFilling && this.mcMask.scaleX <= 0)
+				{
+					this.bPowerBarFilling = true;
+				}
+			}
+			
+			/*if (this.bIsMoving)
 			{
 				if (this.bPowerBarFilling && this.scaleX < 1.0)
 				{
@@ -59,7 +86,7 @@ package com.teamphysics.samg
 				{
 					this.bPowerBarFilling = true;
 				}
-			}
+			}*/
 		}
 		
 	}
