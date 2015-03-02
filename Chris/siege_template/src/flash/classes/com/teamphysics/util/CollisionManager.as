@@ -1,4 +1,4 @@
-package com.teamphysics.util
+﻿package com.teamphysics.util
 {
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.natejc.utils.StageRef;

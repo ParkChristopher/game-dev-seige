@@ -15,7 +15,9 @@
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
-	 
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.chrisp.AbstractGameObject; 
 	//import nape.shape.
 	
 	public class RectangleBlock extends BaseBlock
@@ -31,6 +33,8 @@
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
 			this.stop();
+			this._sObjectType = GameObjectType.TYPE_BLOCK;
+			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this._nHeight = 100;
 			this._nWidth = 25;
 		}
@@ -47,11 +51,11 @@
 		/* ---------------------------------------------------------------------------------------- */
 		override public function buildBlock($xPlacement:int, $yPlacement:int):void
 		{	
-			trace("Overriden method");
-			var s:Sprite = new TempTexture();
+			var s:Sprite = new RectangleBlockGraphic();
 			s.width = _nWidth
 			s.height = _nHeight;
-			StageRef.stage.addChild(s);
+			tempSprite = s;
+			this.addChild(s);
 			var material :Material = new Material(.1,10,2,10);
 			
 			body = new Body(BodyType.DYNAMIC);
@@ -66,6 +70,7 @@
 		override public function end():void
 		{
 			super.end();
+			body.space = null;
 		}
 
 		/* ---------------------------------------------------------------------------------------- */				

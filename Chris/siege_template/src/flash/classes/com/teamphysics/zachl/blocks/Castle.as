@@ -21,6 +21,7 @@
 	import com.teamphysics.zachl.blocks.BaseBlock;
 	import com.teamphysics.zachl.blocks.KingBlock;
 	import com.teamphysics.zachl.blocks.LargeSquareBlock;
+	import com.teamphysics.zachl.blocks.LongBlock;
 	import com.teamphysics.zachl.blocks.RectangleBlock;
 	import com.teamphysics.zachl.blocks.SquareBlock;
 	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
@@ -33,6 +34,7 @@
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
 	import nape.geom.Vec2;
+	import com.teamphysics.util.CollisionManager;
 
 	public class Castle extends MovieClip
 	{
@@ -90,10 +92,6 @@
 			
 			var i:int = 0;
 			var block:BaseBlock;
-			var largeSquareBlock:LargeSquareBlock;
-			var smallSquareBlock:SquareBlock;
-			var kingBlock:KingBlock;
-			var material:Material;
 						
 			for ( i = 0; i < blockArray.length; i++)
 			{
@@ -114,9 +112,7 @@
 				}			
 				else if (blockArray[i] == "si")
 				{
-					block = new RectangleBlock();
-					block.width = 250;
-					block.height = 15;
+					block = new LongBlock();
 					StageRef.stage.addChild(block);
 				}
 				else if (blockArray[i] == "ssb")
@@ -135,18 +131,16 @@
 					StageRef.stage.addChild(block);
 				}
 
-				var blockPhysicsBody:Body = new Body(BodyType.DYNAMIC);
-				blockPhysicsBody.shapes.add(new Polygon(Polygon.box(block.width, block.height)));
-				blockPhysicsBody.position.setxy(placementArray[i], h - ((i+1) * 100));				
-				
+				block.buildBlock(placementArray[i], h - ((i+1) * 100));
+								 
 				if (block is KingBlock)
 				{
-					blockPhysicsBody.cbTypes.add(kingCollisionType);
+					//blockPhysicsBody.cbTypes.add(kingCollisionType);
 					trace("kingCollisionType set");
 				}
+
 				aOnScreenObjects.push(block);
-				SpaceRef.space.bodies.add(blockPhysicsBody);
-				blockPhysicsBody.userData.graphic = block;
+				CollisionManager.instance.add(block);
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
 			TweenMax.delayedCall(5, allowRotation);

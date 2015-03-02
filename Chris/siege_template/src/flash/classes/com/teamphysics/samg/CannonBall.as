@@ -1,17 +1,17 @@
-package com.teamphysics.samg 
+﻿package com.teamphysics.samg 
 {
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.util.GameObjectType;
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.CollisionManager;
-	
+	import org.osflash.signals.*;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
 	 */
 	public class CannonBall extends AbstractGameObject 
 	{
-		
+		public var 		gameOverSignal 				:Signal = new Signal();
 		public function CannonBall() 
 		{
 			super();
@@ -19,6 +19,7 @@ package com.teamphysics.samg
 			this._sObjectType = GameObjectType.TYPE_CANNONBALL;
 			this.addCollidableType(GameObjectType.TYPE_SHIELD_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_SPEED_POWERUP);
+			this.addCollidableType(GameObjectType.TYPE_BLOCK);
 		}
 		
 		override public function begin():void
@@ -37,7 +38,7 @@ package com.teamphysics.samg
 		
 		override public function collidedWith($object:AbstractGameObject):void
 		{
-			trace("CannonBall: Collision with Powerup");
+			trace($object.objectType);
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
 			{
 				trace("--is a shield");
@@ -52,6 +53,18 @@ package com.teamphysics.samg
 				
 			}
 			
+			if ($object.objectType == GameObjectType.TYPE_BLOCK)
+			{
+				trace("block was hit");
+				//set up speed
+				
+			}
+			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
+			{
+				trace("KING WAS HIT");
+				this.gameOverSignal.dispatch();
+				
+			}
 			$object.end();
 			CollisionManager.instance.remove($object);
 			$object.cleanupSignal.dispatch($object);

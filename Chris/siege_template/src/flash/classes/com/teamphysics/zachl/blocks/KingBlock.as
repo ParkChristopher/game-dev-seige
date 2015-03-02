@@ -1,48 +1,70 @@
-package com.teamphysics.zachl.blocks
+﻿package com.teamphysics.zachl.blocks
 {
 	
+	
+	import com.natejc.input.KeyboardManager;
+	import com.natejc.input.KeyCode;
 	import com.teamphysics.util.SpaceRef;
+	import flash.display.SimpleButton;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import nape.callbacks.*;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Polygon;
+	import org.osflash.signals.Signal;
+	import com.natejc.utils.StageRef;
+	import nape.phys.Material;
+	import org.osflash.signals.*;
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.chrisp.AbstractGameObject; 
 	
-	 
 	//import nape.shape.
 
 	public class KingBlock extends BaseBlock
 	{
-		protected var nBlockWidth			: int = 50;
-		protected var nBlockHeight			: int = 75;
-		public static var kingBody			:Body = new Body(BodyType.DYNAMIC);
+		private var body		:Body;
+		/** A variable to track when the hero has died. */
+		private var kingDiedSignal 	:Signal = new Signal();
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Constructs the Token object.
 		 */
 		public function KingBlock()
 		{
-			//var body:Body = new Body(BodyType.DYNAMIC);
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
-			this._nHeight = 75;
-			this._nWidth = 50;
+			this._nHeight = 50;
+			this._nWidth = 25;
+			this._sObjectType = GameObjectType.TYPE_KING_BLOCK;
+			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
+			{
+				trace("Correctly set as king");
+				trace(this._sObjectType);
+				trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
+			}
+			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this.stop();
 		}
 		
-		public override function buildBlock($xPlacement:int, $yPlacement:int):void
-		{		
-			var s:Sprite = new TempTexture();
+		override public function buildBlock($xPlacement:int, $yPlacement:int):void
+		{	
+			var s:Sprite = new KingBlockGraphic();
+			s.width = _nWidth
+			s.height = _nHeight;
+			this.addChild(s);
+			var material :Material = new Material(.1,10,2,10);
 			
-			addChild(s);
-		
-			//var body:Body = new Body(BodyType.DYNAMIC);
-			kingBody.shapes.add(new Polygon(Polygon.box(nBlockWidth, nBlockHeight)));
-			kingBody.position.setxy($xPlacement, $yPlacement);
+			body = new Body(BodyType.DYNAMIC);
 
-			kingBody.space = SpaceRef.space;
+			body.shapes.add(new Polygon(Polygon.box(_nWidth, _nHeight), material));
+			body.position.setxy($xPlacement, $yPlacement);
+
+			body.space = SpaceRef.space;
 			
-			kingBody.userData.graphic = s;		
+			body.userData.graphic = s;	
 		}
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
@@ -58,14 +80,10 @@ package com.teamphysics.zachl.blocks
 		override public function end():void
 		{
 			super.end();
+			body.space = null;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
-		public function get body():Body
-		{
-			return kingBody;
-		}
 	
 		
 		/* ---------------------------------------------------------------------------------------- */				

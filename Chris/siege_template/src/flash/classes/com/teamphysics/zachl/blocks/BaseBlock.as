@@ -13,15 +13,18 @@
 	import nape.shape.Polygon;
 	import org.osflash.signals.Signal;
 	import nape.phys.Material;
-
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.chrisp.AbstractGameObject;
+	import com.natejc.utils.StageRef;
 	
-	public class BaseBlock extends MovieClip
+	public class BaseBlock extends AbstractGameObject
 	{
 		
 		private var _nBlockHealth	:int = 1;		
 		protected var _nHeight		:int;
 		protected var _nWidth		:int;
-		
+		protected var tempSprite	:Sprite;
 		//Bodies
 		private var body		:Body = new Body(BodyType.DYNAMIC);
 		/* ---------------------------------------------------------------------------------------- */				
@@ -31,12 +34,14 @@
 		public function BaseBlock()
 		{
 			super();
+			//this._sObjectType = GameObjectType.TYPE_BLOCK;
+			//this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			parseXML();
 			this.stop();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		public function begin() :void
+		override public function begin() :void
 		{
 			this.play();
 			this.visible = true;
@@ -44,10 +49,13 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function end():void
+		override public function end():void
 		{
-			this.stop();
-			this.visible = false;
+			body.userData.graphic = null;
+			body.space = null;
+			while (this.numChildren > 0)
+				this.removeChildAt(0);
+			SpaceRef.space.bodies.remove(body);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -56,17 +64,16 @@
 		{	
 			
 			var s:Sprite = new TempTexture();
+			tempSprite = s;
 			s.width = _nWidth
 			s.height = _nHeight;
-			addChild(s);
+			this.addChild(s);
 			var material :Material = new Material(0,10,2,10);
-			//body = new Body(BodyType.DYNAMIC);
 			body.shapes.add((new Polygon(Polygon.box(_nWidth, _nHeight), material)));
 			body.position.setxy($xPlacement, $yPlacement);
 
 			body.space = SpaceRef.space;
-			
-			body.userData.graphic = s;	
+						
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */				
@@ -106,7 +113,7 @@
 		 */
 		public function destroy() :void
 		{
-			super.destroy();
+			
 		}
 	}
 }

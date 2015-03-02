@@ -15,28 +15,28 @@
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
-	import com.teamphysics.zachl.blocks.BaseBlock;
 	import com.teamphysics.util.CollisionManager;
 	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.chrisp.AbstractGameObject;
+	import com.teamphysics.chrisp.AbstractGameObject; 
 	//import nape.shape.
 	
-	public class LargeStoneSquareBlock extends BaseBlock
+	public class LongBlock extends BaseBlock
 	{
 		private var body		:Body;
-	
+
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Constructs the Token object.
 		 */
-		public function LargeStoneSquareBlock()
+		public function LongBlock()
 		{
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
+			this.stop();
 			this._sObjectType = GameObjectType.TYPE_BLOCK;
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
-			this.stop();
-			this._nHeight = this._nWidth = 50;
+			this._nHeight = 15;
+			this._nWidth = 250;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */				
@@ -51,7 +51,7 @@
 		/* ---------------------------------------------------------------------------------------- */
 		override public function buildBlock($xPlacement:int, $yPlacement:int):void
 		{	
-			var s:Sprite = new LargeStoneSquareBlockGraphic();
+			var s:Sprite = new TempTexture();
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);
@@ -64,17 +64,15 @@
 			body.space = SpaceRef.space;
 			
 			body.userData.graphic = s;	
-		}		
-		/* ---------------------------------------------------------------------------------------- */
+		}
 		
 		override public function end():void
 		{
 			super.end();
 			body.space = null;
 		}
-		
+
 		/* ---------------------------------------------------------------------------------------- */				
-		
 		/**
 		 * Calls CollectibleManagers destroy function
 		 */

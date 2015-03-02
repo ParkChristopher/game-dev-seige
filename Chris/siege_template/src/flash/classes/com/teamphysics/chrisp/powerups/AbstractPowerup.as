@@ -1,4 +1,4 @@
-
+﻿
 package com.teamphysics.chrisp.powerups
 {
 	import com.teamphysics.chrisp.AbstractGameObject;

@@ -373,6 +373,8 @@
 		//Removes all movieclips on screen end
 		public function cleanScreen():void
 		{
+			this.player1Castle.end();
+			this.player2Castle.end();
 			for (var i:uint = 0; i < aOnScreenObjects.length; i++)
 			{
 				this.aOnScreenObjects[i].end();
@@ -409,11 +411,9 @@
 		protected function quitClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Quit Clicked.");
-			this.space.clear();
-			this.player1Castle.end();
-			this.player2Castle.end();
+			//this.space.clear();
 			this.cleanScreen();
-			
+			this.space.clear();
 			this.quitClickedSignal.dispatch();
 		}
 		
