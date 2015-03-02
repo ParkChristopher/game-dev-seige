@@ -8,6 +8,7 @@
 	import com.teamphysics.chrisp.powerups.ShieldPowerup;
 	import com.teamphysics.chrisp.powerups.SpeedPowerup;
 	import com.teamphysics.chrisp.screens.AbstractScreen;
+	import com.teamphysics.chrisp.ShieldBlock;
 	import com.teamphysics.samg.Cannon;
 	import com.teamphysics.samg.CannonBall;
 	import com.teamphysics.samg.PowerBar;
@@ -40,6 +41,7 @@
 	import nape.util.Debug;
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
+	import com.natejc.utils.StageRef;
 	
 	/**
 	 * Game Screen
@@ -89,13 +91,14 @@
 		public var player1Castle: Castle = new Castle();
 		public var player2Castle: Castle = new Castle();
 		
-		//Powerup Indicators
+		//Powerup 
 		public var mcP1SpeedIndicator		:MovieClip;
 		public var mcP1ShieldIndicator		:MovieClip;
 		public var mcP2SpeedIndicator		:MovieClip;
 		public var mcP2ShieldIndicator		:MovieClip;
 		
-		
+		public var shieldBlockP1			:ShieldBlock;
+		public var shieldBlockP2			:ShieldBlock;
 		
 		//Physics Parts
 		public var debug					:Debug;
@@ -346,6 +349,13 @@
 		{
 			this.player1Castle.end();
 			this.player2Castle.end();
+			
+			if (this.shieldBlockP1 != null)
+				this.shieldBlockP1.end();
+				
+			if (this.shieldBlockP2 != null)
+				this.shieldBlockP2.end();
+			
 			for (var i:uint = 0; i < aOnScreenObjects.length; i++)
 			{
 				this.aOnScreenObjects[i].end();
@@ -396,36 +406,16 @@
 		
 		public function createShield($isPlayerOne:Boolean):void
 		{
-			var shield:Body;
-			var poly:Polygon;
-			var testTexture: Sprite = new TempTexture();
-			testTexture.width = 10;
-			testTexture.height = 775;
-			shield = new Body(BodyType.STATIC);
-			poly = new Polygon(Polygon.box(10, 775));
+			var shield		:ShieldBlock;
 			
-			shield.shapes.add(poly);
+			shield = new ShieldBlock($isPlayerOne);
 			
 			if ($isPlayerOne)
-			{
-				poly.filter.collisionGroup = 1;
-				shield.position.setxy(275, 0);
-			}
+				shieldBlockP1 = shield;
 			else
-			{
-				poly.filter.collisionGroup = 2;
-				shield.position.setxy(625, 0);
-			}
+				shieldBlockP2 = shield;
 			
-			//Collision call here?
-			//Use graphic that matches desired size
-			
-			
-			shield.space = SpaceRef.space;
-			shield.userData.graphic = testTexture;
-			aOnScreenObjects.push(shield);
-			this.addChildAt(testTexture, 1);
-			
+			StageRef.stage.addChild(shield);
 			
 		}
 		

@@ -38,6 +38,7 @@
 		
 		override public function end():void
 		{
+			
 			this.visible = false;
 		}
 		
