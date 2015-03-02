@@ -81,6 +81,7 @@
 			
 			if ($object.objectType == GameObjectType.TYPE_BLOCK)
 			{
+				
 				trace("block was hit");
 				
 				var block : BaseBlock = BaseBlock($object);
@@ -104,9 +105,9 @@
 				trace("KING WAS HIT");
 				this.gameOverSignal.dispatch();
 				
-				//$object.end();
-				//CollisionManager.instance.remove($object);
-				//$object.cleanupSignal.dispatch($object);
+				$object.end();
+				CollisionManager.instance.remove($object);
+				$object.cleanupSignal.dispatch($object);
 				
 			}
 		}

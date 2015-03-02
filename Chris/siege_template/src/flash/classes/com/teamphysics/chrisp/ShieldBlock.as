@@ -46,7 +46,7 @@ package com.teamphysics.chrisp
 			
 			CollisionManager.instance.add(this);
 			
-			this.tempTexture = new TempTexture();
+			this.tempTexture = new ShieldBlockTexture();
 			this.tempTexture.width = 10;
 			this.tempTexture.height = 775;
 			

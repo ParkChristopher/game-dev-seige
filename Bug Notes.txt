@@ -2,13 +2,15 @@ Bug List:
 
 -Cannonball images still ghost randomly. More frequent with rapid firing.
 
--Damage still being applied to a players own blocks by their cannon.
+-Damage still being applied to a players own blocks by their cannon. (Possible fix: Boolean variable to determine each blocks player, then check for match in cannonball collision and return if the boolean values are the same)
 
 -Shield display indicator is not working. Code is identical to Speed display which works. Simply setting shield indicators to true when thy are initialized in the begin() method of gamescreen doesn't make them show either I'm not sure why this is happening.
 
--Shields are appearing but are not coded for removal on impact. Despite this, the Right players wall physics body dissapears randomly.
 
-Possible Tweaks:
+Tweaks: (Subjective)
 
 -Cannon fire rate and velocity should be slowed.
+-Cannon should be topmost layer so the powerbar isn't obscured
+-I Tweaked Sams angle arrows, not real happy with them, and question whether we really need them, but they are a little better.
 -Tweak materials to make upsetting structures easier (tied to previous)
+-It takes forever to destroy blocks, and they are pretty much immovable. not very much fun.
