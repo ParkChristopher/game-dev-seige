@@ -1,4 +1,4 @@
-package com.teamphysics.samg 
+﻿package com.teamphysics.samg 
 {
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
