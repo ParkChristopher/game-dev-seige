@@ -181,8 +181,6 @@
 			player1Cannon.x = 260;
 			player1Cannon.y = 450;
 			player1Cannon.setBallCollision(ballCollisionType);
-			//player1PowerBar.x = player1Cannon.x - 40;
-			//player1PowerBar.y = player1Cannon.y + 20;
 			aOnScreenObjects.push(player1Cannon);
 			this.addChildAt(player1Cannon, 1);
 			player1Cannon.setLeftness(true);
@@ -192,13 +190,9 @@
 			
 			//Cannon 2
 			player2Cannon = new Cannon();
-			//player2Cannon.scaleX = -1;
 			player2Cannon.x = 900 - 260;
 			player2Cannon.y = 450;
-			//trace("ball collision: " + ballCollisionType);
 			player2Cannon.setBallCollision(ballCollisionType);
-			//player2PowerBar.x = player2Cannon.x + 40;
-			//player2PowerBar.y = player2Cannon.y + 20;
 			aOnScreenObjects.push(player2Cannon);
 			this.addChildAt(player2Cannon, 1);
 			player2Cannon.setLeftness(false);
@@ -406,23 +400,31 @@
 			var poly:Polygon;
 			var testTexture: Sprite = new TempTexture();
 			testTexture.width = 10;
-			testTexture.height = 600;
+			testTexture.height = 775;
 			shield = new Body(BodyType.STATIC);
-			poly = new Polygon(Polygon.box(10, 600));
+			poly = new Polygon(Polygon.box(10, 775));
+			
 			shield.shapes.add(poly);
 			
 			if ($isPlayerOne)
 			{
-				shield.position.setxy(225, 0);
+				poly.filter.collisionGroup = 1;
+				shield.position.setxy(275, 0);
 			}
 			else
 			{
-				shield.position.setxy(675, 0);
+				poly.filter.collisionGroup = 2;
+				shield.position.setxy(625, 0);
 			}
 			
-			shield.space = this.space;
+			//Collision call here?
+			//Use graphic that matches desired size
+			
+			
+			shield.space = SpaceRef.space;
 			shield.userData.graphic = testTexture;
-			//this.addChildAt(testTexture, 1);
+			aOnScreenObjects.push(shield);
+			this.addChildAt(testTexture, 1);
 			
 			
 		}
