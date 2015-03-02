@@ -2,6 +2,7 @@ package com.teamphysics.samg
 {
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
+	import com.natejc.utils.StageRef;
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.util.CollisionManager;
 	import com.teamphysics.util.SpaceRef;
@@ -226,13 +227,26 @@ package com.teamphysics.samg
 		
 		public function rotate($angle:Number)
 		{
-			this.mcCannonBarrel.rotation = $angle;
-			var cos:Number = Math.cos($angle * (Math.PI / 180));
-			var sin:Number = Math.sin($angle * (Math.PI / 180));
-			frontPoint.x = cos * (_length * .5);
-			frontPoint.y = -sin * (_length * .5);
-			backPoint.x = -cos * (_length * .5);
-			backPoint.y = sin * (_length * .5);
+			if (_bIsLeft)
+			{
+				this.mcCannonBarrel.rotation = $angle;
+				var cos:Number = Math.cos($angle * (Math.PI / 180));
+				var sin:Number = Math.sin($angle * (Math.PI / 180));
+				frontPoint.x = cos * (_length * .5);
+				frontPoint.y = sin * (_length * .5);
+				backPoint.x = -cos * (_length * .5);
+				backPoint.y = -sin * (_length * .5);
+			}
+			else 
+			{
+				this.mcCannonBarrel.rotation = $angle;
+				var cos:Number = Math.cos($angle * (Math.PI / 180));
+				var sin:Number = Math.sin($angle * (Math.PI / 180));
+				frontPoint.x = -cos * (_length * .5);
+				frontPoint.y = sin * (_length * .5);
+				backPoint.x = cos * (_length * .5);
+				backPoint.y = -sin * (_length * .5);
+			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
