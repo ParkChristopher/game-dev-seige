@@ -15,9 +15,11 @@
 	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.util.SpaceRef;
 	import com.teamphysics.zachl.blocks.Castle;
+	import com.teamphysics.zachl.blocks.RectangleBlock;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -366,6 +368,8 @@
 				{
 					SoundManager.instance.playPowerupGet();
 					$object.activate(this);
+					
+					this.createShield($object.bOwnerIsP1);
 					$object.cleanupSignal.remove(removeObject);
 					this.bPowerupActive = false;
 				}
@@ -375,7 +379,12 @@
 				{
 					SoundManager.instance.playPowerupGet();
 					$object.activate(this);
-					this.player1Cannon.setSpeedBonus(10);
+					
+					if($object.bOwnerIsP1)
+						this.player1Cannon.setSpeedBonus(10);
+					else
+						this.player2Cannon.setSpeedBonus(10);
+						
 					$object.cleanupSignal.remove(removeObject);
 					this.bPowerupActive = false;
 				}
@@ -387,6 +396,34 @@
 				this.removeChild($object);
 				aOnScreenObjects.splice(objectIndex, 1);
 			}
+			
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function createShield($isPlayerOne:Boolean):void
+		{
+			var shield:Body;
+			var poly:Polygon;
+			var testTexture: Sprite = new TempTexture();
+			testTexture.width = 10;
+			testTexture.height = 600;
+			shield = new Body(BodyType.STATIC);
+			poly = new Polygon(Polygon.box(10, 600));
+			shield.shapes.add(poly);
+			
+			if ($isPlayerOne)
+			{
+				shield.position.setxy(225, 0);
+			}
+			else
+			{
+				shield.position.setxy(675, 0);
+			}
+			
+			shield.space = this.space;
+			shield.userData.graphic = testTexture;
+			//this.addChildAt(testTexture, 1);
+			
 			
 		}
 		

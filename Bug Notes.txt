@@ -1,0 +1,14 @@
+Bug List:
+
+-Cannonball images still ghost randomly. More frequent with rapid firing.
+
+-Damage still being applied to a players own blocks by their cannon.
+
+-Shield display indicator is not working. Code is identical to Speed display which works. Simply setting shield indicators to true when thy are initialized in the begin() method of gamescreen doesn't make them show either I'm not sure why this is happening.
+
+-Shields are appearing but are not coded for removal on impact. Despite this, the Right players wall physics body dissapears randomly.
+
+Possible Tweaks:
+
+-Cannon fire rate and velocity should be slowed.
+-Tweak materials to make upsetting structures easier (tied to previous)

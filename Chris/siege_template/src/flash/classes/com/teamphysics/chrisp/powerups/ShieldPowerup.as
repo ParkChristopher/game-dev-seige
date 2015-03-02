@@ -52,8 +52,18 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.activate($object);
 			
-			//Create a static body in front of castle of cannon owner
-			//Remove that body once it is hit by the other cannons fire.
+			//NOTE These are set up the same as speed indicators but are not
+			//becoming visible
+			
+			if (this.bOwnerIsP1)
+			{
+				$object.mcP1ShieldIndicator.visible = true;
+			}
+			else
+			{
+				$object.mcP2ShieldIndicator.visible = true;
+			}
+			
 		}
 	}
 }

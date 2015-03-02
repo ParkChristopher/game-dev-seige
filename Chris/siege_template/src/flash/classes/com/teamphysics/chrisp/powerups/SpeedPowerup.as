@@ -64,9 +64,6 @@ package com.teamphysics.chrisp.powerups
 			{
 				$object.mcP2SpeedIndicator.visible = true;
 			}
-				
-			//Have a variable in Cannon for speed multiplier
-			//set that speed multiplier to this objects contained speed value
 			
 		}
 		
