@@ -16,6 +16,7 @@ package com.teamphysics.samg
 	import nape.phys.Material;
 	import nape.shape.Circle;
 	import com.natejc.utils.StageRef;
+	import com.teamphysics.util.SoundManager;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -165,6 +166,8 @@ package com.teamphysics.samg
 			}
 			else if(!_bIsRotating && mcPowerBar.bIsMoving)
 			{
+				SoundManager.instance.playCannonFire();
+				
 				mcPowerBar.stopMoving();
 				var s:CannonBall = new CannonBall();
 				s.x = this.mcCannonBarrel.x;
@@ -265,6 +268,10 @@ package com.teamphysics.samg
 		override public function end():void
 		{
 			super.end();
+			
+			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, addCannonBall);
+			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, addCannonBall);
+			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

@@ -56,7 +56,7 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.activate($object);
 			
-			$object.nSpeedMultiplier = this.speedIncrease;
+			//$object.nSpeedMultiplier = this.speedIncrease;
 			$object.mcP1SpeedIndicator.visible = true;
 			//Have a variable in Cannon for speed multiplier
 			//set that speed multiplier to this objects contained speed value

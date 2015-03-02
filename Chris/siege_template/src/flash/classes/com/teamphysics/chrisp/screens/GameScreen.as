@@ -131,6 +131,8 @@
 		{
 			super.begin();
 			
+			SoundManager.instance.playGameMusic();
+			
 			CollisionManager.instance.reset();
 			CollisionManager.instance.begin();
 			
@@ -396,6 +398,7 @@
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP ||
 				$object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 				{
+					SoundManager.instance.playPowerupGet();
 					$object.activate(this);
 					$object.cleanupSignal.remove(removeObject);
 					this.bPowerupActive = false;

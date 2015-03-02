@@ -11,11 +11,12 @@ package com.teamphysics.util
 		/** Stores a reference to the singleton instance. */  
 		private static const _instance	:SoundManager = new SoundManager( SingletonLock );
 		
-		public static var SOUND_BUTTON_CLICK:String = "../src/audio/ButtonClick.mp3";
-		public static var SOUND_CANNON_FIRE:String = "../src/audio/CannonFire.mp3";
-		public static var SOUND_POWERUP_GET:String = "../src/audio/PowerupGet.mp3";
-		public static var MUSIC_TITLE_SCREEN:String = "../src/audio/TitleScreenLoop.mp3";
-		public static var MUSIC_RESULTS_SCREEN:String = "../src/audio/ResultsScreenLoop.mp3";
+		public static var SOUND_BUTTON_CLICK:String = "ButtonClick";
+		public static var SOUND_CANNON_FIRE:String = "CannonFire";
+		public static var SOUND_POWERUP_GET:String = "PowerupGet";
+		public static var MUSIC_TITLE_SCREEN:String = "TitleScreenLoop";
+		public static var MUSIC_RESULTS_SCREEN:String = "ResultsScreenLoop";
+		public static var MUSIC_GAME_SCREEN:String = "GameScreenLoop";
 		
 		public static var SE_VOLUME:Number = 1;
 		
@@ -37,40 +38,51 @@ package com.teamphysics.util
 		//Initialize sounds
 		public function init():void
 		{
-			SoundAS.loadSound(SOUND_BUTTON_CLICK, "ButtonClick");
-			SoundAS.loadSound(SOUND_CANNON_FIRE, "CannonFire");
-			SoundAS.loadSound(SOUND_POWERUP_GET, "PowerupGet");
-			SoundAS.loadSound(MUSIC_TITLE_SCREEN, "TitleScreenLoop");
-			SoundAS.loadSound(MUSIC_RESULTS_SCREEN, "ResultsScreenLoop");
+			SoundAS.loadSound("../src/audio/ButtonClick.mp3" ,SOUND_BUTTON_CLICK);
+			SoundAS.loadSound("../src/audio/CannonFire.mp3" ,SOUND_CANNON_FIRE);
+			SoundAS.loadSound("../src/audio/PowerupGet.mp3" ,SOUND_POWERUP_GET);
+			SoundAS.loadSound("../src/audio/TitleScreenLoop.mp3" ,MUSIC_TITLE_SCREEN);
+			SoundAS.loadSound("../src/audio/ResultsScreenLoop.mp3" ,MUSIC_RESULTS_SCREEN);
+			SoundAS.loadSound("../src/audio/KirbYourEnthusiasm.mp3" ,MUSIC_GAME_SCREEN);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playButtonClick():void
 		{
-			SoundAS.playFx("ButtonClick");
+			SoundAS.playFx(SOUND_BUTTON_CLICK);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playCannonFire():void
 		{
-			SoundAS.playFx("CannonFire");
+			SoundAS.playFx(SOUND_CANNON_FIRE, .1);
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playPowerupGet():void
 		{
-			SoundAS.playFx("PowerupGet");
+			SoundAS.playFx(SOUND_POWERUP_GET, .5);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playTitleMusic():void
 		{
+			SoundAS.fadeAllTo(0);
+			SoundAS.fadeFrom(MUSIC_TITLE_SCREEN, 0, .2);
+			SoundAS.playLoop(MUSIC_TITLE_SCREEN, .2);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playGameMusic():void
+		{
 			
-			SoundAS.fadeTo("TitleScreenLoop", .5);
-			SoundAS.playLoop("TitleScreenLoop", .5);
+			SoundAS.fadeAllTo(0);
+			SoundAS.fadeFrom(MUSIC_GAME_SCREEN, 0, .2);
+			SoundAS.playLoop(MUSIC_GAME_SCREEN, .2);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
