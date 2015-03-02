@@ -5,6 +5,7 @@
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.CollisionManager;
 	import org.osflash.signals.*;
+	import com.teamphysics.zachl.blocks.BaseBlock;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -16,11 +17,11 @@
 		{
 			super();
 			
-			/*this._sObjectType = GameObjectType.TYPE_CANNONBALL;
+			this._sObjectType = GameObjectType.TYPE_CANNONBALL;
 			this.addCollidableType(GameObjectType.TYPE_SHIELD_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_SPEED_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_BLOCK);
-			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);*/
+			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);
 		}
 		
 		override public function begin():void
@@ -43,21 +44,33 @@
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
 			{
 				trace("--is a shield");
-				//set up shield
-				
+				$object.end();
+				CollisionManager.instance.remove($object);
+				$object.cleanupSignal.dispatch($object);				
 			}
 			
 			if ($object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 			{
 				trace("--is a speed boost");
-				//set up speed
+				$object.end();
+				CollisionManager.instance.remove($object);
+				$object.cleanupSignal.dispatch($object);
 				
 			}
 			
 			if ($object.objectType == GameObjectType.TYPE_BLOCK)
 			{
 				trace("block was hit");
-				//set up speed
+				var block : BaseBlock = BaseBlock($object);
+				trace(block.health);
+				block.health--;
+				trace(block.health);
+				if(block.health == 0)
+				{
+					block.end();
+					CollisionManager.instance.remove($object);
+					$object.cleanupSignal.dispatch($object);
+				}
 				
 			}
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
@@ -66,9 +79,9 @@
 				this.gameOverSignal.dispatch();
 				
 			}
-			$object.end();
-			CollisionManager.instance.remove($object);
-			$object.cleanupSignal.dispatch($object);
+			//$object.end();
+			//CollisionManager.instance.remove($object);
+			//$object.cleanupSignal.dispatch($object);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

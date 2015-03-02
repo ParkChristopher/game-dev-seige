@@ -21,7 +21,7 @@
 	public class BaseBlock extends AbstractGameObject
 	{
 		
-		private var _nBlockHealth	:int = 1;		
+		protected var _nBlockHealth	:int = 5;		
 		protected var _nHeight		:int;
 		protected var _nWidth		:int;
 		protected var tempSprite	:Sprite;
@@ -95,11 +95,14 @@
 		/**
 		 * Basic get for _nValue
 		 */
-		public function get getHealth(): int
+		public function get health(): int
 		{
 			return  _nBlockHealth;
 		}
-		
+		public function set health($hp:int):void
+		{
+			_nBlockHealth = $hp;
+		}
 		public function get blockBody(): Body
 		{
 			return  body;
