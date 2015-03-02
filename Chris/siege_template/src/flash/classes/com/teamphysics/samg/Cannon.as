@@ -231,7 +231,7 @@
 			{
 				trace("Cannon: Removing Object");
 				$object.end();
-				this.removeChild($object);
+				StageRef.stage.removeChild($object);
 				_aCannonBalls.splice(objectIndex, 1);
 			}
 			

@@ -78,6 +78,8 @@
 					CollisionManager.instance.remove($object);
 					$object.cleanupSignal.dispatch($object);
 				}
+				CollisionManager.instance.remove(this);
+				this.cleanupSignal.dispatch(this);
 				
 				
 			}
