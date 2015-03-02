@@ -14,6 +14,7 @@ package com.teamphysics.samg
 	import nape.phys.BodyType;
 	import nape.phys.Material;
 	import nape.shape.Circle;
+	import com.natejc.utils.StageRef;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -171,7 +172,7 @@ package com.teamphysics.samg
 				
 				CollisionManager.instance.add(s);
 				s.cleanupSignal.add(removeObject);
-				this.addChildAt(s, 0);
+				StageRef.stage.addChildAt(s, 1);
 				s.begin();
 		
 				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
