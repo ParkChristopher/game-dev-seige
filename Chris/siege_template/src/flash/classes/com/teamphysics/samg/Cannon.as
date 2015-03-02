@@ -188,7 +188,7 @@
 		
 				cannonBallPhysicsBody = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
 				
-				var material:Material = new Material(0.5);
+				var material:Material = new Material(0.5, 1, 1, 5);
 				var shape:Circle = new Circle(s.width / 2, null, material);
 				if (_bIsLeft)
 				{

@@ -21,7 +21,7 @@
 	public class BaseBlock extends AbstractGameObject
 	{
 		
-		protected var _nBlockHealth	:int = 5;		
+		protected var _nBlockHealth	:int = 3;		
 		protected var _nHeight		:int;
 		protected var _nWidth		:int;
 		protected var tempSprite	:Sprite;

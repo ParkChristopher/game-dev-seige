@@ -55,7 +55,7 @@
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);
-			var material :Material = new Material(.1,10,2,10);
+			var material :Material = new Material(0,1,.5,1);
 			
 			body = new Body(BodyType.DYNAMIC);
 			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);
