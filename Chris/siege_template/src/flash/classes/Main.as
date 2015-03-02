@@ -11,6 +11,7 @@ package
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import com.natejc.utils.StageRef;
+	import com.teamphysics.util.SoundManager;
 	
 	
 	/**
@@ -51,6 +52,9 @@ package
 		
 		protected function init():void
 		{
+			
+			SoundManager.instance.init();
+			
 			this.mcTitleScreen = new TitleScreen();
 			this.mcTitleScreen.playClickedSignal.add(castleSelectState);
 			this.mcTitleScreen.creditsClickedSignal.add(creditsState);

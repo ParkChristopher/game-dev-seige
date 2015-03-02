@@ -3,7 +3,7 @@ package com.teamphysics.chrisp.screens {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-
+	import com.teamphysics.util.SoundManager;
 	
 	/**
 	 * Credits Screen
@@ -52,6 +52,7 @@ package com.teamphysics.chrisp.screens {
 		protected function returnClicked($e:MouseEvent):void
 		{
 			trace("Credits: Return Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.returnClickedSignal.dispatch();
 		}
 		

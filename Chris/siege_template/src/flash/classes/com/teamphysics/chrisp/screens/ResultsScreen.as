@@ -3,7 +3,7 @@ package com.teamphysics.chrisp.screens {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-
+	import com.teamphysics.util.SoundManager;
 	
 	/**
 	 * Results Screen
@@ -63,6 +63,7 @@ package com.teamphysics.chrisp.screens {
 		protected function playAgainClicked($e:MouseEvent):void
 		{
 			trace("Results: Play Again Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.playAgainClickedSignal.dispatch();
 		}
 		
@@ -71,6 +72,7 @@ package com.teamphysics.chrisp.screens {
 		protected function toTitleClicked($e:MouseEvent):void
 		{
 			trace("Results: To Title Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.toTitleClickedSignal.dispatch();
 		}
 		
@@ -79,6 +81,7 @@ package com.teamphysics.chrisp.screens {
 		protected function creditsClicked($e:MouseEvent):void
 		{
 			trace("Results: Credits Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.creditsClickedSignal.dispatch();
 		}
 		

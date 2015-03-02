@@ -2,7 +2,7 @@ package com.teamphysics.chrisp.screens {
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-
+	import com.teamphysics.util.SoundManager;
 	
 	/**
 	 * Castle select screen
@@ -118,6 +118,8 @@ package com.teamphysics.chrisp.screens {
 		//Set player one castle
 		protected function castleSelectedP1($e:MouseEvent):void
 		{
+			SoundManager.instance.playButtonClick();
+			
 			if ($e.target == btCastleOneP1)
 				iPlayerOneCastleNumber = 1;
 			
@@ -148,6 +150,8 @@ package com.teamphysics.chrisp.screens {
 		//Set player two castle
 		protected function castleSelectedP2($e:MouseEvent):void
 		{
+			SoundManager.instance.playButtonClick();
+			
 			if ($e.target == btCastleOneP2)
 				iPlayerTwoCastleNumber = 1;
 			
@@ -178,6 +182,7 @@ package com.teamphysics.chrisp.screens {
 		protected function backClicked($e:MouseEvent):void
 		{
 			trace("Castle Select: Back Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.backClickedSignal.dispatch();
 		}
 		
@@ -185,6 +190,7 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function continueClicked($e:MouseEvent):void
 		{
+			SoundManager.instance.playButtonClick();
 			//If castles have not been selected, don't dispatch a signal.
 			if (iPlayerOneCastleNumber == 0 || iPlayerTwoCastleNumber == 0)
 			{

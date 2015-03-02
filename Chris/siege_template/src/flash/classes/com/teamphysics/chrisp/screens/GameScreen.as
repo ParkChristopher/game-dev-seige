@@ -37,6 +37,7 @@
 	import nape.space.Space;
 	import nape.util.Debug;
 	import org.osflash.signals.Signal;
+	import com.teamphysics.util.SoundManager;
 	
 	/**
 	 * Game Screen
@@ -416,6 +417,7 @@
 		protected function quitClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Quit Clicked.");
+			SoundManager.instance.playButtonClick();
 			//this.space.clear();
 			this.cleanScreen();
 			this.space.clear();
@@ -427,6 +429,7 @@
 		protected function pauseClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Pause Clicked.");
+			SoundManager.instance.playButtonClick();
 			//TODO: Pause game logic or call here
 		}
 		

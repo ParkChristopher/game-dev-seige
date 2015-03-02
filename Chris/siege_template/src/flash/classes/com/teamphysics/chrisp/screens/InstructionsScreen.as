@@ -3,6 +3,7 @@ package com.teamphysics.chrisp.screens {
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
+	import com.teamphysics.util.SoundManager;
 	
 	/**
 	 * Instructions Screen Class
@@ -52,6 +53,7 @@ package com.teamphysics.chrisp.screens {
 		protected function returnClicked($e:MouseEvent):void
 		{
 			trace("Instructions: Return Clicked.");
+			SoundManager.instance.playButtonClick();
 			this.returnClickedSignal.dispatch();
 		}
 		/* ---------------------------------------------------------------------------------------- */
