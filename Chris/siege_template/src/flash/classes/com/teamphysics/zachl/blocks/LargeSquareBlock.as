@@ -12,6 +12,7 @@
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Polygon;
+	import nape.shape.Shape;
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
@@ -48,16 +49,17 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		override public function buildBlock($xPlacement:int, $yPlacement:int):void
+		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			var s:Sprite = new LargeSquareBlockGraphic();
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);
 			var material :Material = new Material(.1,10,2,10);
-			
 			body = new Body(BodyType.DYNAMIC);
-			body.shapes.add(new Polygon(Polygon.box(_nWidth, _nHeight), material));
+			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);
+			polygon.filter.collisionGroup = $collisionType;
+			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
 
 			body.space = SpaceRef.space;

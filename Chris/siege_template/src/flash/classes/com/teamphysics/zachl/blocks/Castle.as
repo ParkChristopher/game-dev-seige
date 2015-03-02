@@ -48,6 +48,7 @@
 		protected var interactionListener	:InteractionListener;
 		public var kingDiedSignal 			:Signal = new Signal();
 		private var nWidth 					:int = StageRef.stage.stageWidth;
+		private var _nCollisionGroup		:int;
 
 		//Bodies
 		private var body		:Body;
@@ -73,10 +74,12 @@
 			if($Player == "Player1")
 			{
 				placementArray = [50, 100, 150, 200, 125, 200, 50, 125, 200, 50, 125, 75, 75, 175, 175, 300, 300, 300, 300, 300];
+				_nCollisionGroup = 1;
 			}
 			else
 			{
 				placementArray = [nWidth - 50, nWidth - 100, nWidth - 150, nWidth - 200, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 75, nWidth - 75, nWidth - 175, nWidth - 175, nWidth-300, nWidth-300, nWidth-300, nWidth-300, nWidth-300];
+				_nCollisionGroup = 2;
 			}
 			
 			this.buildCastle();
@@ -130,8 +133,8 @@
 					block = new KingBlock();
 					StageRef.stage.addChild(block);
 				}
-
-				block.buildBlock(placementArray[i], h - ((i+1) * 100));
+				
+				block.buildBlock(placementArray[i], h - ((i+1) * 100), _nCollisionGroup);
 								 
 				if (block is KingBlock)
 				{

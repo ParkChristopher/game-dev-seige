@@ -60,7 +60,7 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function buildBlock($xPlacement:int, $yPlacement:int):void
+		public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			
 			var s:Sprite = new TempTexture();
@@ -74,6 +74,11 @@
 
 			body.space = SpaceRef.space;
 						
+		}
+		
+		public function setCollisionType(collisionType:int)
+		{
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */				

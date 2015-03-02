@@ -49,7 +49,7 @@
 			this.stop();
 		}
 		
-		override public function buildBlock($xPlacement:int, $yPlacement:int):void
+		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			var s:Sprite = new KingBlockGraphic();
 			s.width = _nWidth

@@ -16,11 +16,11 @@
 		{
 			super();
 			
-			this._sObjectType = GameObjectType.TYPE_CANNONBALL;
+			/*this._sObjectType = GameObjectType.TYPE_CANNONBALL;
 			this.addCollidableType(GameObjectType.TYPE_SHIELD_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_SPEED_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_BLOCK);
-			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);
+			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);*/
 		}
 		
 		override public function begin():void

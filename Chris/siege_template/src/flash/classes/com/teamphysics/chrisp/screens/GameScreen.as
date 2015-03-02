@@ -167,7 +167,7 @@
 			floorPhysicsBody = new Body(BodyType.STATIC);
 			var p:Polygon = new Polygon ( Polygon.rect(0, stage.stageHeight - 95,
 				stage.stageWidth, 100));
-				
+				p.filter.collisionGroup = 3;
 			floorPhysicsBody.shapes.add(p);
 			space.bodies.add(floorPhysicsBody);
 			floorPhysicsBody.space = space;

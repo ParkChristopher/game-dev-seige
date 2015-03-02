@@ -179,7 +179,18 @@ package com.teamphysics.samg
 				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
 				
 				var material:Material = new Material(0.5);
-				cannonBallPhysicsBody.shapes.add(new Circle(s.width / 2, null, material));
+				var shape:Circle = new Circle(s.width / 2, null, material);
+				if (_bIsLeft)
+				{
+					shape.filter.collisionGroup = 1;//left
+					shape.filter.collisionMask = 2;
+				}
+				else
+				{
+					shape.filter.collisionGroup = 2;//right
+					shape.filter.collisionMask = 1;
+				}
+				cannonBallPhysicsBody.shapes.add(shape);
 				cannonBallPhysicsBody.cbTypes.add(ballCollisionType);
 				SpaceRef.space.bodies.add(cannonBallPhysicsBody);
 			
@@ -190,7 +201,7 @@ package com.teamphysics.samg
 				trace(frontPoint.x + ", " + frontPoint.y);
 				trace(backPoint.x + ", " + backPoint.y);
 				var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
-				var scaler:Number = 15 + (this.mcPowerBar.scaleX * 10) + _nSpeedBonus;
+				var scaler:Number = 7 + (this.mcPowerBar.scaleX * 10) + _nSpeedBonus;
 				trace("scaler: " + scaler);
 				velocityVec = velocityVec.mul(scaler);
 				trace("velocityVec: " + velocityVec.x + ", " + velocityVec.y);
