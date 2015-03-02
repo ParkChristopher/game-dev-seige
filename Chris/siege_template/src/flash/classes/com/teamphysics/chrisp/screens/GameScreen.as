@@ -184,6 +184,8 @@
 			aOnScreenObjects.push(player1Cannon);
 			this.addChildAt(player1Cannon, 1);
 			player1Cannon.setLeftness(true);
+			player1Cannon.bOwnerIsP1 = true;
+			player1Cannon.speedCleanupSignal.add(removeSpeed);
 			player1Cannon.begin();
 			
 			//Cannon 2
@@ -198,13 +200,14 @@
 			aOnScreenObjects.push(player2Cannon);
 			this.addChildAt(player2Cannon, 1);
 			player2Cannon.setLeftness(false);
+			player2Cannon.bOwnerIsP1 = false;
+			player2Cannon.speedCleanupSignal.add(removeSpeed);
 			player2Cannon.begin();
 			
 			//Build Castles
 			buildCastles();
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			//KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
 			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
 				ballCollisionType, king1CollisionType, kingHit);
 			space.listeners.add(interactionListener1);
@@ -226,11 +229,14 @@
 			this.btPause.removeEventListener(MouseEvent.CLICK, pauseClicked);
 			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, addCannonBall);
 			
 			//Stop and remove timers
 			this.powerupTimer.removeEventListener(TimerEvent.TIMER, spawnPowerup);
 			this.powerupTimer.stop();
+			
+			player1Cannon.speedCleanupSignal.remove(removeSpeed);
+			player2Cannon.speedCleanupSignal.remove(removeSpeed);
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -262,9 +268,6 @@
 		{
 			space.step(1 / stage.frameRate);
 			space.bodies.foreach(updateGraphics);
-
-			//this.player1Rotation();
-			//this.player2Rotation();
 			
 		}
 		/* ---------------------------------------------------------------------------------------- */
@@ -332,48 +335,12 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		private function addCannonBall()
+		public function removeSpeed($object:Cannon):void
 		{
-			/*if (bCannonP1IsRotating)
-			{
-				bCannonP1IsRotating = false;
-				player1PowerBar.begin();
-			}
-			else if(!bCannonP1IsRotating && player1PowerBar.bIsMoving)
-			{
-				player1PowerBar.stopMoving();
-				var s:CannonBall = new CannonBall();
-				this.aOnScreenObjects.push(s);
-				
-				CollisionManager.instance.add(s);
-				s.cleanupSignal.add(removeObject);
-				this.addChildAt(s, 1);
-				s.begin();
-				
-				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(player1Cannon.x, player1Cannon.y));
-				var material:Material = new Material(0.5);
-				cannonBallPhysicsBody.shapes.add(new Circle(s.width / 2, null, material));
-				cannonBallPhysicsBody.cbTypes.add(ballCollisionType);
-				space.bodies.add(cannonBallPhysicsBody);
-			
-				cannonBallPhysicsBody.userData.graphic = s;
-				cannonBallPhysicsBody.mass = 1;
-				
-					
-				var velocityVec:Vec2 = new Vec2(player1Cannon.frontPoint.x - player1Cannon.backPoint.x, player1Cannon.frontPoint.y - player1Cannon.backPoint.y);
-				var scaler:Number = (this.player1PowerBar.scaleX * 30) + this.nSpeedMultiplier;
-				velocityVec = velocityVec.mul(scaler);
-				trace(velocityVec.x + ", " + velocityVec.y);
-					
-				cannonBallPhysicsBody.velocity = velocityVec;
-				
-				bCannonP1IsRotating = true;
-				player1PowerBar.end();
-				
-				this.nSpeedMultiplier = 0;
+			if ($object.bOwnerIsP1)
 				this.mcP1SpeedIndicator.visible = false;
-			}*/
-			
+			else
+				this.mcP2SpeedIndicator.visible = false;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -395,11 +362,20 @@
 		{
 			var objectIndex :int = aOnScreenObjects.indexOf($object);
 			
-			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP ||
-				$object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
+			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
 				{
 					SoundManager.instance.playPowerupGet();
 					$object.activate(this);
+					$object.cleanupSignal.remove(removeObject);
+					this.bPowerupActive = false;
+				}
+				
+				
+			if($object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
+				{
+					SoundManager.instance.playPowerupGet();
+					$object.activate(this);
+					this.player1Cannon.setSpeedBonus(10);
 					$object.cleanupSignal.remove(removeObject);
 					this.bPowerupActive = false;
 				}

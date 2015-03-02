@@ -17,6 +17,7 @@
 	import nape.shape.Circle;
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.SoundManager;
+	import org.osflash.signals.Signal;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -49,6 +50,9 @@
 		
 		private var _nSpeedBonus		:Number;
 		private var cannonBallPhysicsBody:Body;
+		
+		public var	speedCleanupSignal	:Signal = new Signal(Cannon);
+		
 		public function Cannon() 
 		{
 			super();
@@ -172,6 +176,9 @@
 				var s:CannonBall = new CannonBall();
 				s.x = this.mcCannonBarrel.x;
 				s.y = this.mcCannonBarrel.y;
+				
+				s.bOwnerIsP1 = this.bOwnerIsP1;
+				
 				_aCannonBalls.push(s);
 				
 				CollisionManager.instance.add(s);
@@ -206,7 +213,7 @@
 				var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
 				var scaler:Number = 5 + (this.mcPowerBar.mcMask.scaleX * 9) + _nSpeedBonus;
 				
-				trace("speed bonus: " + +_nSpeedBonus);
+				trace("speed bonus: " +_nSpeedBonus);
 				velocityVec = velocityVec.mul(scaler);
 					
 				cannonBallPhysicsBody.velocity = velocityVec;
@@ -215,7 +222,7 @@
 				mcPowerBar.end();
 				
 				_nSpeedBonus = 0;
-				//this.mcP1SpeedIndicator.visible = false;
+				this.speedCleanupSignal.dispatch(this);
 			}
 			
 		}

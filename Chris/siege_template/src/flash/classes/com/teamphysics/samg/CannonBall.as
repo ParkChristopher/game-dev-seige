@@ -48,7 +48,7 @@
 			trace($object.objectType);
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
 			{
-				trace("--is a shield");
+				$object.bOwnerIsP1 = this.bOwnerIsP1;
 				
 				$object.end();
 				CollisionManager.instance.remove($object);
@@ -58,7 +58,7 @@
 			
 			if ($object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 			{
-				trace("--is a speed boost");
+				$object.bOwnerIsP1 = this.bOwnerIsP1;
 				
 				$object.end();
 				CollisionManager.instance.remove($object);

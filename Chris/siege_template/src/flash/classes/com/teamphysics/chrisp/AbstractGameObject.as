@@ -24,6 +24,8 @@ package com.teamphysics.chrisp
 		/** Signals for this object to be cleaned up*/
 		public var cleanupSignal		:Signal = new Signal(AbstractGameObject);
 		
+		public var bOwnerIsP1			:Boolean;
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
