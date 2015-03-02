@@ -6,6 +6,10 @@
 	import com.teamphysics.util.CollisionManager;
 	import org.osflash.signals.*;
 	import com.teamphysics.zachl.blocks.BaseBlock;
+	import com.greensock.events.LoaderEvent;
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.XMLLoader;
+	import com.greensock.TweenMax; 
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -79,8 +83,7 @@
 					$object.cleanupSignal.dispatch($object);
 				}
 				CollisionManager.instance.remove(this);
-				this.cleanupSignal.dispatch(this);
-				
+				TweenMax.delayedCall(1.5, this.removeCannonBall);				
 				
 			}
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
@@ -95,6 +98,10 @@
 			}
 		}
 		
+		public function removeCannonBall():void
+		{
+			this.cleanupSignal.dispatch(this);
+		}
 		/* ---------------------------------------------------------------------------------------- */
 		
 	}

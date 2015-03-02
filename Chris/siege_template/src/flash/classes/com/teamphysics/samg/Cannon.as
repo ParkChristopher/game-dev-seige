@@ -48,7 +48,7 @@
 		protected var ballCollisionType		:CbType;
 		
 		private var _nSpeedBonus		:Number;
-		
+		private var cannonBallPhysicsBody:Body;
 		public function Cannon() 
 		{
 			super();
@@ -179,7 +179,7 @@
 				StageRef.stage.addChildAt(s, 1);
 				s.begin();
 		
-				var cannonBallPhysicsBody:Body = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
+				cannonBallPhysicsBody = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
 				
 				var material:Material = new Material(0.5);
 				var shape:Circle = new Circle(s.width / 2, null, material);
@@ -232,6 +232,7 @@
 				trace("Cannon: Removing Object");
 				$object.end();
 				StageRef.stage.removeChild($object);
+				this.cannonBallPhysicsBody.space = null;
 				_aCannonBalls.splice(objectIndex, 1);
 			}
 			
