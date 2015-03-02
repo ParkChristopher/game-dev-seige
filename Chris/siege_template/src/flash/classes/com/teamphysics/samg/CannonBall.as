@@ -27,6 +27,7 @@
 			this.addCollidableType(GameObjectType.TYPE_SHIELD_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_SPEED_POWERUP);
 			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);
+			this.addCollidableType(GameObjectType.TYPE_SHIELD_WALL);
 		}
 		
 		override public function begin():void
@@ -47,6 +48,17 @@
 		override public function collidedWith($object:AbstractGameObject):void
 		{
 			trace($object.objectType);
+			
+			if ($object.objectType == GameObjectType.TYPE_SHIELD_WALL)
+			{
+				//if this wall belongs to owner of cannonball do nothing
+				if ($object.bOwnerIsP1 == this.bOwnerIsP1)
+					return;
+				
+				//removal from collision happens in end for this object
+				$object.end();
+			}
+			
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
 			{
 				$object.bOwnerIsP1 = this.bOwnerIsP1;

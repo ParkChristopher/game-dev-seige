@@ -350,10 +350,10 @@
 			this.player1Castle.end();
 			this.player2Castle.end();
 			
-			if (this.shieldBlockP1 != null)
+			if (this.shieldBlockP1 != null && this.shieldBlockP1.visible == true)
 				this.shieldBlockP1.end();
 				
-			if (this.shieldBlockP2 != null)
+			if (this.shieldBlockP2 != null && this.shieldBlockP2.visible == true)
 				this.shieldBlockP2.end();
 			
 			for (var i:uint = 0; i < aOnScreenObjects.length; i++)

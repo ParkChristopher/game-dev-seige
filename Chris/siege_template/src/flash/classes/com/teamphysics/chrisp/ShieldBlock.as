@@ -7,6 +7,9 @@ package com.teamphysics.chrisp
 	import nape.phys.BodyType;
 	import com.teamphysics.util.SpaceRef;
 	import com.natejc.utils.StageRef;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.CollisionManager;
+	import com.greensock.TweenMax;
 
 	
 	/**
@@ -38,6 +41,10 @@ package com.teamphysics.chrisp
 		
 		protected function init()
 		{
+			this._sObjectType = GameObjectType.TYPE_SHIELD_WALL;
+			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
+			
+			CollisionManager.instance.add(this);
 			
 			this.tempTexture = new TempTexture();
 			this.tempTexture.width = 10;
@@ -84,9 +91,18 @@ package com.teamphysics.chrisp
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-			public function cleanUp() :void
+		public function cleanUp() :void
 		{
+			CollisionManager.instance.remove(this);
 			StageRef.stage.removeChild(this);
+			TweenMax.delayedCall(.5, this.removePhysicsBody);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function removePhysicsBody():void
+		{
+			this.physicsBody.space = null;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

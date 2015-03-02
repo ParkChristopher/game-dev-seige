@@ -14,6 +14,7 @@
 		public static const TYPE_SPEED_POWERUP		:String = "SPEED";
 		public static const TYPE_CANNONBALL			:String = "CANNONBALL";
 		public static const TYPE_KING_BLOCK			:String = "KING";
+		public static const TYPE_SHIELD_WALL		:String = "SHIELD_WALL";
 
 		
 		/* ---------------------------------------------------------------------------------------- */
