@@ -40,17 +40,11 @@ package
 		{
 			KeyboardManager.init(this.stage);
 			StageRef.stage = this.stage;
-			// start your stuff here
+			
 			trace("it's working");
 			
-			this.mcLoadingScreen = new LoadingScreen();
-			this.addChild(this.mcLoadingScreen);
-			this.mcLoadingScreen.begin();
-			TweenMax.delayedCall(5, titleState);
-			//TODO: Load assets here.
 			this.init();
-			
-			//titleState();
+			this.mcLoadingScreen.begin();
 			
 		}
 		
@@ -90,6 +84,10 @@ package
 			this.mcGameScreen.quitClickedSignal.add(titleState);
 			this.mcGameScreen.screenCompleteSignal.add(resultsState);
 			this.addChildAt(mcGameScreen, 1);
+			
+			this.mcLoadingScreen = new LoadingScreen();
+			this.mcLoadingScreen.screenCompleteSignal.add(titleState);
+			this.addChildAt(mcLoadingScreen, 1);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -97,6 +95,9 @@ package
 		protected function titleState():void
 		{
 			trace("Main: Transitioning to Title Screen.");
+			
+			if (this.mcLoadingScreen.bActive)
+				this.mcLoadingScreen.end();
 			
 			if(this.mcGameScreen.bActive)
 				this.mcGameScreen.end();

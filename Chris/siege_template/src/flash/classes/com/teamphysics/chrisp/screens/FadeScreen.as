@@ -41,11 +41,11 @@ package com.teamphysics.chrisp.screens
 		 */
 		override protected function hide():void
 		{
-			TweenMax.fromTo(this, .5, {alpha:1}, {autoAlpha:0, ease:Linear.easeNone});
+			
+			TweenMax.fromTo(this, .5, { alpha:1 }, { autoAlpha:0, ease:Linear.easeNone } );
 			super.hide();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
 	}
 }

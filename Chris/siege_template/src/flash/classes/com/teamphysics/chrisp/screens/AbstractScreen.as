@@ -1,4 +1,5 @@
-package com.teamphysics.chrisp.screens {
+package com.teamphysics.chrisp.screens 
+{
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
