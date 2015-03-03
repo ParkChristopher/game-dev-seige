@@ -108,7 +108,7 @@
 				$object.end();
 				CollisionManager.instance.remove($object);
 				$object.cleanupSignal.dispatch($object);
-				this.cleanupSignal.dispatch(this);
+				
 			}
 		}
 		
