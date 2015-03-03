@@ -48,7 +48,7 @@
 	 * 
 	 * @author Chris Park, Zach Lontz, Sam Gronhovd
 	 */
-	public class GameScreen extends AbstractScreen
+	public class GameScreen extends FadeScreen
 	{
 		//Buttons
 		public var btQuit					:SimpleButton;

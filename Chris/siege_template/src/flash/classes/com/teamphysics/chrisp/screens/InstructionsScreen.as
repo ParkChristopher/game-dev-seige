@@ -10,7 +10,7 @@ package com.teamphysics.chrisp.screens {
 	 * 
 	 * @author Chris Park
 	 */
-	public class InstructionsScreen extends AbstractScreen
+	public class InstructionsScreen extends FadeScreen
 	{
 		//Buttons
 		public var btReturn				:SimpleButton;

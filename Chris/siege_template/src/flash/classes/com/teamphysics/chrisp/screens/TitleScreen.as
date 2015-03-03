@@ -11,7 +11,7 @@ package com.teamphysics.chrisp.screens {
 	 * 
 	 * @author Chris Park
 	 */
-	public class TitleScreen extends AbstractScreen
+	public class TitleScreen extends FadeScreen
 	{
 		
 		//Buttons

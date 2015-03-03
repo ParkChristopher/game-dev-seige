@@ -9,7 +9,7 @@ package com.teamphysics.chrisp.screens {
 	 * 
 	 * @author Chris Park
 	 */
-	public class CastleSelectScreen extends AbstractScreen
+	public class CastleSelectScreen extends FadeScreen
 	{
 		//Buttons
 		public var btCastleOneP1			:SimpleButton;
