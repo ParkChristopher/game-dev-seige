@@ -59,7 +59,7 @@
 		public function Castle()
 		{
 			super();
-			this.castle = String("lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb sssb sssb sssb sssb ssb");
+			this.castle = String("lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb");
 			blockArray = this.castle.split(" ");			
 			parseXML();
 			this.stop();
@@ -73,12 +73,12 @@
 			this.aOnScreenObjects = new Array();
 			if($Player == "Player1")
 			{
-				placementArray = [50, 100, 150, 200, 125, 200, 50, 125, 200, 50, 125, 75, 75, 175, 175, 300, 300, 300, 300, 300];
+				placementArray = [50, 100, 150, 200, 125, 200, 50, 125, 200, 50, 125, 75, 75, 175, 175];
 				_nCollisionGroup = 1;
 			}
 			else
 			{
-				placementArray = [nWidth - 50, nWidth - 100, nWidth - 150, nWidth - 200, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 75, nWidth - 75, nWidth - 175, nWidth - 175, nWidth-300, nWidth-300, nWidth-300, nWidth-300, nWidth-300];
+				placementArray = [nWidth - 50, nWidth - 100, nWidth - 150, nWidth - 200, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 75, nWidth - 75, nWidth - 175, nWidth - 175];
 				_nCollisionGroup = 2;
 			}
 			
