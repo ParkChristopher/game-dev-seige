@@ -4,6 +4,7 @@ package
 	import com.teamphysics.chrisp.screens.CreditsScreen;
 	import com.teamphysics.chrisp.screens.GameScreen;
 	import com.teamphysics.chrisp.screens.InstructionsScreen;
+	import com.teamphysics.chrisp.screens.LoadingScreen;
 	import com.teamphysics.chrisp.screens.ResultsScreen;
 	import com.teamphysics.chrisp.screens.TitleScreen;
 	import com.natejc.input.KeyboardManager;
@@ -12,6 +13,7 @@ package
 	import flash.events.Event;
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.SoundManager;
+	import com.greensock.TweenMax;
 	
 	
 	/**
@@ -28,7 +30,7 @@ package
 		public var mcResultsScreen			:MovieClip;
 		public var mcCreditsScreen			:MovieClip;
 		public var mcGameScreen				:MovieClip;
-		
+		public var mcLoadingScreen			:MovieClip;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -41,10 +43,14 @@ package
 			// start your stuff here
 			trace("it's working");
 			
+			this.mcLoadingScreen = new LoadingScreen();
+			this.addChild(this.mcLoadingScreen);
+			this.mcLoadingScreen.begin();
+			TweenMax.delayedCall(5, titleState);
 			//TODO: Load assets here.
 			this.init();
 			
-			titleState();
+			//titleState();
 			
 		}
 		
