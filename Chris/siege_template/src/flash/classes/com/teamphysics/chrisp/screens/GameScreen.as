@@ -164,7 +164,6 @@
 			
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
-			
 			//Create the space
 			space = new Space(new Vec2(0, 500));
 			
@@ -189,6 +188,7 @@
 			player1Cannon.setLeftness(true);
 			player1Cannon.bOwnerIsP1 = true;
 			player1Cannon.speedCleanupSignal.add(removeSpeed);
+			player1Cannon.endGameSignal.add(kingHit)
 			player1Cannon.begin();
 			
 			//Cannon 2
@@ -201,6 +201,7 @@
 			player2Cannon.setLeftness(false);
 			player2Cannon.bOwnerIsP1 = false;
 			player2Cannon.speedCleanupSignal.add(removeSpeed);
+			player2Cannon.endGameSignal.add(kingHit);
 			player2Cannon.begin();
 			
 			//Build Castles
@@ -250,13 +251,9 @@
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function kingHit(ev: InteractionCallback):void
+		public function kingHit():void
 		{
-			trace("King collision detected");
 			this.screenCompleteSignal.dispatch();
-			this.player1Castle.end();
-			this.player2Castle.end();
-			
 			this.space.clear();
 			this.cleanScreen();
 			

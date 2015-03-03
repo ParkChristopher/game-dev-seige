@@ -52,6 +52,9 @@
 		private var cannonBallPhysicsBody:Body;
 		
 		public var	speedCleanupSignal	:Signal = new Signal(Cannon);
+		public var	endGameSignal	:Signal = new Signal();
+
+		public var s:CannonBall;
 		
 		public function Cannon() 
 		{
@@ -107,6 +110,13 @@
 				KeyboardManager.instance.addKeyDownListener(KeyCode.L, addCannonBall);
 			}
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		public function kingKilled():void
+		{
+			trace("King was killed");
+			this.endGameSignal.dispatch();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -173,7 +183,8 @@
 				SoundManager.instance.playCannonFire();
 				
 				mcPowerBar.stopMoving();
-				var s:CannonBall = new CannonBall();
+				s = new CannonBall();
+				s.gameOverSignal.add(kingKilled);
 				s.x = this.mcCannonBarrel.x;
 				s.y = this.mcCannonBarrel.y;
 				
