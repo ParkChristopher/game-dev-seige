@@ -235,7 +235,16 @@
 			this.powerupTimer.stop();
 			
 			player1Cannon.speedCleanupSignal.remove(removeSpeed);
+			//player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
 			player2Cannon.speedCleanupSignal.remove(removeSpeed);
+			//player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function resetCastleBlocksHit($playerNum:Number)
+		{
 			
 		}
 		

@@ -25,6 +25,9 @@
 		protected var _nHeight		:int;
 		protected var _nWidth		:int;
 		protected var tempSprite	:Sprite;
+		
+		public var bHasBeenCollidedWith	:Boolean;
+		
 		//Bodies
 		private var body		:Body = new Body(BodyType.DYNAMIC);
 		/* ---------------------------------------------------------------------------------------- */				

@@ -150,12 +150,24 @@
 
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function allowRotation():void
 		{
 			trace("Inside allowRotation");
 			for(var i :uint = 0; i < SpaceRef.space.bodies.length; i++)
 			{
 				SpaceRef.space.bodies.at(i).allowRotation = true;
+			}
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function resetBlocks()
+		{
+			for (var i:uint; i < blockArray.length; i++)
+			{
+				blockArray[i].hasBeenCollidedWith = false;
 			}
 		}
 		

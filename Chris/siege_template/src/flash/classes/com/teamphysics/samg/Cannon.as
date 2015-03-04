@@ -17,6 +17,7 @@
 	import nape.shape.Circle;
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.SoundManager;
+	import org.osflash.signals.natives.base.SignalBitmap;
 	import org.osflash.signals.Signal;
 	/**
 	 * ...
@@ -53,6 +54,7 @@
 		
 		public var	speedCleanupSignal	:Signal = new Signal(Cannon);
 		public var	endGameSignal	:Signal = new Signal();
+		public var 	cannonFireSignal	:Signal = new Signal();
 
 		public var s:CannonBall;
 		
@@ -172,7 +174,7 @@
 		}
 		
 		private function addCannonBall()
-		{
+		{			
 			if (_bIsRotating)
 			{
 				_bIsRotating = false;
@@ -181,6 +183,14 @@
 			else if(!_bIsRotating && mcPowerBar.bIsMoving)
 			{
 				SoundManager.instance.playCannonFire();
+				if (_bIsLeft)
+				{
+					cannonFireSignal.dispatch(1);
+				}
+				else
+				{
+					cannonFireSignal.dispatch(2);
+				}
 				
 				mcPowerBar.stopMoving();
 				s = new CannonBall();
@@ -196,27 +206,6 @@
 				s.cleanupSignal.add(removeObject);
 				StageRef.stage.addChildAt(s, 1);
 				s.begin();
-		
-				cannonBallPhysicsBody = new Body(BodyType.DYNAMIC, new Vec2(this.x, this.y));
-				
-				var material:Material = new Material(0.5, 1, 1, 5);
-				var shape:Circle = new Circle(s.width / 2, null, material);
-				if (_bIsLeft)
-				{
-					shape.filter.collisionGroup = 1;//left
-					shape.filter.collisionMask = 2;
-				}
-				else
-				{
-					shape.filter.collisionGroup = 2;//right
-					shape.filter.collisionMask = 1;
-				}
-				cannonBallPhysicsBody.shapes.add(shape);
-				cannonBallPhysicsBody.cbTypes.add(ballCollisionType);
-				SpaceRef.space.bodies.add(cannonBallPhysicsBody);
-			
-				cannonBallPhysicsBody.userData.graphic = s;
-				cannonBallPhysicsBody.mass = 1;
 				
 				trace("Left?: " + _bIsLeft);
 				trace(frontPoint.x + ", " + frontPoint.y);
@@ -226,8 +215,18 @@
 				
 				trace("speed bonus: " +_nSpeedBonus);
 				velocityVec = velocityVec.mul(scaler);
+				
+				s.setCbType(ballCollisionType);
+				if (_bIsLeft)
+				{
+					s.buildBall(this.x, this.y,  1);
+				}
+				else 
+				{
+					s.buildBall(this.x, this.y, 2);
+				}
+				s.setVelocity(velocityVec);
 					
-				cannonBallPhysicsBody.velocity = velocityVec;
 				
 				_bIsRotating = true;
 				mcPowerBar.end();
@@ -250,7 +249,6 @@
 				trace("Cannon: Removing Object");
 				$object.end();
 				StageRef.stage.removeChild($object);
-				this.cannonBallPhysicsBody.space = null;
 				_aCannonBalls.splice(objectIndex, 1);
 			}
 			
@@ -260,11 +258,13 @@
 		
 		public function rotate($angle:Number)
 		{
+			var sin:Number;
+			var cos:Number;
 			if (_bIsLeft)
 			{
 				this.mcCannonBarrel.rotation = $angle;
-				var cos:Number = Math.cos($angle * (Math.PI / 180));
-				var sin:Number = Math.sin($angle * (Math.PI / 180));
+				cos = Math.cos($angle * (Math.PI / 180));
+				sin = Math.sin($angle * (Math.PI / 180));
 				frontPoint.x = cos * (_length * .5);
 				frontPoint.y = sin * (_length * .5);
 				backPoint.x = -cos * (_length * .5);
@@ -273,8 +273,8 @@
 			else 
 			{
 				this.mcCannonBarrel.rotation = $angle;
-				var cos:Number = Math.cos($angle * (Math.PI / 180));
-				var sin:Number = Math.sin($angle * (Math.PI / 180));
+				cos = Math.cos($angle * (Math.PI / 180));
+				sin = Math.sin($angle * (Math.PI / 180));
 				frontPoint.x = -cos * (_length * .5);
 				frontPoint.y = sin * (_length * .5);
 				backPoint.x = cos * (_length * .5);
