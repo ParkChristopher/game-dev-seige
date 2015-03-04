@@ -95,6 +95,7 @@ package com.teamphysics.chrisp
 		{
 			CollisionManager.instance.remove(this);
 			StageRef.stage.removeChild(this);
+			this.physicsBody.space = null;
 			TweenMax.delayedCall(.5, this.removePhysicsBody);
 		}
 		

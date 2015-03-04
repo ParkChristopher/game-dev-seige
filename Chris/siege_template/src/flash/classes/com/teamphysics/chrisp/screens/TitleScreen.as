@@ -49,13 +49,21 @@ package com.teamphysics.chrisp.screens {
 			this.btCredits.addEventListener(MouseEvent.CLICK, creditsClicked);
 			this.btInstructions.addEventListener(MouseEvent.CLICK, instructionsClicked);
 			
-			TweenMax.from(this.mcLogo, 1.5, { y: 0, ease:Bounce.easeOut } );
-			TweenMax.from(this.btPlay, .3, { y: 700, delay: 1, ease:Quad.easeOut } );
-			TweenMax.from(this.btCredits, .3, { x: 1100, delay: .8, ease:Quad.easeOut } );
-			TweenMax.from(this.btInstructions, .3, { x: -200, delay: .8, ease:Quad.easeOut } );
+			this.activateTweens();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function activateTweens():void
+		{
+			TweenMax.from(this.mcLogo, 1.5, { y: 0, ease:Bounce.easeOut } );
+			TweenMax.from(this.btPlay, .3, { y: 700, delay: 1, ease:Quad.easeOut } );
+			TweenMax.from(this.btCredits, .3, { x: 1100, delay: .8, ease:Quad.easeOut } );
+			TweenMax.from(this.btInstructions, .3, { x: -200, delay: .8, ease:Quad.easeOut } );	
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		
 		override public function end():void
 		{

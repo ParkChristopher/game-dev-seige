@@ -3,6 +3,8 @@ package com.teamphysics.chrisp.screens {
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
+	import com.greensock.TweenMax;
+	import com.greensock.easing.*;
 	
 	/**
 	 * Castle select screen
@@ -81,6 +83,32 @@ package com.teamphysics.chrisp.screens {
 			this.btBack.addEventListener(MouseEvent.CLICK, backClicked);
 			this.btContinue.addEventListener(MouseEvent.CLICK, continueClicked);
 			
+			this.activateTweens();
+			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function activateTweens():void
+		{
+			TweenMax.from(this.btCastleOneP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleTwoP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleThreeP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleFourP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleFiveP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleSixP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btRandomP1, 1, { x: 1100, ease:Quad.easeOut } );
+			
+			TweenMax.from(this.btCastleOneP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleTwoP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleThreeP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleFourP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleFiveP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btCastleSixP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btRandomP2, 1, { x: 1100, ease:Quad.easeOut } );
+			
+			TweenMax.from(this.btBack, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.btContinue, 1, { x: 1100, ease:Quad.easeOut } );
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
