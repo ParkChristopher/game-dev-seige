@@ -58,6 +58,7 @@
 		{
 			physicsBody = null;
 			this.visible = false;
+			CollisionManager.instance.remove(this);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -143,29 +144,32 @@
 			if ($object.objectType == GameObjectType.TYPE_BLOCK)
 			{
 				
-				trace("block was hit");
+				//trace("block was hit");
 				
 				var block : BaseBlock = BaseBlock($object);
 				
-				
-				trace("ball velocity: " + physicsBody.velocity.length);
-				if (physicsBody.velocity.length > 350)
+				if (!block.bHasBeenCollidedWith)
 				{
-					trace(block.health);
-					block.health--;
-					trace(block.health);
-				}
+					trace("ball velocity: " + physicsBody.velocity.length);
+					if (physicsBody.velocity.length > 350)
+					{
+						trace(block.health);
+						block.health--;
+						trace(block.health);
+					}
 				
-				if(block.health == 0)
-				{
-					block.end();
-					CollisionManager.instance.remove($object);
-					$object.cleanupSignal.dispatch($object);
-				}
-				CollisionManager.instance.remove(this);
-				TweenMax.delayedCall(1.5, this.removeCannonBall);	
+					if(block.health == 0)
+					{
+						block.end();
+						CollisionManager.instance.remove($object);
+						$object.cleanupSignal.dispatch($object);
+					}
+					//CollisionManager.instance.remove(this);
+						
 				
-				block.bHasBeenCollidedWith = true;
+					block.bHasBeenCollidedWith = true;
+				}
+				TweenMax.delayedCall(1.5, this.removeCannonBall);
 				
 			}
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)

@@ -1,5 +1,7 @@
 ﻿package com.teamphysics.samg 
 {
+	import com.greensock.easing.Elastic;
+	import com.greensock.TweenMax;
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
 	import com.natejc.utils.StageRef;
@@ -233,8 +235,29 @@
 				
 				_nSpeedBonus = 0;
 				this.speedCleanupSignal.dispatch(this);
+				
+				justFired();
 			}
 			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		private function justFired()
+		{
+			_bIsRotating = false;
+			
+			TweenMax.to(this.mcCannonBarrel, 2, { rotation:0, ease:Elastic.easeOut, onComplete:backToZero } );
+			//not sure why this isn't working...
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		private function backToZero()
+		{
+			_nRotationAmount = 0;
+			//_bIsRotatingUp = true; //?
+			_bIsRotating = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
