@@ -43,7 +43,8 @@ package com.teamphysics.chrisp.screens
 		{
 			
 			TweenMax.fromTo(this, .5, { alpha:1 }, { autoAlpha:0, ease:Linear.easeNone } );
-			super.hide();
+			//Commenting this out smoothed out transitions
+			//super.hide();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
