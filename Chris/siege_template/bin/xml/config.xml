@@ -1,0 +1,8 @@
+﻿<config>
+	<gameObjects>
+		<Castle1>
+			<blocks>lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb</blocks>
+			<p1coords>50 100 150 200 125 200 50 125 200 50 125 75 75 175 175</p1coords>
+		</Castle1>
+	</gameObjects>
+</config>

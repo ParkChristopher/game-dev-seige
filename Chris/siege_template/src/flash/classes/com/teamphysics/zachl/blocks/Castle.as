@@ -39,7 +39,7 @@
 	public class Castle extends MovieClip
 	{
 		
-		private var castle					:String;
+		private var castle					:String = " ";
 		private var placementArray			:Array;
 		private var aOnScreenObjects		:Array;
 		private var blockArray				:Array;
@@ -49,7 +49,7 @@
 		public var kingDiedSignal 			:Signal = new Signal();
 		private var nWidth 					:int = StageRef.stage.stageWidth;
 		private var _nCollisionGroup		:int;
-
+		private var castleNumber			:int;
 		//Bodies
 		private var body		:Body;
 		/* ---------------------------------------------------------------------------------------- */				
@@ -59,19 +59,20 @@
 		public function Castle()
 		{
 			super();
-			this.castle = String("lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb");
-			blockArray = this.castle.split(" ");			
-			parseXML();
+			//this.castle = String("lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb");
+			//blockArray = this.castle.split(" ");			
 			this.stop();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		public function begin($Player:String, $CastleNumber: int) :void
+		public function begin($player:String, $castleNumber: int) :void
 		{
 			this.play();
+			parseXML();
+			this.castleNumber = $castleNumber
 			this.visible = true;
 			this.aOnScreenObjects = new Array();
-			if($Player == "Player1")
+			if($player == "Player1")
 			{
 				placementArray = [50, 100, 150, 200, 125, 200, 50, 125, 200, 50, 125, 75, 75, 175, 175];
 				_nCollisionGroup = 1;
@@ -183,10 +184,15 @@
 		/**
 		 * Loads the parameters from the XML file to the local variables in this class
 		 */
-		protected static function parseXML():void
+		protected function parseXML():void
 		{
-			//var xConfig:XML = LoaderMax.getContent("config.xml");
-			//_increaseValue = int(xConfig.gameObjects.scoringIncrease);
+			var xConfig:XML = LoaderMax.getContent("config.xml");
+			this.castle = String(xConfig.gameObjects.Castle1.blocks);
+			blockArray = this.castle.split(" ");
+			if(true)
+			{
+				
+			}
 		}
 		
 		public function get kingHitBox():CbType
