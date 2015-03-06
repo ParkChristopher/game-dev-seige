@@ -1,4 +1,4 @@
-package com.teamphysics.chrisp.screens {
+﻿package com.teamphysics.chrisp.screens {
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
@@ -39,8 +39,8 @@ package com.teamphysics.chrisp.screens {
 		public var continueClickedSignal	:Signal = new Signal();
 		
 		//Castle Selections
-		public var iPlayerOneCastleNumber	:int;
-		public var iPlayerTwoCastleNumber	:int;
+		public var iPlayerOneCastleNumber	:int = 0;
+		public var iPlayerTwoCastleNumber	:int = 0;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -169,7 +169,7 @@ package com.teamphysics.chrisp.screens {
 			if ($e.target == btRandomP1)
 				iPlayerOneCastleNumber = 1 + Math.random() * 5;
 			
-			trace("Castle Select: P1 castle selected.");
+			trace("Castle Select: P1 castle selected." + iPlayerOneCastleNumber);
 			//TODO: Add display update for players current choice
 		}
 		
@@ -201,10 +201,20 @@ package com.teamphysics.chrisp.screens {
 			if ($e.target == btRandomP2)
 				iPlayerTwoCastleNumber = 1 + Math.random() * 5;
 			
-			trace("Castle Select: P2 castle selected.");
+			trace("Castle Select: P2 castle selected." + iPlayerTwoCastleNumber);
 			//TODO: Add display update for players current choice
 		}
+
+
+		public function get p1CastleNumber(): int
+		{
+			return  iPlayerOneCastleNumber;
+		}
 		
+		public function get p2CastleNumber(): int
+		{
+			return  iPlayerTwoCastleNumber;
+		}
 		/* ---------------------------------------------------------------------------------------- */
 		
 		protected function backClicked($e:MouseEvent):void

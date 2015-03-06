@@ -9,6 +9,7 @@
 	import com.teamphysics.chrisp.powerups.SpeedPowerup;
 	import com.teamphysics.chrisp.screens.AbstractScreen;
 	import com.teamphysics.chrisp.ShieldBlock;
+	import com.teamphysics.chrisp.screens.CastleSelectScreen;
 	import com.teamphysics.samg.Cannon;
 	import com.teamphysics.samg.CannonBall;
 	import com.teamphysics.samg.PowerBar;
@@ -88,8 +89,10 @@
 		public var player2PowerBar			:PowerBar;
 		
 		//Castles
-		public var player1Castle: Castle = new Castle();
-		public var player2Castle: Castle = new Castle();
+		public var player1Castle			: Castle = new Castle();
+		public var player2Castle			: Castle = new Castle();
+		public var p1CastleChoice			:int = 0;
+		public var p2CastleChoice			:int = 0;
 		
 		//Powerup 
 		public var mcP1SpeedIndicator		:MovieClip;
@@ -132,14 +135,13 @@
 			bCannonP2IsRotating = true;
 		}
 		
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function begin():void
 		{
 			super.begin();
-			
 			SoundManager.instance.playGameMusic();
-			
 			CollisionManager.instance.reset();
 			CollisionManager.instance.begin();
 			
@@ -253,13 +255,21 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------------------- */
+		public function getCastleSelection($p1CastleChoice:int, $p2CastleChoice)
+		{
+			p1CastleChoice = $p1CastleChoice;
+			p2CastleChoice = $p2CastleChoice;
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		private function buildCastles()
 		{
-			player1Castle.begin("Player1");
+			player1Castle.begin("Player1", this.p1CastleChoice);
 			this.king1CollisionType = player1Castle.kingHitBox;
 
-			player2Castle.begin("Player2");
+			player2Castle.begin("Player2", this.p2CastleChoice);
 			this.king2CollisionType = player2Castle.kingHitBox;
 		}
 		/* ---------------------------------------------------------------------------------------- */

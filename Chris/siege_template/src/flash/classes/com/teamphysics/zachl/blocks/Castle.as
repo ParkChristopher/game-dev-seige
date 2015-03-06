@@ -66,7 +66,7 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		public function begin($Player:String) :void
+		public function begin($Player:String, $CastleNumber: int) :void
 		{
 			this.play();
 			this.visible = true;

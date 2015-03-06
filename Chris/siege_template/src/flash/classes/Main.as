@@ -1,4 +1,4 @@
-package 
+﻿package 
 {
 	import com.teamphysics.chrisp.screens.CastleSelectScreen;
 	import com.teamphysics.chrisp.screens.CreditsScreen;
@@ -183,7 +183,7 @@ package
 		{
 			trace("Main: Transitioning to Game Screen.");
 			mcCastleSelectScreen.end();
-			
+			this.mcGameScreen.getCastleSelection(mcCastleSelectScreen.p1CastleNumber, mcCastleSelectScreen.p2CastleNumber);
 			this.mcGameScreen.begin();
 			trace("Main: Game Screen Transition Complete.");
 		}
