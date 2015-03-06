@@ -99,6 +99,8 @@
 		
 		public var shieldBlockP1			:ShieldBlock;
 		public var shieldBlockP2			:ShieldBlock;
+		public var mcP1Shield				:MovieClip;
+		public var mcP2Shield				:MovieClip;
 		
 		//Physics Parts
 		public var debug					:Debug;
@@ -142,6 +144,8 @@
 			CollisionManager.instance.begin();
 			
 			//Turn off indicators until a powerup is acquired.
+			this.mcP1Shield.visible = false;
+			this.mcP2Shield.visible = false;
 			this.mcP1ShieldIndicator.visible = false;
 			this.mcP1SpeedIndicator.visible = false;
 			this.mcP2ShieldIndicator.visible = false;
@@ -348,6 +352,23 @@
 				this.mcP2SpeedIndicator.visible = false;
 		}
 		
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function removeShield($player:Boolean):void
+		{
+			if ($player == true)
+			{
+				this.mcP1Shield.visible = false;
+				shieldBlockP1.removeShieldSignal.remove(removeShield);
+			}
+			else
+			{
+				this.mcP2Shield.visible = false;
+				shieldBlockP2.removeShieldSignal.remove(removeShield);
+			}
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		//Removes all movieclips on screen end
@@ -381,6 +402,7 @@
 					
 					this.createShield($object.bOwnerIsP1);
 					$object.cleanupSignal.remove(removeObject);
+						
 					this.bPowerupActive = false;
 				}
 				
@@ -417,9 +439,17 @@
 			shield = new ShieldBlock($isPlayerOne);
 			
 			if ($isPlayerOne)
+			{
 				shieldBlockP1 = shield;
+				this.mcP1Shield.visible = true;
+				shieldBlockP1.removeShieldSignal.add(removeShield);
+			}
 			else
+			{
 				shieldBlockP2 = shield;
+				this.mcP2Shield.visible = true;
+				shieldBlockP2.removeShieldSignal.add(removeShield);
+			}
 			
 			StageRef.stage.addChild(shield);
 			

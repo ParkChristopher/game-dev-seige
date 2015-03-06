@@ -10,6 +10,7 @@ package com.teamphysics.chrisp
 	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.util.CollisionManager;
 	import com.greensock.TweenMax;
+	import org.osflash.signals.Signal;
 
 	
 	/**
@@ -23,6 +24,8 @@ package com.teamphysics.chrisp
 		protected var physicsBody		:Body;
 		protected var poly				:Polygon;
 		protected var tempTexture		:Sprite;
+		
+		public var removeShieldSignal	:Signal = new Signal(Boolean);
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -97,6 +100,8 @@ package com.teamphysics.chrisp
 			StageRef.stage.removeChild(this);
 			this.physicsBody.space = null;
 			TweenMax.delayedCall(.5, this.removePhysicsBody);
+			
+			this.removeShieldSignal.dispatch(bOwnerIsP1);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
