@@ -4,6 +4,8 @@ package com.teamphysics.chrisp.screens {
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
+	import com.greensock.TweenMax;
+	import com.greensock.easing.*;
 	
 	/**
 	 * Results Screen
@@ -43,6 +45,16 @@ package com.teamphysics.chrisp.screens {
 			this.btResultsToTitle.addEventListener(MouseEvent.CLICK, toTitleClicked);
 			this.btResultsCredits.addEventListener(MouseEvent.CLICK, creditsClicked);
 			
+			this.activateTweens();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function activateTweens():void
+		{
+			TweenMax.from(this.btResultsToTitle, 1.5, { y: 0, ease:Bounce.easeOut } );
+			TweenMax.from(this.btResultsPlayAgain, 1.5, { y: 0, delay: .5, ease:Bounce.easeOut } );
+			TweenMax.from(this.btResultsCredits, 1.5, { y: 0, delay: .5, ease:Bounce.easeOut } );
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
