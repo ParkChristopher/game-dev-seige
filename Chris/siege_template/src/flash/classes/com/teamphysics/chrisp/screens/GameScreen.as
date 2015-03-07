@@ -469,6 +469,7 @@
 				shieldBlockP2.removeShieldSignal.add(removeShield);
 			}
 			
+			SoundManager.instance.playShieldActivate();
 			StageRef.stage.addChild(shield);
 			
 		}

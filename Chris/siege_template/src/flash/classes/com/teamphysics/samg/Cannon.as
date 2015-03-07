@@ -222,7 +222,7 @@
 				
 				_bIsRotating = true;
 				mcPowerBar.end();
-				
+					
 				_nSpeedBonus = 0;
 				this.speedCleanupSignal.dispatch(this);
 				
@@ -248,6 +248,7 @@
 			_nRotationAmount = 0;
 			//_bIsRotatingUp = true; //?
 			_bIsRotating = true;
+			SoundManager.instance.playLock();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

@@ -1,6 +1,8 @@
 package com.teamphysics.util
 {
 	
+	//TO ADD: Ground Hit
+	//
 	import treefortress.sound.SoundAS;
 	
 	/**
@@ -14,9 +16,23 @@ package com.teamphysics.util
 		public static var SOUND_BUTTON_CLICK:String = "ButtonClick";
 		public static var SOUND_CANNON_FIRE:String = "CannonFire";
 		public static var SOUND_POWERUP_GET:String = "PowerupGet";
+		public static var SOUND_GET_POINT:String = "GetPoint";
+		public static var SOUND_GROUND_HIT:String = "GroundHit";
+		public static var SOUND_HIT_BLOCK:String = "HitBlock";
+		public static var SOUND_ITEM_SELECT:String = "ItemSelect";
+		public static var SOUND_KING_DIED:String = "KingDied";
+		public static var SOUND_CANNON_LOCK:String = "Lock";
+		public static var SOUND_GAME_PAUSE:String = "Pause";
+		public static var SOUND_CANNON_ROTATION:String = "Rotation";
+		public static var SOUND_SHIELD_ACTIVATE:String = "ShieldActivate";
+		public static var SOUND_SHIELD_DOWN:String = "ShieldDown";
+		public static var SOUND_SPEED_UP:String = "VelocityUp";
+		public static var SOUND_VICTORY:String = "Victory";
+		
 		public static var MUSIC_TITLE_SCREEN:String = "TitleScreenLoop";
 		public static var MUSIC_RESULTS_SCREEN:String = "ResultsScreenLoop";
 		public static var MUSIC_GAME_SCREEN:String = "GameScreenLoop";
+		
 		
 		public static var SE_VOLUME:Number = 1;
 		
@@ -43,7 +59,76 @@ package com.teamphysics.util
 			SoundAS.loadSound("../src/audio/PowerupGet.mp3" ,SOUND_POWERUP_GET);
 			SoundAS.loadSound("../src/audio/TitleScreenLoop.mp3" ,MUSIC_TITLE_SCREEN);
 			SoundAS.loadSound("../src/audio/ResultsScreenLoop.mp3" ,MUSIC_RESULTS_SCREEN);
-			SoundAS.loadSound("../src/audio/KirbYourEnthusiasm.mp3" ,MUSIC_GAME_SCREEN);
+			SoundAS.loadSound("../src/audio/KirbYourEnthusiasm.mp3" , MUSIC_GAME_SCREEN);
+			SoundAS.loadSound("../src/audio/GetPoint.mp3", SOUND_GET_POINT);
+			SoundAS.loadSound("../src/audio/GroundHit.mp3", SOUND_GROUND_HIT);
+			SoundAS.loadSound("../src/audio/HitBlock.mp3", SOUND_HIT_BLOCK);
+			SoundAS.loadSound("../src/audio/ItemSelect.mp3", SOUND_ITEM_SELECT);
+			SoundAS.loadSound("../src/audio/KingDied.mp3", SOUND_KING_DIED);
+			SoundAS.loadSound("../src/audio/Lock.mp3", SOUND_CANNON_LOCK);
+			SoundAS.loadSound("../src/audio/Pause.mp3", SOUND_GAME_PAUSE);
+			SoundAS.loadSound("../src/audio/Rotation.mp3", SOUND_CANNON_ROTATION );
+			SoundAS.loadSound("../src/audio/ShieldActivate.mp3", SOUND_SHIELD_ACTIVATE);
+			SoundAS.loadSound("../src/audio/ShieldDown.mp3", SOUND_SHIELD_DOWN);
+			SoundAS.loadSound("../src/audio/VelocityUp.mp3", SOUND_SPEED_UP);
+			SoundAS.loadSound("../src/audio/Victory.mp3", SOUND_VICTORY);
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playSpeedUp():void
+		{
+			SoundAS.playFx(SOUND_SPEED_UP, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playLock():void
+		{
+			SoundAS.playFx(SOUND_CANNON_LOCK, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playResultsMusic():void
+		{
+			SoundAS.fadeFrom(MUSIC_RESULTS_SCREEN, 0, .2);
+			SoundAS.playLoop(MUSIC_RESULTS_SCREEN, .2);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playVictory():void
+		{
+			SoundAS.stopAll();
+			SoundAS.playFx(SOUND_VICTORY, .1);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playKingDied():void
+		{
+			SoundAS.playFx(SOUND_KING_DIED, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playBlockHit():void
+		{
+			SoundAS.playFx(SOUND_HIT_BLOCK, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playShieldDown():void
+		{
+			SoundAS.playFx(SOUND_SHIELD_DOWN, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playShieldActivate():void
+		{
+			SoundAS.playFx(SOUND_SHIELD_ACTIVATE, .5);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -63,7 +148,7 @@ package com.teamphysics.util
 		
 		public function playPowerupGet():void
 		{
-			SoundAS.playFx(SOUND_POWERUP_GET, .5);
+			SoundAS.playFx(SOUND_POWERUP_GET, .2);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

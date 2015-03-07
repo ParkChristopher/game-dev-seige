@@ -19,7 +19,8 @@
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.XMLLoader;
-	import com.greensock.TweenMax; 
+	import com.greensock.TweenMax;
+	import com.teamphysics.util.SoundManager;
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -37,6 +38,10 @@
 		private var 	ballCollisionType			:CbType;
 		
 		private var 		tMaxLifeSpanTimer			:Timer = new Timer(10000);
+		
+		private var		hitTimerReset				:Timer = new Timer(5000);
+		
+		private var 	isSoundReset				:Boolean;
 		
 		public function CannonBall() 
 		{
@@ -56,6 +61,9 @@
 			super.begin();
 			tMaxLifeSpanTimer.addEventListener(TimerEvent.TIMER, this.removeCannonBall);
 			tMaxLifeSpanTimer.start();
+			this.hitTimerReset.addEventListener(TimerEvent.TIMER, this.resetTimer);
+			this.hitTimerReset.start();
+			this.isSoundReset = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -63,6 +71,8 @@
 		override public function end():void
 		{
 			tMaxLifeSpanTimer.stop();
+			this.hitTimerReset.stop();
+			this.isSoundReset = false;
 			physicsBody = null;
 			this.visible = false;
 			CollisionManager.instance.remove(this);
@@ -128,6 +138,7 @@
 				
 				//removal from collision happens in end for this object
 				$object.end();
+				SoundManager.instance.playShieldDown();
 			}
 			
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
@@ -152,10 +163,13 @@
 			
 			if ($object.objectType == GameObjectType.TYPE_BLOCK)
 			{
-				
-				//trace("block was hit");
-				
 				var block : BaseBlock = BaseBlock($object);
+				
+				if (isSoundReset)
+				{
+					SoundManager.instance.playBlockHit();
+					this.isSoundReset = false;
+				}
 				
 				if (!block.bHasBeenCollidedWith)
 				{
@@ -198,15 +212,16 @@
 			}
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
 			{
+				
 				//trace("king is player1?: " + $object.bOwnerIsP1);
 					//trace("ball is player1: " + this.bOwnerIsP1);
 					//trace(!$object.bOwnerIsP1 && !this.bOwnerIsP1);
 					//trace(($object.bOwnerIsP1 && this.bOwnerIsP1) || (!$object.bOwnerIsP1 && !this.bOwnerIsP1));
 				if (($object.bOwnerIsP1 && !this.bOwnerIsP1) || (!$object.bOwnerIsP1 && this.bOwnerIsP1))
 				{
-					
+					SoundManager.instance.playKingDied();
 					//trace("KING WAS HIT");
-					this.gameOverSignal.dispatch();
+					TweenMax.delayedCall(.5, this.endGame);
 				
 					$object.end();
 					CollisionManager.instance.remove($object);
@@ -216,11 +231,28 @@
 				
 			}
 		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function endGame():void
+		{
+			SoundManager.instance.playVictory();
+			this.gameOverSignal.dispatch();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function removeCannonBall():void
 		{
 			this.cleanupSignal.dispatch(this);
 		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function resetTimer($e:TimerEvent):void
+		{
+			this.hitTimerReset.reset();
+			this.isSoundReset = true;
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 	}

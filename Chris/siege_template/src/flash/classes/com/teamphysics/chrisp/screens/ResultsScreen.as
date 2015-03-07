@@ -55,6 +55,14 @@ package com.teamphysics.chrisp.screens {
 			TweenMax.from(this.btResultsToTitle, 1.5, { y: 0, ease:Bounce.easeOut } );
 			TweenMax.from(this.btResultsPlayAgain, 1.5, { y: 0, delay: .5, ease:Bounce.easeOut } );
 			TweenMax.from(this.btResultsCredits, 1.5, { y: 0, delay: .5, ease:Bounce.easeOut } );
+			TweenMax.delayedCall(5, playMusic);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		protected function playMusic():void
+		{
+			SoundManager.instance.playResultsMusic();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
