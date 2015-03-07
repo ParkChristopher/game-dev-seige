@@ -43,6 +43,7 @@
 		private var placementArray			:Array;
 		private var aOnScreenObjects		:Array;
 		private var blockArray				:Array;
+		private var arrayOfBlocks			:Vector.<BaseBlock>;
 		private var player					:String;
 		private var stringCoords			:String;
 		protected var kingCollisionType		:CbType = new CbType();
@@ -73,7 +74,7 @@
 			this.castleNumber = $castleNumber
 			parseXML();
 			this.aOnScreenObjects = new Array();
-			
+			arrayOfBlocks = new Vector.<BaseBlock>;
 			this.buildCastle();
 		}
 		
@@ -126,7 +127,9 @@
 					StageRef.stage.addChild(block);
 				}
 				
-				block.buildBlock(placementArray[i], h - ((i+1) * 100), _nCollisionGroup);
+				block.buildBlock(placementArray[i], h - ((i + 1) * 100), _nCollisionGroup);
+				
+				arrayOfBlocks.push(block);
 
 				aOnScreenObjects.push(block);
 				CollisionManager.instance.add(block);
@@ -150,9 +153,9 @@
 		
 		public function resetBlocks()
 		{
-			for (var i:uint; i < blockArray.length; i++)
+			for (var i:uint; i < arrayOfBlocks.length; i++)
 			{
-				blockArray[i].hasBeenCollidedWith = false;
+				arrayOfBlocks[i].bHasBeenCollidedWith = false;
 			}
 		}
 		

@@ -5,6 +5,8 @@
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.util.CollisionManager;
 	import com.teamphysics.util.SpaceRef;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import nape.callbacks.CbType;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
@@ -34,6 +36,8 @@
 		
 		private var 	ballCollisionType			:CbType;
 		
+		private var 		tMaxLifeSpanTimer			:Timer = new Timer(10000);
+		
 		public function CannonBall() 
 		{
 			super();
@@ -50,12 +54,15 @@
 		override public function begin():void
 		{
 			super.begin();
+			tMaxLifeSpanTimer.addEventListener(TimerEvent.TIMER, this.removeCannonBall);
+			tMaxLifeSpanTimer.start();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function end():void
 		{
+			tMaxLifeSpanTimer.stop();
 			physicsBody = null;
 			this.visible = false;
 			CollisionManager.instance.remove(this);
@@ -79,18 +86,20 @@
 		
 		public function buildBall($xPos:int, $yPos:int, $collisionGroup:int)
 		{
-			trace($xPos + ", " + $yPos);
+			//trace($xPos + ", " + $yPos);
 			physicsBody = new Body(BodyType.DYNAMIC, new Vec2($xPos, $yPos));
 			material = new Material(0.5, 1, 1, 5);
 			shape = new Circle(this.width / 2, null, material);
 			
 			if ($collisionGroup == 1)
 			{
+				bOwnerIsP1 = true;
 				shape.filter.collisionGroup = 1;//left
 				shape.filter.collisionMask = 2;
 			}
 			else
 			{
+				bOwnerIsP1 = false;
 				shape.filter.collisionGroup = 2;//right
 				shape.filter.collisionMask = 1;
 			}
@@ -109,7 +118,7 @@
 		
 		override public function collidedWith($object:AbstractGameObject):void
 		{
-			trace($object.objectType);
+			//trace($object.objectType);
 			
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_WALL)
 			{
@@ -151,20 +160,27 @@
 				if (!block.bHasBeenCollidedWith)
 				{
 					trace("ball velocity: " + physicsBody.velocity.length);
-					if (physicsBody.velocity.length > 1000)
+					if (physicsBody.velocity.length > 700)
 					{
-						trace(block.health);
+						trace("massive damage");
 						block.health-= 33;
-						trace(block.health);
+						trace("block.health: " + block.health);
 					}
 					else if (physicsBody.velocity.length > 300)
 					{
-						block.health -= 15;
+						trace("standard damage");
+						block.health = block.health - 20;
+						trace("block.health: " + block.health);
 					}
 					else if (physicsBody.velocity.length > 100)
 					{
+						trace("min damage");
 						block.health -= 5;
+						trace("block.health: " + block.health);
 					}
+					
+					//block.health--;
+					//trace("block.health: " + block.health);
 				
 					if(block.health <= 0)
 					{
@@ -177,18 +193,26 @@
 				
 					block.bHasBeenCollidedWith = true;
 				}
-				TweenMax.delayedCall(1.5, this.removeCannonBall);
+				TweenMax.delayedCall(5, this.removeCannonBall);
 				
 			}
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
 			{
-				trace("KING WAS HIT");
-				this.gameOverSignal.dispatch();
+				//trace("king is player1?: " + $object.bOwnerIsP1);
+					//trace("ball is player1: " + this.bOwnerIsP1);
+					//trace(!$object.bOwnerIsP1 && !this.bOwnerIsP1);
+					//trace(($object.bOwnerIsP1 && this.bOwnerIsP1) || (!$object.bOwnerIsP1 && !this.bOwnerIsP1));
+				if (($object.bOwnerIsP1 && !this.bOwnerIsP1) || (!$object.bOwnerIsP1 && this.bOwnerIsP1))
+				{
+					
+					//trace("KING WAS HIT");
+					this.gameOverSignal.dispatch();
 				
-				$object.end();
-				CollisionManager.instance.remove($object);
-				$object.cleanupSignal.dispatch($object);
-				this.cleanupSignal.dispatch(this);
+					$object.end();
+					CollisionManager.instance.remove($object);
+					$object.cleanupSignal.dispatch($object);
+					this.cleanupSignal.dispatch(this);
+				}
 				
 			}
 		}

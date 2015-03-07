@@ -55,11 +55,22 @@
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);
-			var material :Material = new Material(.1,10,2,10);
+			var material :Material = new Material(.1, 10, 2, 10);
+			if ($collisionType == 1)
+			{
+				bOwnerIsP1 = true;
+			}
+			else
+			{
+				bOwnerIsP1 = false;
+			}
 			
 			body = new Body(BodyType.DYNAMIC);
-
-			body.shapes.add(new Polygon(Polygon.box(_nWidth, _nHeight), material));
+			
+			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);
+			polygon.filter.collisionGroup = $collisionType;
+			
+			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
 
 			body.space = SpaceRef.space;

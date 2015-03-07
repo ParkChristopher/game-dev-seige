@@ -39,8 +39,6 @@
 		
 		public var mcPowerBar		:PowerBar;
 		
-		private var _bIsLeft		:Boolean;
-		
 		private var _bIsRotating	:Boolean;
 		
 		private var _bIsRotatingUp	:Boolean;
@@ -69,7 +67,6 @@
 			backPoint = new Point();
 			_height = this.mcCannonBarrel.height;//cannon must start horizontal
 			_length = this.mcCannonBarrel.width;
-			_bIsLeft = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -77,7 +74,7 @@
 		override public function begin():void
 		{
 			super.begin();
-			if (_bIsLeft)
+			if (bOwnerIsP1)
 			{
 				backPoint.x = this.mcCannonBarrel.x - (this.mcCannonBarrel.width / 2);
 				backPoint.y = this.mcCannonBarrel.y;
@@ -104,7 +101,7 @@
 			_bIsRotatingUp = true;
 			_nRotationAmount = 0;
 			
-			if (_bIsLeft)
+			if (bOwnerIsP1)
 			{
 				KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
 			}
@@ -121,13 +118,6 @@
 		{
 			trace("King was killed");
 			this.endGameSignal.dispatch();
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-		public function setLeftness($bIsLeft)
-		{
-			_bIsLeft = $bIsLeft;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -185,7 +175,7 @@
 			else if(!_bIsRotating && mcPowerBar.bIsMoving)
 			{
 				SoundManager.instance.playCannonFire();
-				if (_bIsLeft)
+				if (bOwnerIsP1)
 				{
 					cannonFireSignal.dispatch(1);
 				}
@@ -209,17 +199,17 @@
 				StageRef.stage.addChildAt(s, 1);
 				s.begin();
 				
-				trace("Left?: " + _bIsLeft);
+				/*trace("Left?: " + bOwnerIsP1);
 				trace(frontPoint.x + ", " + frontPoint.y);
-				trace(backPoint.x + ", " + backPoint.y);
+				trace(backPoint.x + ", " + backPoint.y);*/
 				var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
 				var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
 				
-				trace("speed bonus: " +_nSpeedBonus);
+				//trace("speed bonus: " +_nSpeedBonus);
 				velocityVec = velocityVec.mul(scaler);
 				
 				s.setCbType(ballCollisionType);
-				if (_bIsLeft)
+				if (bOwnerIsP1)
 				{
 					s.buildBall(this.x, this.y,  1);
 				}
@@ -269,7 +259,7 @@
 				
 			if (objectIndex >= 0)
 			{
-				trace("Cannon: Removing Object");
+				//trace("Cannon: Removing Object");
 				$object.end();
 				StageRef.stage.removeChild($object);
 				_aCannonBalls.splice(objectIndex, 1);
@@ -283,7 +273,7 @@
 		{
 			var sin:Number;
 			var cos:Number;
-			if (_bIsLeft)
+			if (bOwnerIsP1)
 			{
 				this.mcCannonBarrel.rotation = $angle;
 				cos = Math.cos($angle * (Math.PI / 180));

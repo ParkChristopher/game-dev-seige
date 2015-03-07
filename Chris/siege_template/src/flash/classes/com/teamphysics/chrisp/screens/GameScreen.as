@@ -184,31 +184,7 @@
 			space.bodies.add(floorPhysicsBody);
 			floorPhysicsBody.space = space;
 			
-			//Start Cannons
-			player1Cannon = new Cannon();
-			player1Cannon.x = 260;
-			player1Cannon.y = 450;
-			player1Cannon.setBallCollision(ballCollisionType);
-			aOnScreenObjects.push(player1Cannon);
-			this.addChildAt(player1Cannon, 1);
-			player1Cannon.setLeftness(true);
-			player1Cannon.bOwnerIsP1 = true;
-			player1Cannon.speedCleanupSignal.add(removeSpeed);
-			player1Cannon.endGameSignal.add(kingHit)
-			player1Cannon.begin();
 			
-			//Cannon 2
-			player2Cannon = new Cannon();
-			player2Cannon.x = 900 - 260;
-			player2Cannon.y = 450;
-			player2Cannon.setBallCollision(ballCollisionType);
-			aOnScreenObjects.push(player2Cannon);
-			this.addChildAt(player2Cannon, 1);
-			player2Cannon.setLeftness(false);
-			player2Cannon.bOwnerIsP1 = false;
-			player2Cannon.speedCleanupSignal.add(removeSpeed);
-			player2Cannon.endGameSignal.add(kingHit);
-			player2Cannon.begin();
 			
 			//Build Castles
 			buildCastles();
@@ -221,6 +197,32 @@
 			interactionListener2 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
 				ballCollisionType, king2CollisionType, kingHit);
 			space.listeners.add(interactionListener2);
+			
+			//Start Cannons
+			player1Cannon = new Cannon();
+			player1Cannon.x = 60;
+			player1Cannon.y = 450;
+			player1Cannon.setBallCollision(ballCollisionType);
+			player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+			aOnScreenObjects.push(player1Cannon);
+			this.addChild(player1Cannon);
+			player1Cannon.bOwnerIsP1 = true;
+			player1Cannon.speedCleanupSignal.add(removeSpeed);
+			player1Cannon.endGameSignal.add(kingHit)
+			player1Cannon.begin();
+			
+			//Cannon 2
+			player2Cannon = new Cannon();
+			player2Cannon.x = 900 - 60;
+			player2Cannon.y = 450;
+			player2Cannon.setBallCollision(ballCollisionType);
+			player2Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+			aOnScreenObjects.push(player2Cannon);
+			this.addChild(player2Cannon);
+			player2Cannon.bOwnerIsP1 = false;
+			player2Cannon.speedCleanupSignal.add(removeSpeed);
+			player2Cannon.endGameSignal.add(kingHit);
+			player2Cannon.begin();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -241,20 +243,26 @@
 			this.powerupTimer.stop();
 			
 			player1Cannon.speedCleanupSignal.remove(removeSpeed);
-			//player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+			player1Cannon.cannonFireSignal.removeAll();
 			player2Cannon.speedCleanupSignal.remove(removeSpeed);
-			//player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
-			
+			player2Cannon.cannonFireSignal.removeAll();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function resetCastleBlocksHit($playerNum:Number)
 		{
-			
+			trace("resetCastleBlockHit, game screen" + $playerNum);
+			if ($playerNum == 1)
+			{
+				player2Castle.resetBlocks();
+			}
+			else
+			{
+				player1Castle.resetBlocks();
+			}
 		}
 		
-		/* ---------------------------------------------------------------------------------------- */
 		/* ---------------------------------------------------------------------------------------- */
 		public function getCastleSelection($p1CastleChoice:int, $p2CastleChoice)
 		{

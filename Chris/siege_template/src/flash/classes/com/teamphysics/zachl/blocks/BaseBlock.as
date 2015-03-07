@@ -21,7 +21,7 @@
 	public class BaseBlock extends AbstractGameObject
 	{
 		
-		protected var _nBlockHealth	:int = 100;		
+		protected var _nBlockHealth	:int;		
 		protected var _nHeight		:int;
 		protected var _nWidth		:int;
 		protected var tempSprite	:Sprite;
@@ -39,6 +39,7 @@
 			super();
 			//this._sObjectType = GameObjectType.TYPE_BLOCK;
 			//this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
+			health = 100;
 			parseXML();
 			this.stop();
 		}
