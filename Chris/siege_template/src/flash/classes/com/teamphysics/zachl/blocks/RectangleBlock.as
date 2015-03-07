@@ -56,7 +56,7 @@
 			s.height = _nHeight;
 			tempSprite = s;
 			this.addChild(s);
-			var material :Material = new Material(0,1,.5,1);
+			var material :Material = new Material(0,1.5,1,1.5);
 			
 			body = new Body(BodyType.DYNAMIC);
 			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);

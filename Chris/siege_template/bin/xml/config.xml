@@ -6,14 +6,14 @@
 			<p2coords>850 800 750 700 775 700 850 775 700 850 775 825 825 725 725</p2coords>
 		</Castle1>
 		<Castle2>
-			<blocks>lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb</blocks>
-			<p1coords>50 100 150 200 125 200 50 125 200 50 125 75 75 175 175</p1coords>
-			<p2coords>850 800 750 700 775 700 850 775 700 850 775 825 825 725 725</p2coords>
+			<blocks>lssb lssb lssb lssb kb lssb lssb lsb lsb si sssb ssb ssb</blocks>
+			<p1coords>50 100 150 200 125 50 200 50 200 125 300 300 300</p1coords>
+			<p2coords>850 800 750 700 775 850 700 850 700 775 600 600 600</p2coords>
 		</Castle2>
 		<Castle3>
-			<blocks>lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb</blocks>
-			<p1coords>50 100 150 200 125 200 50 125 200 50 125 75 75 175 175</p1coords>
-			<p2coords>850 800 750 700 775 700 850 775 700 850 775 825 825 725 725</p2coords>
+			<blocks>uwb uwb uwb uwb si kb uwb uwb si</blocks>
+			<p1coords>50 75 175 200 125 125 50 200 125</p1coords>
+			<p2coords>850 825 725 700 775 775 850 700 775</p2coords>
 		</Castle3>
 		<Castle4>
 			<blocks>lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb</blocks>

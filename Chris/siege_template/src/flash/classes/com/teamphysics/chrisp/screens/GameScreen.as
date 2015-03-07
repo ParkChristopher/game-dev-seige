@@ -171,7 +171,7 @@
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
 			//Create the space
-			space = new Space(new Vec2(0, 500));
+			space = new Space(new Vec2(0, 450));
 			
 			SpaceRef.space = space;
 			
