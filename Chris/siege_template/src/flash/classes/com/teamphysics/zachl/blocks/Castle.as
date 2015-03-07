@@ -39,10 +39,12 @@
 	public class Castle extends MovieClip
 	{
 		
-		private var castle					:String = " ";
+		private var castle					:String;
 		private var placementArray			:Array;
 		private var aOnScreenObjects		:Array;
 		private var blockArray				:Array;
+		private var player					:String;
+		private var stringCoords			:String;
 		protected var kingCollisionType		:CbType = new CbType();
 		protected var ballCollisionType		:CbType = new CbType();
 		protected var interactionListener	:InteractionListener;
@@ -58,9 +60,7 @@
 		 */
 		public function Castle()
 		{
-			super();
-			//this.castle = String("lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb");
-			//blockArray = this.castle.split(" ");			
+			super();		
 			this.stop();
 		}
 		
@@ -68,20 +68,11 @@
 		public function begin($player:String, $castleNumber: int) :void
 		{
 			this.play();
-			parseXML();
-			this.castleNumber = $castleNumber
 			this.visible = true;
+			this.player = $player;
+			this.castleNumber = $castleNumber
+			parseXML();
 			this.aOnScreenObjects = new Array();
-			if($player == "Player1")
-			{
-				placementArray = [50, 100, 150, 200, 125, 200, 50, 125, 200, 50, 125, 75, 75, 175, 175];
-				_nCollisionGroup = 1;
-			}
-			else
-			{
-				placementArray = [nWidth - 50, nWidth - 100, nWidth - 150, nWidth - 200, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 200, nWidth - 50, nWidth - 125, nWidth - 75, nWidth - 75, nWidth - 175, nWidth - 175];
-				_nCollisionGroup = 2;
-			}
 			
 			this.buildCastle();
 		}
@@ -136,12 +127,6 @@
 				}
 				
 				block.buildBlock(placementArray[i], h - ((i+1) * 100), _nCollisionGroup);
-								 
-				if (block is KingBlock)
-				{
-					//blockPhysicsBody.cbTypes.add(kingCollisionType);
-					trace("kingCollisionType set");
-				}
 
 				aOnScreenObjects.push(block);
 				CollisionManager.instance.add(block);
@@ -155,7 +140,6 @@
 		
 		public function allowRotation():void
 		{
-			trace("Inside allowRotation");
 			for(var i :uint = 0; i < SpaceRef.space.bodies.length; i++)
 			{
 				SpaceRef.space.bodies.at(i).allowRotation = true;
@@ -187,12 +171,98 @@
 		protected function parseXML():void
 		{
 			var xConfig:XML = LoaderMax.getContent("config.xml");
-			this.castle = String(xConfig.gameObjects.Castle1.blocks);
-			blockArray = this.castle.split(" ");
-			if(true)
+			if(castleNumber == 1)
 			{
-				
+				this.castle = String(xConfig.gameObjects.Castle1.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle1.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle1.p2coords);
+					_nCollisionGroup = 2;
+				}
 			}
+			else if(castleNumber == 2)
+			{
+				this.castle = String(xConfig.gameObjects.Castle2.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle2.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle2.p2coords);
+					_nCollisionGroup = 2;
+				}
+			}
+			else if(castleNumber == 3)
+			{
+				this.castle = String(xConfig.gameObjects.Castle3.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle3.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle3.p2coords);
+					_nCollisionGroup = 2;
+				}
+			}
+			else if(castleNumber == 4)
+			{
+				this.castle = String(xConfig.gameObjects.Castle4.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle4.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle4.p2coords);
+					_nCollisionGroup = 2;
+				}
+			}
+			else if(castleNumber == 5)
+			{
+				this.castle = String(xConfig.gameObjects.Castle5.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle5.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle5.p2coords);
+					_nCollisionGroup = 2;
+				}
+			}
+			else if(castleNumber == 6)
+			{
+				this.castle = String(xConfig.gameObjects.Castle6.blocks);
+				blockArray = this.castle.split(" ");
+				if(player == "Player1")
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle6.p1coords);
+					_nCollisionGroup = 1;
+				}
+				else
+				{
+					this.stringCoords = String(xConfig.gameObjects.Castle6.p2coords);
+					_nCollisionGroup = 2;
+				}
+			}
+			placementArray = this.stringCoords.split(" ");
+
 		}
 		
 		public function get kingHitBox():CbType
