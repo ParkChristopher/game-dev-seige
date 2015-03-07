@@ -151,14 +151,22 @@
 				if (!block.bHasBeenCollidedWith)
 				{
 					trace("ball velocity: " + physicsBody.velocity.length);
-					if (physicsBody.velocity.length > 350)
+					if (physicsBody.velocity.length > 1000)
 					{
 						trace(block.health);
-						block.health--;
+						block.health-= 33;
 						trace(block.health);
 					}
+					else if (physicsBody.velocity.length > 300)
+					{
+						block.health -= 15;
+					}
+					else if (physicsBody.velocity.length > 100)
+					{
+						block.health -= 5;
+					}
 				
-					if(block.health == 0)
+					if(block.health <= 0)
 					{
 						block.end();
 						CollisionManager.instance.remove($object);

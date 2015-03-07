@@ -33,7 +33,7 @@ package com.teamphysics.chrisp
 		 */
 		public function AbstractGameObject()
 		{
-			super();
+			//super();
 			
 			this.mouseEnabled	= false;
 			this.mouseChildren	= false;
