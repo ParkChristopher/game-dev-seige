@@ -26,6 +26,7 @@
 	import com.teamphysics.zachl.blocks.SquareBlock;
 	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
 	import com.teamphysics.zachl.blocks.StoneSquareBlock;
+	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
 	import nape.phys.Material;
 	import org.osflash.signals.Signal;
 	import com.greensock.events.LoaderEvent;
@@ -106,6 +107,11 @@
 					block = new RectangleBlock();
 					StageRef.stage.addChild(block);
 				}			
+				else if(blockArray[i] == "hwb")
+				{
+					block = new HorizontalRectangleBlock();
+					StageRef.stage.addChild(block);
+				}
 				else if (blockArray[i] == "si")
 				{
 					block = new LongBlock();
