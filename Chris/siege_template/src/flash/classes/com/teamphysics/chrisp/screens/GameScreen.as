@@ -119,7 +119,7 @@
 		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = false;
+		public var debugToggle				:Boolean = true;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**

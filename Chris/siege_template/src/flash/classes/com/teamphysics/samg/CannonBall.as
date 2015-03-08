@@ -124,6 +124,10 @@
 
 		}
 		
+		public function get body():Body
+		{
+			return this.physicsBody;
+		}
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function collidedWith($object:AbstractGameObject):void

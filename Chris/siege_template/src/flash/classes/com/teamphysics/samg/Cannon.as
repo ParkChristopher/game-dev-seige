@@ -261,6 +261,11 @@
 			if (objectIndex >= 0)
 			{
 				//trace("Cannon: Removing Object");
+				if(CannonBall($object))
+				{
+					var tempBody : Body = CannonBall($object).body;
+					tempBody.space = null;
+				}
 				$object.end();
 				StageRef.stage.removeChild($object);
 				_aCannonBalls.splice(objectIndex, 1);
