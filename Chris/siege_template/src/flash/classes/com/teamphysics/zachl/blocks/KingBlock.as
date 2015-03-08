@@ -27,6 +27,7 @@
 	{
 		private var body		:Body;
 		/** A variable to track when the hero has died. */
+		private var collisionGroupHolder 	:int;
 		private var kingDiedSignal 	:Signal = new Signal();
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
@@ -69,6 +70,7 @@
 			
 			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);
 			polygon.filter.collisionGroup = $collisionType;
+			this.collisionGroupHolder = polygon.filter.collisionGroup;
 			
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
@@ -94,6 +96,10 @@
 			body.space = null;
 		}
 		
+		override public function get getCollisionGroup(): int
+		{
+			return this.collisionGroupHolder;
+		}
 		/* ---------------------------------------------------------------------------------------- */
 	
 		

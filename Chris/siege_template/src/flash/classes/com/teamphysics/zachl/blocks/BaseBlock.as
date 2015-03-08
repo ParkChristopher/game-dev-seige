@@ -21,11 +21,11 @@
 	public class BaseBlock extends AbstractGameObject
 	{
 		
-		protected var _nBlockHealth	:int;		
-		protected var _nHeight		:int;
-		protected var _nWidth		:int;
-		protected var tempSprite	:Sprite;
-		
+		protected var _nBlockHealth		:int;		
+		protected var _nHeight			:int;
+		protected var _nWidth			:int;
+		protected var tempSprite		:Sprite;
+		protected var collisionGroup	:int = 0;
 		public var bHasBeenCollidedWith	:Boolean;
 		
 		//Bodies
@@ -110,6 +110,10 @@
 		public function get blockBody(): Body
 		{
 			return  body;
+		}
+		public function get getCollisionGroup(): int
+		{
+			return  collisionGroup;
 		}
 		/* ---------------------------------------------------------------------------------------- */				
 		/**

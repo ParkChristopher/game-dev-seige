@@ -16,6 +16,14 @@
 	import nape.shape.Shape;
 	import org.osflash.signals.*;
 	import com.teamphysics.zachl.blocks.BaseBlock;
+	import com.teamphysics.zachl.blocks.LargeSquareBlock;
+	import com.teamphysics.zachl.blocks.LongBlock;
+	import com.teamphysics.zachl.blocks.RectangleBlock;
+	import com.teamphysics.zachl.blocks.SquareBlock;
+	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
+	import com.teamphysics.zachl.blocks.StoneSquareBlock;
+	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
+	import com.teamphysics.zachl.blocks.KingBlock;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.XMLLoader;
@@ -169,47 +177,85 @@
 			{
 				var block : BaseBlock = BaseBlock($object);
 				
+				if($object is RectangleBlock)
+				{
+					block = RectangleBlock($object);
+				}
+				else if($object is LargeSquareBlock)
+				{
+					block = LargeSquareBlock($object);
+				}
+				else if($object is LongBlock)
+				{
+					block = LongBlock($object);
+				}
+				else if($object is SquareBlock)
+				{
+					block = SquareBlock($object);
+				}
+				else if($object is LargeStoneSquareBlock)
+				{
+					block = LargeStoneSquareBlock($object);
+				}
+				else if($object is StoneSquareBlock)
+				{
+					block = StoneSquareBlock($object);
+				}
+				else if($object is HorizontalRectangleBlock)
+				{
+					block = HorizontalRectangleBlock($object);
+				}
+				else if($object is KingBlock)
+				{
+					block = KingBlock($object);
+				}
+				
+				
 				if (isSoundReset)
 				{
 					SoundManager.instance.playBlockHit();
 					this.isSoundReset = false;
 				}
-				
-				if (!block.bHasBeenCollidedWith)
+				trace("OBJECT FIRED CANNONBALL OWNER IS: " + bOwnerIsP1 + " Block is : " + block.getCollisionGroup);
+				//If cannonball is owned by p1 and the block collisiongroup is 2 or the reverse
+				if(this.bOwnerIsP1 == true && block.getCollisionGroup == 2 || this.bOwnerIsP1 == false && block.getCollisionGroup == 1)
 				{
-					trace("ball velocity: " + physicsBody.velocity.length);
-					if (physicsBody.velocity.length > 700)
+					if (!block.bHasBeenCollidedWith)
 					{
-						trace("massive damage");
-						block.health-= 33;
-						trace("block.health: " + block.health);
-					}
-					else if (physicsBody.velocity.length > 300)
-					{
-						trace("standard damage");
-						block.health = block.health - 20;
-						trace("block.health: " + block.health);
-					}
-					else if (physicsBody.velocity.length > 100)
-					{
-						trace("min damage");
-						block.health -= 5;
-						trace("block.health: " + block.health);
-					}
-					
-					//block.health--;
-					//trace("block.health: " + block.health);
-				
-					if(block.health <= 0)
-					{
-						block.end();
-						CollisionManager.instance.remove($object);
-						$object.cleanupSignal.dispatch($object);
-					}
-					//CollisionManager.instance.remove(this);
+						trace("ball velocity: " + physicsBody.velocity.length);
+						if (physicsBody.velocity.length > 700)
+						{
+							trace("massive damage");
+							block.health-= 33;
+							trace("block.health: " + block.health);
+						}
+						else if (physicsBody.velocity.length > 300)
+						{
+							trace("standard damage");
+							block.health = block.health - 20;
+							trace("block.health: " + block.health);
+						}
+						else if (physicsBody.velocity.length > 100)
+						{
+							trace("min damage");
+							block.health -= 5;
+							trace("block.health: " + block.health);
+						}
 						
-				
-					block.bHasBeenCollidedWith = true;
+						//block.health--;
+						//trace("block.health: " + block.health);
+					
+						if(block.health <= 0)
+						{
+							block.end();
+							CollisionManager.instance.remove($object);
+							$object.cleanupSignal.dispatch($object);
+						}
+						//CollisionManager.instance.remove(this);
+							
+					
+						block.bHasBeenCollidedWith = true;
+					}
 				}
 				TweenMax.delayedCall(5, this.removeCannonBall);
 				
