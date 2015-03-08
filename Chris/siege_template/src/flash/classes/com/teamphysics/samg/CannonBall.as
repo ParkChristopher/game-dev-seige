@@ -29,6 +29,8 @@
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.TweenMax;
 	import com.teamphysics.util.SoundManager;
+	import com.teamphysics.util.ScoreManager;
+	
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -157,6 +159,11 @@
 			{
 				$object.bOwnerIsP1 = this.bOwnerIsP1;
 				
+				if (this.bOwnerIsP1)
+					ScoreManager.instance.nP1Score += 150;
+				else
+					ScoreManager.instance.nP2Score += 150;
+				
 				$object.end();
 				CollisionManager.instance.remove($object);
 				$object.cleanupSignal.dispatch($object);
@@ -166,6 +173,11 @@
 			if ($object.objectType == GameObjectType.TYPE_SPEED_POWERUP)
 			{
 				$object.bOwnerIsP1 = this.bOwnerIsP1;
+				
+				if (this.bOwnerIsP1)
+					ScoreManager.instance.nP1Score += 150;
+				else
+					ScoreManager.instance.nP2Score += 150;
 				
 				$object.end();
 				CollisionManager.instance.remove($object);
@@ -222,6 +234,12 @@
 				{
 					if (!block.bHasBeenCollidedWith)
 					{
+						//Guessing on score placement here
+						if (this.bOwnerIsP1)
+							ScoreManager.instance.nP1Score += 50;
+						else
+							ScoreManager.instance.nP2Score += 50;
+						
 						trace("ball velocity: " + physicsBody.velocity.length);
 						if (physicsBody.velocity.length > 700)
 						{
@@ -269,6 +287,11 @@
 					//trace(($object.bOwnerIsP1 && this.bOwnerIsP1) || (!$object.bOwnerIsP1 && !this.bOwnerIsP1));
 				if (($object.bOwnerIsP1 && !this.bOwnerIsP1) || (!$object.bOwnerIsP1 && this.bOwnerIsP1))
 				{
+					if (this.bOwnerIsP1)
+						ScoreManager.instance.sWinner = "P1";
+					else
+						ScoreManager.instance.sWinner = "P2";
+						
 					SoundManager.instance.playKingDied();
 					//trace("KING WAS HIT");
 					TweenMax.delayedCall(.5, this.endGame);

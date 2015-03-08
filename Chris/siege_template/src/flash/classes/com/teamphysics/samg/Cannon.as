@@ -21,6 +21,8 @@
 	import com.teamphysics.util.SoundManager;
 	import org.osflash.signals.natives.base.SignalBitmap;
 	import org.osflash.signals.Signal;
+	import com.teamphysics.util.ScoreManager;
+	
 	/**
 	 * ...
 	 * @author Sam Gronhovd
@@ -166,7 +168,7 @@
 		}
 		
 		private function addCannonBall()
-		{			
+		{	
 			if (_bIsRotating)
 			{
 				_bIsRotating = false;
@@ -211,10 +213,12 @@
 				s.setCbType(ballCollisionType);
 				if (bOwnerIsP1)
 				{
+					ScoreManager.instance.nP1ShotsFired += 1;
 					s.buildBall(this.x, this.y,  1);
 				}
 				else 
 				{
+					ScoreManager.instance.nP2ShotsFired += 1;
 					s.buildBall(this.x, this.y, 2);
 				}
 				s.setVelocity(velocityVec);

@@ -45,6 +45,7 @@
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
 	import com.natejc.utils.StageRef;
+	import com.teamphysics.util.ScoreManager;
 	
 	/**
 	 * Game Screen
@@ -152,6 +153,7 @@
 			CollisionManager.instance.reset();
 			CollisionManager.instance.begin();
 			
+			ScoreManager.instance.reset();
 			this.txtP1Score.text = "0";
 			this.txtP2Score.text = "0";
 			
@@ -316,6 +318,8 @@
 				debug.draw(space);
 				debug.flush();
 			}
+			
+			this.updateScore();
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -497,6 +501,12 @@
 		/* ---------------------------------------------------------------------------------------- */
 		//[ EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
+		protected function updateScore():void
+		{
+			this.txtP1Score.text = ScoreManager.instance.nP1Score.toString();
+			this.txtP2Score.text = ScoreManager.instance.nP2Score.toString();
+		}
+		
 		protected function quitClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Quit Clicked.");
