@@ -26,9 +26,9 @@
 			<p2coords>850 825 760 670 815 710 800 775 750 725 670 670</p2coords>
 		</Castle5>
 		<Castle6>
-			<blocks>lssb lssb lssb lssb kb uwb uwb si uwb uwb si ssb ssb ssb ssb</blocks>
-			<p1coords>50 100 150 200 125 200 50 125 200 50 125 75 75 175 175</p1coords>
-			<p2coords>850 800 750 700 775 700 850 775 700 850 775 825 825 725 725</p2coords>
+			<blocks>uwb kb uwb si lssb lssb hwb uwb hwb</blocks>
+			<p1coords>50 125 200 115 125 315 275 50 90 </p1coords>
+			<p2coords>850 775 700 785 775 585 625 850 810</p2coords>
 		</Castle6>
 	</gameObjects>
 </config>
