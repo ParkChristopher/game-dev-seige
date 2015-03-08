@@ -1,4 +1,5 @@
 ﻿package com.teamphysics.chrisp.screens {
+	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
@@ -33,6 +34,20 @@
 		
 		public var btBack					:SimpleButton;
 		public var btContinue				:SimpleButton;
+		
+		public var mcCastle1ImageP1			:MovieClip;
+		public var mcCastle2ImageP1			:MovieClip;
+		public var mcCastle3ImageP1			:MovieClip;
+		public var mcCastle4ImageP1			:MovieClip;
+		public var mcCastle5ImageP1			:MovieClip;
+		public var mcCastle6ImageP1			:MovieClip;
+		
+		public var mcCastle1ImageP2			:MovieClip;
+		public var mcCastle2ImageP2			:MovieClip;
+		public var mcCastle3ImageP2			:MovieClip;
+		public var mcCastle4ImageP2			:MovieClip;
+		public var mcCastle5ImageP2			:MovieClip;
+		public var mcCastle6ImageP2			:MovieClip;
 		
 		//Signals
 		public var backClickedSignal		:Signal = new Signal();
@@ -69,7 +84,6 @@
 			this.btCastleFiveP1.addEventListener(MouseEvent.CLICK, castleSelectedP1);
 			this.btCastleSixP1.addEventListener(MouseEvent.CLICK, castleSelectedP1);
 			
-			
 			this.btCastleOneP2.addEventListener(MouseEvent.CLICK, castleSelectedP2);
 			this.btCastleTwoP2.addEventListener(MouseEvent.CLICK, castleSelectedP2);
 			this.btCastleThreeP2.addEventListener(MouseEvent.CLICK, castleSelectedP2);
@@ -82,6 +96,20 @@
 			
 			this.btBack.addEventListener(MouseEvent.CLICK, backClicked);
 			this.btContinue.addEventListener(MouseEvent.CLICK, continueClicked);
+			
+			this.mcCastle1ImageP1.mouseEnabled = false;
+			this.mcCastle2ImageP1.mouseEnabled = false;
+			this.mcCastle3ImageP1.mouseEnabled = false;
+			this.mcCastle4ImageP1.mouseEnabled = false;
+			this.mcCastle5ImageP1.mouseEnabled = false;
+			this.mcCastle6ImageP1.mouseEnabled = false;
+			
+			this.mcCastle1ImageP2.mouseEnabled = false;
+			this.mcCastle2ImageP2.mouseEnabled = false;
+			this.mcCastle3ImageP2.mouseEnabled = false;
+			this.mcCastle4ImageP2.mouseEnabled = false;
+			this.mcCastle5ImageP2.mouseEnabled = false;
+			this.mcCastle6ImageP2.mouseEnabled = false;
 			
 			this.activateTweens();
 			
@@ -106,6 +134,21 @@
 			TweenMax.from(this.btCastleFiveP2, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.btCastleSixP2, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.btRandomP2, 1, { x: 1100, ease:Quad.easeOut } );
+			
+			TweenMax.from(this.mcCastle1ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle2ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle3ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle4ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle5ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle6ImageP1, 1, { x: 1100, ease:Quad.easeOut } );
+			
+			TweenMax.from(this.mcCastle1ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle2ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle3ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle4ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle5ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			TweenMax.from(this.mcCastle6ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
+			
 			
 			TweenMax.from(this.btBack, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.btContinue, 1, { x: 1100, ease:Quad.easeOut } );
