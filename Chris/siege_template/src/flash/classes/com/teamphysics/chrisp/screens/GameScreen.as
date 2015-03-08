@@ -25,6 +25,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
 	import flash.utils.Timer;
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -70,6 +71,10 @@
 		public var castle					:String;
 		public var castle2					:String;
 		
+		//Score Boxes
+		public var txtP1Score				:TextField;
+		public var txtP2Score				:TextField;
+		
 		//Booleans
 		protected var bCannonP1RotatingUp	:Boolean;
 		protected var bCannonP1IsRotating	:Boolean;
@@ -81,7 +86,7 @@
 		//Numbers
 		protected var nCannonOneRotateAmount	:Number;
 		protected var nCannonTwoRotateAmount	:Number;
-		public var nSpeedMultiplier			:Number = 0;
+		public var nSpeedMultiplier				:Number = 0;
 		
 		//Cannon
 		public var player1Cannon			:Cannon;
@@ -146,6 +151,9 @@
 			SoundManager.instance.playGameMusic();
 			CollisionManager.instance.reset();
 			CollisionManager.instance.begin();
+			
+			this.txtP1Score.text = "0";
+			this.txtP2Score.text = "0";
 			
 			//Turn off indicators until a powerup is acquired.
 			this.mcP1Shield.visible = false;

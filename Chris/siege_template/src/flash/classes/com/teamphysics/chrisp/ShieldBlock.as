@@ -51,7 +51,7 @@ package com.teamphysics.chrisp
 			
 			this.tempTexture = new ShieldBlockTexture();
 			this.tempTexture.width = 10;
-			this.tempTexture.height = 775;
+			this.tempTexture.height = 900;
 			
 			this.physicsBody = new Body(BodyType.STATIC);
 			this.poly = new Polygon(Polygon.box(10, 775));
