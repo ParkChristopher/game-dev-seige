@@ -257,6 +257,10 @@
 			this.isSoundReset = true;
 		}
 		
+		public function cleanCannonBall():void
+		{
+			this.physicsBody.space = null;
+		}
 		/* ---------------------------------------------------------------------------------------- */
 		
 	}

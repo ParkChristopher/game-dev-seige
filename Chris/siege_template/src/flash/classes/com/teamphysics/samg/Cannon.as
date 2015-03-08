@@ -263,8 +263,8 @@
 				//trace("Cannon: Removing Object");
 				if(CannonBall($object))
 				{
-					var tempBody : Body = CannonBall($object).body;
-					tempBody.space = null;
+					var tempCannonball : CannonBall = CannonBall($object);
+					tempCannonball.cleanCannonBall();
 				}
 				$object.end();
 				StageRef.stage.removeChild($object);
