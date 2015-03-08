@@ -40,6 +40,7 @@
 	import nape.shape.Polygon;
 	import nape.space.Space;
 	import nape.util.Debug;
+ 	import nape.util.BitmapDebug;
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
 	import com.natejc.utils.StageRef;
@@ -117,7 +118,8 @@
 		protected var interactionListener1	:InteractionListener;
 		protected var interactionListener2	:InteractionListener;
 
-		
+		//DEBUG SETTINGS
+		public var debugToggle				:Boolean = false;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -172,7 +174,12 @@
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
 			//Create the space
 			space = new Space(new Vec2(0, 450));
-			
+			//DEBUG CODE
+			if(this.debugToggle == true)
+			{
+				debug = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+				addChild(debug.display);
+			}
 			SpaceRef.space = space;
 			
 			//Create Floor
@@ -295,7 +302,12 @@
 		{
 			space.step(1 / stage.frameRate);
 			space.bodies.foreach(updateGraphics);
-			
+			if(this.debugToggle == true)
+			{
+				debug.clear();
+				debug.draw(space);
+				debug.flush();
+			}
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
