@@ -60,6 +60,8 @@ package com.teamphysics.chrisp.screens {
 			
 			this.txtPlayerOne.text = "Player One";
 			this.txtPlayerTwo.text = "Player Two";
+			this.txtPlayerOne.visible = false;
+			this.txtPlayerTwo.visible = false;
 			
 			this.tallyScore();
 			
@@ -107,7 +109,10 @@ package com.teamphysics.chrisp.screens {
 			
 			this.txtHighScore.text  = ScoreManager.instance.nHighScore.toString();
 			
-			//check for winner visibility here
+			if (ScoreManager.instance.sWinner == "P1")
+				this.txtPlayerOne.visible = true;
+			else
+				this.txtPlayerTwo.visible = true;
 			
 		}
 		

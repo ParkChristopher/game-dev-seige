@@ -79,6 +79,8 @@
 			
 			this.iPlayerOneCastleNumber = 0;
 			this.iPlayerTwoCastleNumber = 0;
+			this.txtP1Choice.text = "";
+			this.txtP2Choice.text = "";
 			
 			this.btCastleOneP1.addEventListener(MouseEvent.CLICK, castleSelectedP1);
 			this.btCastleTwoP1.addEventListener(MouseEvent.CLICK, castleSelectedP1);

@@ -75,6 +75,13 @@ package com.teamphysics.util
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function playPause():void
+		{
+			SoundAS.playFx(SOUND_GAME_PAUSE, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function playSpeedUp():void
 		{
 			SoundAS.playFx(SOUND_SPEED_UP, .5);

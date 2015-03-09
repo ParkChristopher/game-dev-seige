@@ -81,6 +81,7 @@
 		protected var bCannonP1IsRotating	:Boolean;
 		protected var bCannonP2RotatingUp	:Boolean;
 		protected var bCannonP2IsRotating	:Boolean;
+		protected var bIsPaused				:Boolean;
 		
 		protected var bPowerupActive		:Boolean;
 		
@@ -157,6 +158,8 @@
 			this.txtP1Score.text = "0";
 			this.txtP2Score.text = "0";
 			
+			this.bIsPaused = false;
+			
 			//Turn off indicators until a powerup is acquired.
 			this.mcP1Shield.visible = false;
 			this.mcP2Shield.visible = false;
@@ -182,6 +185,7 @@
 			
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
+			
 			//Create the space
 			space = new Space(new Vec2(0, 450));
 			//DEBUG CODE
@@ -522,8 +526,21 @@
 		protected function pauseClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Pause Clicked.");
-			SoundManager.instance.playButtonClick();
-			//TODO: Pause game logic or call here
+			SoundManager.instance.playPause();
+			
+			if (bIsPaused)
+			{
+				this.bIsPaused = false;
+				this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				return;
+			}
+			
+			if (!bIsPaused)
+			{
+				this.bIsPaused = true;
+				this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				return;
+			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
