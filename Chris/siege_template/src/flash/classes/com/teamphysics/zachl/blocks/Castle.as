@@ -1,43 +1,30 @@
 ﻿package com.teamphysics.zachl.blocks
 {
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.TweenMax;
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
-	import com.teamphysics.util.SpaceRef;
 	import com.natejc.utils.StageRef;
-	import flash.display.SimpleButton;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	import nape.phys.Body;
-	import nape.phys.BodyType;
-	import nape.shape.Polygon;
-	import nape.callbacks.CbEvent;
-	import nape.callbacks.CbType;
-	import nape.callbacks.InteractionCallback;
-	import nape.callbacks.InteractionListener;
-	import nape.callbacks.InteractionType;
-	import org.osflash.signals.Signal;
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.SpaceRef;
 	import com.teamphysics.zachl.blocks.BaseBlock;
+	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
 	import com.teamphysics.zachl.blocks.KingBlock;
 	import com.teamphysics.zachl.blocks.LargeSquareBlock;
+	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
 	import com.teamphysics.zachl.blocks.LongBlock;
 	import com.teamphysics.zachl.blocks.RectangleBlock;
 	import com.teamphysics.zachl.blocks.SquareBlock;
-	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
 	import com.teamphysics.zachl.blocks.StoneSquareBlock;
-	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
-	import nape.phys.Material;
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.geom.Point;
+	import flash.utils.Timer;
+	import nape.callbacks.CbType;
+	import nape.callbacks.InteractionListener;
+	import nape.phys.Body;
 	import org.osflash.signals.Signal;
-	import com.greensock.events.LoaderEvent;
-	import com.greensock.loading.LoaderMax;
-	import com.greensock.loading.XMLLoader;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.Linear;
-	import nape.geom.Vec2;
-	import com.teamphysics.util.CollisionManager;
 
 	public class Castle extends MovieClip
 	{
@@ -183,13 +170,36 @@
 		private function lockKingPosition()
 		{
 			this.tKingPlacementTimer.stop();
-			king.buildBlock(king.x,king.y, _nCollisionGroup);
+			king = curKingPlacementBlock.mcKing;
 			StageRef.stage.addChild(king);
-				
+			//var globalPoint:Point = curKingPlacementBlock.localToGlobal(new Point());
+			//var containerLocalPoint:Point = curKingPlacementBlock.mcKing.globalToLocal(globalPoint);
+			//trace("local point: " + containerLocalPoint.x + ", " + containerLocalPoint.y);
+			
+			//trace("Local  Kid coords : " + (new Point(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y)));
+			//trace("Global Kid coords : " + curKingPlacementBlock.localToGlobal(new Point(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y)));
+			
+			//var screenGlobalPoint:Point = this.localToGlobal(new Point());
+			//var curKingPositionBlockPoint:Point = curKingPlacementBlock.localToGlobal(screenGlobalPoint);
+			//var kingPositionPoint:Point = curKingPlacementBlock.mcKing.localToGlobal(curKingPositionBlockPoint);
+			//trace(kingPositionPoint);
+			
+			king.buildBlock(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y, _nCollisionGroup);
+			
+			
+			aOnScreenObjects.push(king);
 			arrayOfBlocks.push(king);
 
 			aOnScreenObjects.push(king);
 			CollisionManager.instance.add(king);
+			if (player == "Player1")
+			{
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.A, lockKingPosition);
+			}
+			else
+			{
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.L, lockKingPosition);
+			}
 			kingPlacedSignal.dispatch();
 		}
 		

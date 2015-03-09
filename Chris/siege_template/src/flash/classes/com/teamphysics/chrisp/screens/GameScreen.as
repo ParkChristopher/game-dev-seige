@@ -105,6 +105,9 @@
 		public var p1CastleChoice			:int = 0;
 		public var p2CastleChoice			:int = 0;
 		
+		private var p1KingLocked			:Boolean = false;
+		private var p2KingLocked			:Boolean = false;
+		
 		//Powerup 
 		public var mcP1SpeedIndicator		:MovieClip;
 		public var mcP1ShieldIndicator		:MovieClip;
@@ -176,6 +179,9 @@
 			this.mcP2SpeedIndicator.visible = false;
 			this.bPowerupActive = false;
 			
+			this.mcPlayer1AmmoSelector.visible = false;
+			this.mcPlayer2AmmoSelector.visible = false;
+			
 			//Set up and start the powerup timer.
 			this.powerupTimer = new Timer(5000);
 			this.powerupTimer.addEventListener(TimerEvent.TIMER, spawnPowerup);
@@ -228,7 +234,7 @@
 			
 			//placeKings();
 			//Start Cannons
-			startCannons();
+			//startCannons();
 			
 		}
 		
@@ -247,6 +253,9 @@
 		
 		private function startCannons()
 		{
+			this.mcPlayer1AmmoSelector.visible = true;
+			this.mcPlayer2AmmoSelector.visible = true;
+			
 			//Start Cannons
 
 			player1Cannon = new Cannon();
@@ -331,15 +340,36 @@
 		{
 			player1Castle.begin("Player1", this.p1CastleChoice);
 
-			player1Castle.kingPlacedSignal.add(startCannons);
+			player1Castle.kingPlacedSignal.add(player1KingSelected);
 			this.king1CollisionType = player1Castle.kingHitBox;
 
 			player2Castle.begin("Player2", this.p2CastleChoice);
-			player2Castle.kingPlacedSignal.add(startCannons);
+			player2Castle.kingPlacedSignal.add(player2KingSelected);
 
 			this.king1CollisionType = player1Castle.kingHitBox;
 		}
 		/* ---------------------------------------------------------------------------------------- */
+		
+		private function player1KingSelected()
+		{
+			trace("player1KingSelected");
+			p1KingLocked = true;
+			if (p1KingLocked && p2KingLocked)
+			{
+				startCannons();
+			}
+		}
+		
+		private function player2KingSelected()
+		{
+			trace("player2KingSelected");
+			p2KingLocked = true;
+			if (p1KingLocked && p2KingLocked)
+			{
+				startCannons();
+			}
+		}
+		
 		
 		public function kingHit():void
 		{

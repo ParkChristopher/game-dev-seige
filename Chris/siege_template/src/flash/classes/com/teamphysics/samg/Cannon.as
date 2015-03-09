@@ -326,6 +326,7 @@
 		
 		private function shootSingleShot()
 		{
+			trace("shoot single shot");
 			s = new CannonBall();
 			s.gameOverSignal.add(kingKilled);
 			s.x = this.mcCannonBarrel.x;
