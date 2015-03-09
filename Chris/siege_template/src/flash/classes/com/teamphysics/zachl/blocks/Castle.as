@@ -341,5 +341,16 @@
 				StageRef.stage.removeChild(aOnScreenObjects[i]);
 			}
 		}
+		
+		public function cleanPlaceMentBlocks()
+		{
+			var block:KingPlacementBlock;
+			for (var i:int = 0; i < kingPlacementBlocks.length; i++)
+			{
+				block = kingPlacementBlocks.pop();
+				block.end();
+				StageRef.stage.removeChild(block);
+			}
+		}
 	}
 }

@@ -136,7 +136,7 @@
 		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = false;
+		public var debugToggle				:Boolean = true;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -354,6 +354,7 @@
 		{
 			trace("player1KingSelected");
 			p1KingLocked = true;
+			player1Castle.cleanPlaceMentBlocks();
 			if (p1KingLocked && p2KingLocked)
 			{
 				startCannons();
@@ -364,6 +365,7 @@
 		{
 			trace("player2KingSelected");
 			p2KingLocked = true;
+			player2Castle.cleanPlaceMentBlocks();
 			if (p1KingLocked && p2KingLocked)
 			{
 				startCannons();
