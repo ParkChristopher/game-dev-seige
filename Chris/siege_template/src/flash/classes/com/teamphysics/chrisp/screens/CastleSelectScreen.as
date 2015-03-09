@@ -219,7 +219,10 @@
 			
 			trace("Castle Select: P1 castle selected." + iPlayerOneCastleNumber);
 			
-			this.txtP1Choice.text = iPlayerOneCastleNumber.toString();
+			if ($e.target == btRandomP1)
+				this.txtP1Choice.text = " ?";
+			else
+				this.txtP1Choice.text = iPlayerOneCastleNumber.toString();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -252,7 +255,12 @@
 			
 			trace("Castle Select: P2 castle selected." + iPlayerTwoCastleNumber);
 			
-			this.txtP2Choice.text = iPlayerTwoCastleNumber.toString();
+			if ($e.target == btRandomP2)
+				this.txtP2Choice.text = " ?";
+			else
+				this.txtP2Choice.text = iPlayerTwoCastleNumber.toString();
+			
+			
 		}
 
 
