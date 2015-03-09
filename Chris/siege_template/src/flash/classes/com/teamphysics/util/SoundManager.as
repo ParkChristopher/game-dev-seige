@@ -3,6 +3,7 @@ package com.teamphysics.util
 	
 	//TO ADD: Ground Hit
 	//
+	import adobe.utils.CustomActions;
 	import treefortress.sound.SoundAS;
 	
 	/**
@@ -73,6 +74,27 @@ package com.teamphysics.util
 			SoundAS.loadSound("../src/audio/VelocityUp.mp3", SOUND_SPEED_UP);
 			SoundAS.loadSound("../src/audio/Victory.mp3", SOUND_VICTORY);
 		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playPointGet():void
+		{
+			SoundAS.playFx(SOUND_GET_POINT, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playGroundHit():void
+		{
+			SoundAS.playFx(SOUND_GROUND_HIT, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playRotation():void
+		{
+			SoundAS.playFx(SOUND_CANNON_ROTATION, .05);
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playPause():void

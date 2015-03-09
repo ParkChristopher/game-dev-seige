@@ -140,6 +140,8 @@
 		
 		protected function rotateCannon():void
 		{
+			//drowns out all other sound
+			//SoundManager.instance.playRotation();
 			if (_bIsRotating)
 			{
 				if (_bIsRotatingUp)
@@ -171,6 +173,7 @@
 		{	
 			if (_bIsRotating)
 			{
+				SoundManager.instance.playPointGet();
 				_bIsRotating = false;
 				mcPowerBar.begin();
 			}
