@@ -62,10 +62,7 @@
 			this._sObjectType = GameObjectType.TYPE_KING_BLOCK;
 			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
 			{
-				trace("Correctly set as king");
-				trace(this._sObjectType);
-				trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
-
+				//trace(this._sObjectType);
 			}
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this.stop();
@@ -122,7 +119,10 @@
 			return this.collisionGroupHolder;
 		}
 		/* ---------------------------------------------------------------------------------------- */
-	
+		public function setXYCoordinates($x:int, $y:int):void
+		{
+			body.position.setxy($x, $y);
+		}
 		
 		/* ---------------------------------------------------------------------------------------- */				
 		/**

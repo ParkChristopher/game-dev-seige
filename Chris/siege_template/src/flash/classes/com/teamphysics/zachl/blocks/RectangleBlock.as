@@ -62,7 +62,6 @@
 			body = new Body(BodyType.DYNAMIC);
 			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);
 			polygon.filter.collisionGroup = $collisionType;
-			trace(polygon.filter.collisionGroup);
 			this.collisionGroupHolder = polygon.filter.collisionGroup;
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);

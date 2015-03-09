@@ -170,8 +170,11 @@
 		private function lockKingPosition()
 		{
 			this.tKingPlacementTimer.stop();
+			trace("curTempKing x: " + this.curKingPlacementBlock.xCoordinate);
+			trace("curTempKing y: " + this.curKingPlacementBlock.yCoordinate);
 			king = curKingPlacementBlock.mcKing;
-			StageRef.stage.addChild(king);
+			//this.king.setXYCoordinates(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate);
+			//StageRef.stage.addChild(king);
 			//var globalPoint:Point = curKingPlacementBlock.localToGlobal(new Point());
 			//var containerLocalPoint:Point = curKingPlacementBlock.mcKing.globalToLocal(globalPoint);
 			//trace("local point: " + containerLocalPoint.x + ", " + containerLocalPoint.y);
@@ -183,9 +186,9 @@
 			//var curKingPositionBlockPoint:Point = curKingPlacementBlock.localToGlobal(screenGlobalPoint);
 			//var kingPositionPoint:Point = curKingPlacementBlock.mcKing.localToGlobal(curKingPositionBlockPoint);
 			//trace(kingPositionPoint);
-			
-			king.buildBlock(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y, _nCollisionGroup);
-			
+			trace("curKingPlacementBlock.mcKing.x: " + curKingPlacementBlock.mcKing.x + "curKingPlacementBlock.mcKing.y" + curKingPlacementBlock.mcKing.y);
+			king.buildBlock(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate, _nCollisionGroup);
+			trace("after king.buildblock");
 			
 			aOnScreenObjects.push(king);
 			arrayOfBlocks.push(king);

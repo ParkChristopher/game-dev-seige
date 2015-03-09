@@ -1,4 +1,4 @@
-package com.teamphysics.zachl.blocks 
+﻿package com.teamphysics.zachl.blocks 
 {
 	
 	import com.teamphysics.util.GameObjectType;
@@ -86,6 +86,15 @@ package com.teamphysics.zachl.blocks
 		override public function get getCollisionGroup(): int
 		{
 			return this.collisionGroupHolder;
+		}
+		
+		public function get xCoordinate():int
+		{
+			return this.body.position.x;
+		}
+		public function get yCoordinate():int
+		{
+			return this.body.position.y;
 		}
 		
 	}
