@@ -52,18 +52,7 @@
 			this._nHeight = 50;
 			this._nWidth = 25;
 
-			this._sObjectType = GameObjectType.TYPE_KING_BLOCK
-			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
-			{
-				//trace("Correctly set as king");
-				//trace(this._sObjectType);
-				//trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
-			}
 			this._sObjectType = GameObjectType.TYPE_KING_BLOCK;
-			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
-			{
-				//trace(this._sObjectType);
-			}
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this.stop();
 		}
@@ -98,9 +87,6 @@
 			body.userData.graphic = s;	
 		}
 		/* ---------------------------------------------------------------------------------------- */				
-		/**
-		 * Calls the CollectibleManager to create a Vector of collectibles and then randomly places them using the pickRandomStartingLocation function
-		 */
 		override public function begin() :void
 		{
 			super.begin();

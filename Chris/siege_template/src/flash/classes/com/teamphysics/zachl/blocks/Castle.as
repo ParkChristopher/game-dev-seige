@@ -134,7 +134,6 @@
 				else if (blockArray[i] == "kb")
 				{
 					block= new KingPlacementBlock();
-					//block.mcKing.visible = false;
 					kingPlacementBlocks.push(block);
 					StageRef.stage.addChild(block);
 				}
@@ -148,7 +147,6 @@
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
 			TweenMax.delayedCall(5, allowRotation);
-			//placeKing();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -159,10 +157,6 @@
 			curKingPlacementBlock.mcKing.visible = false;
 			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
 			curKingPlacementBlock.mcKing.visible = false;
-			//kingPlacementBlocks[(_nCurKingPlacementIndex - 1) % kingPlacementBlocks.length].mcKing.visible = false;
-			//kingPlacementBlocks[(_nCurKingPlacementIndex) % kingPlacementBlocks.length].mcKing.visible = true;
-			
-			//this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -172,28 +166,13 @@
 			this.tKingPlacementTimer.stop();
 			trace("curTempKing x: " + this.curKingPlacementBlock.xCoordinate);
 			trace("curTempKing y: " + this.curKingPlacementBlock.yCoordinate);
-			king = curKingPlacementBlock.mcKing;
-			//this.king.setXYCoordinates(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate);
-			//StageRef.stage.addChild(king);
-			//var globalPoint:Point = curKingPlacementBlock.localToGlobal(new Point());
-			//var containerLocalPoint:Point = curKingPlacementBlock.mcKing.globalToLocal(globalPoint);
-			//trace("local point: " + containerLocalPoint.x + ", " + containerLocalPoint.y);
-			
-			//trace("Local  Kid coords : " + (new Point(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y)));
-			//trace("Global Kid coords : " + curKingPlacementBlock.localToGlobal(new Point(curKingPlacementBlock.mcKing.x, curKingPlacementBlock.mcKing.y)));
-			
-			//var screenGlobalPoint:Point = this.localToGlobal(new Point());
-			//var curKingPositionBlockPoint:Point = curKingPlacementBlock.localToGlobal(screenGlobalPoint);
-			//var kingPositionPoint:Point = curKingPlacementBlock.mcKing.localToGlobal(curKingPositionBlockPoint);
-			//trace(kingPositionPoint);
+			king = new KingBlock();
 			trace("curKingPlacementBlock.mcKing.x: " + curKingPlacementBlock.mcKing.x + "curKingPlacementBlock.mcKing.y" + curKingPlacementBlock.mcKing.y);
 			king.buildBlock(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate, _nCollisionGroup);
 			trace("after king.buildblock");
 			
 			aOnScreenObjects.push(king);
 			arrayOfBlocks.push(king);
-
-			aOnScreenObjects.push(king);
 			CollisionManager.instance.add(king);
 			if (player == "Player1")
 			{
@@ -204,36 +183,6 @@
 				KeyboardManager.instance.removeKeyDownListener(KeyCode.L, lockKingPosition);
 			}
 			kingPlacedSignal.dispatch();
-		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-
-		private function enterFrameHandler(e:Event)
-		{
-
-			/*var frameCount = frameCount++ % kingPlacementBlocks.length;
-			var curKingPlacementBlock:KingPlacementBlock = kingPlacementBlocks[frameCount];
-			curKingPlacementBlock.mcKing.visible = true;
-			if (player == "Player1")
-			{
-				if (KeyboardManager.instance.isKeyDown(KeyCode.A))
-				{
-					king.x = curKingPlacementBlock.mcKing.x;
-					king.y = curKingPlacementBlock.mcKing.y;
-					this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-				}
-			}
-			else 
-			{
-				if (KeyboardManager.instance.isKeyDown(KeyCode.L))
-				{
-					king.x = curKingPlacementBlock.mcKing.x;
-					king.y = curKingPlacementBlock.mcKing.y;
-					this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-				}
-			}
-			curKingPlacementBlock.mcKing.visible = false;*/
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
