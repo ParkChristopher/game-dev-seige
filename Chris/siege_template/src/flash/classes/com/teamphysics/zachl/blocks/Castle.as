@@ -141,8 +141,10 @@
 				block.buildBlock(placementArray[i], h - ((i + 1) * 100), _nCollisionGroup);
 				
 				arrayOfBlocks.push(block);
-
-				aOnScreenObjects.push(block);
+				if(block is KingPlacementBlock == false)
+				{
+					aOnScreenObjects.push(block);
+				}
 				CollisionManager.instance.add(block);
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
