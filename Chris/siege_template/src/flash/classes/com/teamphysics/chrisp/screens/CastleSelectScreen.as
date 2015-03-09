@@ -2,6 +2,7 @@
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	import org.osflash.signals.Signal;
 	import com.teamphysics.util.SoundManager;
 	import com.greensock.TweenMax;
@@ -56,6 +57,8 @@
 		//Castle Selections
 		public var iPlayerOneCastleNumber	:int = 0;
 		public var iPlayerTwoCastleNumber	:int = 0;
+		public var txtP1Choice				:TextField;
+		public var txtP2Choice				:TextField;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -192,7 +195,7 @@
 			SoundManager.instance.playButtonClick();
 			
 			if ($e.target == btCastleOneP1)
-				iPlayerOneCastleNumber = 1;
+				this.iPlayerOneCastleNumber = 1;
 			
 			if ($e.target == btCastleTwoP1)
 				iPlayerOneCastleNumber = 2;
@@ -213,7 +216,8 @@
 				iPlayerOneCastleNumber = 1 + Math.random() * 5;
 			
 			trace("Castle Select: P1 castle selected." + iPlayerOneCastleNumber);
-			//TODO: Add display update for players current choice
+			
+			this.txtP1Choice.text = iPlayerOneCastleNumber.toString();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -245,7 +249,8 @@
 				iPlayerTwoCastleNumber = 1 + Math.random() * 5;
 			
 			trace("Castle Select: P2 castle selected." + iPlayerTwoCastleNumber);
-			//TODO: Add display update for players current choice
+			
+			this.txtP2Choice.text = iPlayerTwoCastleNumber.toString();
 		}
 
 

@@ -91,6 +91,7 @@ package com.teamphysics.util
 		
 		public function playResultsMusic():void
 		{
+			SoundAS.fadeAllTo(0);
 			SoundAS.fadeFrom(MUSIC_RESULTS_SCREEN, 0, .2);
 			SoundAS.playLoop(MUSIC_RESULTS_SCREEN, .2);
 		}
@@ -166,8 +167,8 @@ package com.teamphysics.util
 		{
 			
 			SoundAS.fadeAllTo(0);
-			SoundAS.fadeFrom(MUSIC_GAME_SCREEN, 0, .2);
-			SoundAS.playLoop(MUSIC_GAME_SCREEN, .2);
+			SoundAS.fadeFrom(MUSIC_GAME_SCREEN, 0, .1);
+			SoundAS.playLoop(MUSIC_GAME_SCREEN, .1);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

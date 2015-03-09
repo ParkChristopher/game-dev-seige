@@ -247,7 +247,7 @@
 						}
 						
 						trace("ball velocity: " + physicsBody.velocity.length);
-						if (physicsBody.velocity.length > 700)
+						if (physicsBody.velocity.length > 500)
 						{
 							trace("massive damage");
 							block.health-= 33;
