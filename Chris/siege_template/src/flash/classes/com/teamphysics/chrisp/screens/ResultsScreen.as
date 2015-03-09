@@ -81,15 +81,29 @@ package com.teamphysics.chrisp.screens {
 		//sets all score variables for the game.
 		public function tallyScore():void
 		{
+			var p1Acc :Number;
+			var p2Acc :Number;
+			
 			this.txtP1Score.text = ScoreManager.instance.nP1Score.toString();
 			this.txtP2Score.text = ScoreManager.instance.nP2Score.toString();
 			this.txtP1Shots.text = ScoreManager.instance.nP1ShotsFired.toString();
 			this.txtP2Shots.text = ScoreManager.instance.nP2ShotsFired.toString();
 			
-			//Calculate accuracy values here
+			ScoreManager.instance.calculateAccuracy();
+			ScoreManager.instance.updateHighScore();
 			
-			this.txtP1Accuracy.text = "%";
-			this.txtP2Accuracy.text = "%";
+			p1Acc = ScoreManager.instance.nP1Accuracy * 100;
+			p2Acc = ScoreManager.instance.nP2Accuracy * 100;
+			
+			if (p1Acc > 100)
+				p1Acc = 100;
+			
+			if (p2Acc > 100)
+				p2Acc = 100;
+			
+			this.txtP1Accuracy.text = p1Acc.toString() + " %";
+			this.txtP2Accuracy.text = p2Acc.toString() + " %";
+			
 			
 			this.txtHighScore.text  = ScoreManager.instance.nHighScore.toString();
 			

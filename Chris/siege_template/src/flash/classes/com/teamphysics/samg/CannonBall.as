@@ -222,12 +222,6 @@
 					block = KingBlock($object);
 				}
 				
-				
-				if (isSoundReset)
-				{
-					SoundManager.instance.playBlockHit();
-					this.isSoundReset = false;
-				}
 				trace("OBJECT FIRED CANNONBALL OWNER IS: " + bOwnerIsP1 + " Block is : " + block.getCollisionGroup);
 				//If cannonball is owned by p1 and the block collisiongroup is 2 or the reverse
 				if(this.bOwnerIsP1 == true && block.getCollisionGroup == 2 || this.bOwnerIsP1 == false && block.getCollisionGroup == 1)
@@ -236,9 +230,21 @@
 					{
 						//Guessing on score placement here
 						if (this.bOwnerIsP1)
+						{
 							ScoreManager.instance.nP1Score += 50;
+							ScoreManager.instance.nP1ShotsLanded += 1;
+						}
 						else
+						{
+							ScoreManager.instance.nP2ShotsLanded += 1;
 							ScoreManager.instance.nP2Score += 50;
+						}
+						
+						if (isSoundReset)
+						{
+							SoundManager.instance.playBlockHit();
+							this.isSoundReset = false;
+						}
 						
 						trace("ball velocity: " + physicsBody.velocity.length);
 						if (physicsBody.velocity.length > 700)

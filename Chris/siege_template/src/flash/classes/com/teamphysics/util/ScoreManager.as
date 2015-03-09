@@ -3,6 +3,7 @@ package com.teamphysics.util
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.natejc.utils.StageRef;
 	import flash.events.Event;
+	import flash.net.SharedObject;
 
 	/**
 	 * Manages the score for the game
@@ -21,6 +22,9 @@ package com.teamphysics.util
 		public var nP1Accuracy		:Number;
 		public var nP2Accuracy		:Number;
 		public var nHighScore		:Number;
+		public var nP1ShotsLanded	:Number;
+		public var nP2ShotsLanded	:Number;
+		
 		public var sWinner			:String;
 		
 		
@@ -55,13 +59,48 @@ package com.teamphysics.util
 			this.nP2ShotsFired = 0;
 			this.nP1Accuracy = 0;
 			this.nP2Accuracy = 0;
-			this.sWinner = "";
+			this.nP1ShotsLanded = 0;
+			this.nP2ShotsLanded = 0;
 			
-			//reset this to the highscore from shared object
-			this.nHighScore = 0;	
+			this.sWinner = "";
+			this.updateHighScore();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
+		
+		public function calculateAccuracy():void
+		{
+			if (this.nP1ShotsFired == 0)
+				this.nP1Accuracy = 0;
+			else
+				this.nP1Accuracy = this.nP1ShotsLanded / this.nP1ShotsFired;
+				
+			if (this.nP2ShotsFired == 0)
+				this.nP2Accuracy = 0;
+			else
+				this.nP2Accuracy = this.nP2ShotsLanded / this.nP2ShotsFired;
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function updateHighScore():void
+		{
+			var so:SharedObject = SharedObject.getLocal("data");
+			
+			if (so.size == 0)
+				so.data.highscore = 0;
+				
+			if (this.nP1Score > so.data.highscore)
+				so.data.highscore = this.nP1Score;
+			
+			if (this.nP2Score > so.data.highscore)
+				so.data.highscore = this.nP2Score;
+				
+			this.nHighScore = so.data.highscore;
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 	}
 }
 
