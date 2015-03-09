@@ -327,6 +327,8 @@
 		private function shootSingleShot()
 		{
 			trace("shoot single shot");
+			var velocityVec:Vec2;
+			var scaler:Number;
 			s = new CannonBall();
 			s.gameOverSignal.add(kingKilled);
 			s.x = this.mcCannonBarrel.x;
@@ -344,8 +346,8 @@
 				/*trace("Left?: " + bOwnerIsP1);
 				trace(frontPoint.x + ", " + frontPoint.y);
 				trace(backPoint.x + ", " + backPoint.y);*/
-			var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
-			var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
+			velocityVec = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
+			scaler = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
 				
 				//trace("speed bonus: " +_nSpeedBonus);
 			velocityVec = velocityVec.mul(scaler);
@@ -379,8 +381,8 @@
 				/*trace("Left?: " + bOwnerIsP1);
 				trace(frontPoint.x + ", " + frontPoint.y);
 				trace(backPoint.x + ", " + backPoint.y);*/
-				var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
-				var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
+				velocityVec = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
+				scaler = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
 				
 				//trace("speed bonus: " +_nSpeedBonus);
 				velocityVec = velocityVec.mul(scaler);

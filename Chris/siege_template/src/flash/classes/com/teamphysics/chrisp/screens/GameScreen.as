@@ -136,7 +136,7 @@
 		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = true;
+		public var debugToggle				:Boolean = false;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -305,11 +305,15 @@
 			//Stop and remove timers
 			this.powerupTimer.removeEventListener(TimerEvent.TIMER, spawnPowerup);
 			this.powerupTimer.stop();
-			
-			player1Cannon.speedCleanupSignal.remove(removeSpeed);
-			player1Cannon.cannonFireSignal.removeAll();
-			player2Cannon.speedCleanupSignal.remove(removeSpeed);
-			player2Cannon.cannonFireSignal.removeAll();
+			if(this.p1KingLocked == true || this.p2KingLocked == true)
+			{
+				player1Cannon.speedCleanupSignal.remove(removeSpeed);
+				player1Cannon.cannonFireSignal.removeAll();
+				player2Cannon.speedCleanupSignal.remove(removeSpeed);
+				player2Cannon.cannonFireSignal.removeAll();
+			}
+			this.player1Castle.cleanPlaceMentBlocks();
+			this.player2Castle.cleanPlaceMentBlocks();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
