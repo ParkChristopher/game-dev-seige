@@ -164,10 +164,8 @@
 		private function lockKingPosition()
 		{
 			this.tKingPlacementTimer.stop();
-			trace("curTempKing x: " + this.curKingPlacementBlock.xCoordinate);
-			trace("curTempKing y: " + this.curKingPlacementBlock.yCoordinate);
 			king = new KingBlock();
-			trace("curKingPlacementBlock.mcKing.x: " + curKingPlacementBlock.mcKing.x + "curKingPlacementBlock.mcKing.y" + curKingPlacementBlock.mcKing.y);
+			StageRef.stage.addChild(king);
 			king.buildBlock(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate, _nCollisionGroup);
 			trace("after king.buildblock");
 			
