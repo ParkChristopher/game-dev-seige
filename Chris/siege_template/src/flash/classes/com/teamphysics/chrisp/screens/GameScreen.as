@@ -223,6 +223,9 @@
 			//Build Castles
 			buildCastles();
 			
+			p1KingLocked = false;
+			p2KingLocked = false;
+			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
 				ballCollisionType, king1CollisionType, kingHit);
