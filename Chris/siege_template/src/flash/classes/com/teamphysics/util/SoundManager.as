@@ -76,6 +76,13 @@ package com.teamphysics.util
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function playItemSelect():void
+		{
+			SoundAS.playFx(SOUND_ITEM_SELECT, .5);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function playPointGet():void
 		{
 			SoundAS.playFx(SOUND_GET_POINT, .5);

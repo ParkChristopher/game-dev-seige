@@ -369,11 +369,13 @@
 		{
 			if ($sToType == "single")
 			{
-				TweenMax.to(this.mcPlayer1AmmoSelector, 1.0, { y:536 } );
+				SoundManager.instance.playItemSelect();
+				TweenMax.to(this.mcPlayer1AmmoSelector, .5, { y:536 } );
 			}
 			else
 			{
-				TweenMax.to(this.mcPlayer1AmmoSelector, 1.0, { y:580 } );
+				SoundManager.instance.playItemSelect();
+				TweenMax.to(this.mcPlayer1AmmoSelector, .5, { y:580 } );
 			}
 		}
 		
@@ -381,11 +383,13 @@
 		{
 			if ($sToType == "single")
 			{
-				TweenMax.to(this.mcPlayer2AmmoSelector, 1.0, { y:536 } );
+				SoundManager.instance.playItemSelect();
+				TweenMax.to(this.mcPlayer2AmmoSelector, .5, { y:536 } );
 			}
 			else
 			{
-				TweenMax.to(this.mcPlayer2AmmoSelector, 1.0, { y:580 } );
+				SoundManager.instance.playItemSelect();
+				TweenMax.to(this.mcPlayer2AmmoSelector, .5, { y:580 } );
 			}
 		}
 		
