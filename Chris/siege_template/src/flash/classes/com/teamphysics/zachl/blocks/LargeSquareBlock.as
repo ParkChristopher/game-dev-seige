@@ -53,7 +53,7 @@
 		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			var s:Sprite = new LargeSquareBlockGraphic();
-			s.width = _nWidth
+			s.width = _nWidth;
 			s.height = _nHeight;
 			this.addChild(s);
 			var material :Material = new Material(.1,10,2,10);
@@ -64,7 +64,7 @@
 			
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
-
+			
 			body.space = SpaceRef.space;
 			
 			body.userData.graphic = s;	
@@ -81,7 +81,7 @@
 		{
 			return this.collisionGroupHolder;
 		}
-		/* ---------------------------------------------------------------------------------------- */				
+		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
 		 * Calls CollectibleManagers destroy function

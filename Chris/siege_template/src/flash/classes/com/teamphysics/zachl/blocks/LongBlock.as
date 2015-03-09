@@ -52,7 +52,7 @@
 		/* ---------------------------------------------------------------------------------------- */
 		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
-			var s:Sprite = new TempTexture();
+			var s:Sprite = new HorizontalRectangleBlockGraphic();
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);

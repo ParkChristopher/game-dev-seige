@@ -250,7 +250,7 @@
 						if (physicsBody.velocity.length > 500)
 						{
 							trace("massive damage");
-							block.health-= 33;
+							block.health -= 33;
 							trace("block.health: " + block.health);
 						}
 						else if (physicsBody.velocity.length > 300)
