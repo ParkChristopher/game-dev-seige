@@ -9,6 +9,8 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Polygon;
@@ -45,6 +47,7 @@
 		private var aOnScreenObjects		:Array;
 		private var blockArray				:Array;
 		private var arrayOfBlocks			:Vector.<BaseBlock>;
+
 		private var player					:String;
 		private var stringCoords			:String;
 		protected var kingCollisionType		:CbType = new CbType();
@@ -54,6 +57,16 @@
 		private var nWidth 					:int = StageRef.stage.stageWidth;
 		private var _nCollisionGroup		:int;
 		private var castleNumber			:int;
+
+		
+		private var kingPlacementBlocks		:Vector.<KingPlacementBlock>;
+		private var curKingPlacementBlock	:KingPlacementBlock;
+		private var _nCurKingPlacementIndex	:int;
+		public var kingPlacedSignal			:Signal = new Signal();
+		private var king					:KingBlock;
+		private var tKingPlacementTimer		:Timer;
+		
+
 		//Bodies
 		private var body		:Body;
 		/* ---------------------------------------------------------------------------------------- */				
@@ -76,6 +89,10 @@
 			parseXML();
 			this.aOnScreenObjects = new Array();
 			arrayOfBlocks = new Vector.<BaseBlock>;
+
+			kingPlacementBlocks = new Vector.<KingPlacementBlock>();
+			tKingPlacementTimer = new Timer(100);
+
 			this.buildCastle();
 		}
 		
@@ -129,7 +146,9 @@
 				}
 				else if (blockArray[i] == "kb")
 				{
-					block = new KingBlock();
+					block= new KingPlacementBlock();
+					//block.mcKing.visible = false;
+					kingPlacementBlocks.push(block);
 					StageRef.stage.addChild(block);
 				}
 				
@@ -142,17 +161,90 @@
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
 			TweenMax.delayedCall(5, allowRotation);
-
+			//placeKing();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function swapKingPosition(e:Event)
+		{
+			_nCurKingPlacementIndex = (_nCurKingPlacementIndex + 1) % kingPlacementBlocks.length;
+			curKingPlacementBlock.mcKing.visible = false;
+			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
+			curKingPlacementBlock.mcKing.visible = false;
+			//kingPlacementBlocks[(_nCurKingPlacementIndex - 1) % kingPlacementBlocks.length].mcKing.visible = false;
+			//kingPlacementBlocks[(_nCurKingPlacementIndex) % kingPlacementBlocks.length].mcKing.visible = true;
+			
+			//this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		private function lockKingPosition()
+		{
+			this.tKingPlacementTimer.stop();
+			king.buildBlock(king.x,king.y, _nCollisionGroup);
+			StageRef.stage.addChild(king);
+				
+			arrayOfBlocks.push(king);
+
+			aOnScreenObjects.push(king);
+			CollisionManager.instance.add(king);
+			kingPlacedSignal.dispatch();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+
+		private function enterFrameHandler(e:Event)
+		{
+
+			/*var frameCount = frameCount++ % kingPlacementBlocks.length;
+			var curKingPlacementBlock:KingPlacementBlock = kingPlacementBlocks[frameCount];
+			curKingPlacementBlock.mcKing.visible = true;
+			if (player == "Player1")
+			{
+				if (KeyboardManager.instance.isKeyDown(KeyCode.A))
+				{
+					king.x = curKingPlacementBlock.mcKing.x;
+					king.y = curKingPlacementBlock.mcKing.y;
+					this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				}
+			}
+			else 
+			{
+				if (KeyboardManager.instance.isKeyDown(KeyCode.L))
+				{
+					king.x = curKingPlacementBlock.mcKing.x;
+					king.y = curKingPlacementBlock.mcKing.y;
+					this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				}
+			}
+			curKingPlacementBlock.mcKing.visible = false;*/
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+
 		public function allowRotation():void
 		{
 			for(var i :uint = 0; i < SpaceRef.space.bodies.length; i++)
 			{
 				SpaceRef.space.bodies.at(i).allowRotation = true;
 			}
+			tKingPlacementTimer.addEventListener(TimerEvent.TIMER, swapKingPosition);
+			
+			if (player == "Player1")
+			{
+				KeyboardManager.instance.addKeyDownListener(KeyCode.A, lockKingPosition);
+			}
+			else
+			{
+				KeyboardManager.instance.addKeyDownListener(KeyCode.L, lockKingPosition);
+			}
+			_nCurKingPlacementIndex = 0;
+			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
+			tKingPlacementTimer.start();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

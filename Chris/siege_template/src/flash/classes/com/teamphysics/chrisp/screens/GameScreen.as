@@ -1,20 +1,25 @@
 ﻿package com.teamphysics.chrisp.screens 
 {
 	
-	import com.natejc.input.KeyboardManager;
-	import com.natejc.input.KeyCode;
+	import com.greensock.TweenMax;
+	import com.natejc.utils.StageRef;
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.chrisp.powerups.AbstractPowerup;
 	import com.teamphysics.chrisp.powerups.ShieldPowerup;
 	import com.teamphysics.chrisp.powerups.SpeedPowerup;
+
+	import com.teamphysics.chrisp.ShieldBlock;
+
 	import com.teamphysics.chrisp.screens.AbstractScreen;
 	import com.teamphysics.chrisp.ShieldBlock;
 	import com.teamphysics.chrisp.screens.CastleSelectScreen;
+
 	import com.teamphysics.samg.Cannon;
-	import com.teamphysics.samg.CannonBall;
 	import com.teamphysics.samg.PowerBar;
 	import com.teamphysics.util.CollisionManager;
 	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.ScoreManager;
+	import com.teamphysics.util.SoundManager;
 	import com.teamphysics.util.SpaceRef;
 	import com.teamphysics.zachl.blocks.Castle;
 	import com.teamphysics.zachl.blocks.RectangleBlock;
@@ -29,17 +34,15 @@
 	import flash.utils.Timer;
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
-	import nape.callbacks.InteractionCallback;
 	import nape.callbacks.InteractionListener;
 	import nape.callbacks.InteractionType;
 	import nape.constraint.PivotJoint;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
-	import nape.phys.Material;
-	import nape.shape.Circle;
 	import nape.shape.Polygon;
 	import nape.space.Space;
+	import nape.util.BitmapDebug;
 	import nape.util.Debug;
  	import nape.util.BitmapDebug;
 	import org.osflash.signals.Signal;
@@ -112,6 +115,10 @@
 		public var shieldBlockP2			:ShieldBlock;
 		public var mcP1Shield				:MovieClip;
 		public var mcP2Shield				:MovieClip;
+
+		public var mcPlayer1AmmoSelector		:MovieClip;
+		public var mcPlayer2AmmoSelector		:MovieClip;
+
 		
 		//Physics Parts
 		public var debug					:Debug;
@@ -219,12 +226,37 @@
 				ballCollisionType, king2CollisionType, kingHit);
 			space.listeners.add(interactionListener2);
 			
+			//placeKings();
 			//Start Cannons
+			startCannons();
+			
+		}
+		
+		private function placeKings()
+		{
+			//player1Castle.placeKing();
+			//player2Castle.placeKing();
+			/*var p1KingPlaced:Boolean;
+			var p2KingPlaced:Boolean;
+			while (!p1KingPlaced && !p2KingPlaced)
+			{
+				
+			}
+			startCannons();*/
+		}
+		
+		private function startCannons()
+		{
+			//Start Cannons
+
 			player1Cannon = new Cannon();
 			player1Cannon.x = 60;
 			player1Cannon.y = 450;
 			player1Cannon.setBallCollision(ballCollisionType);
 			player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+
+			player1Cannon.changeShotTypeSignal.add(player1ChangeShotIndicator);
+
 			aOnScreenObjects.push(player1Cannon);
 			this.addChild(player1Cannon);
 			player1Cannon.bOwnerIsP1 = true;
@@ -238,6 +270,8 @@
 			player2Cannon.y = 450;
 			player2Cannon.setBallCollision(ballCollisionType);
 			player2Cannon.cannonFireSignal.add(resetCastleBlocksHit);
+			player2Cannon.changeShotTypeSignal.add(player2ChangeShotIndicator);
+
 			aOnScreenObjects.push(player2Cannon);
 			this.addChild(player2Cannon);
 			player2Cannon.bOwnerIsP1 = false;
@@ -296,10 +330,14 @@
 		private function buildCastles()
 		{
 			player1Castle.begin("Player1", this.p1CastleChoice);
+
+			player1Castle.kingPlacedSignal.add(startCannons);
 			this.king1CollisionType = player1Castle.kingHitBox;
 
 			player2Castle.begin("Player2", this.p2CastleChoice);
-			this.king2CollisionType = player2Castle.kingHitBox;
+			player2Castle.kingPlacedSignal.add(startCannons);
+
+			this.king1CollisionType = player1Castle.kingHitBox;
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -326,6 +364,30 @@
 			this.updateScore();
 		}
 		/* ---------------------------------------------------------------------------------------- */
+		
+		private function player1ChangeShotIndicator($sToType:String)
+		{
+			if ($sToType == "single")
+			{
+				TweenMax.to(this.mcPlayer1AmmoSelector, 1.0, { y:536 } );
+			}
+			else
+			{
+				TweenMax.to(this.mcPlayer1AmmoSelector, 1.0, { y:580 } );
+			}
+		}
+		
+		private function player2ChangeShotIndicator($sToType:String)
+		{
+			if ($sToType == "single")
+			{
+				TweenMax.to(this.mcPlayer2AmmoSelector, 1.0, { y:536 } );
+			}
+			else
+			{
+				TweenMax.to(this.mcPlayer2AmmoSelector, 1.0, { y:580 } );
+			}
+		}
 		
 		protected function player1Rotation():void
 		{

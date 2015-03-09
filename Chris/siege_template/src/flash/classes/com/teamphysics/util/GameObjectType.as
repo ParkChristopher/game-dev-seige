@@ -16,6 +16,8 @@
 		public static const TYPE_KING_BLOCK			:String = "KING";
 		public static const TYPE_SHIELD_WALL		:String = "SHIELD_WALL";
 
+		public static const TYPE_KING_PLACEMENT_BLOCK	:String = "KING_PLACEMENT_BLOCK";
+
 		
 		/* ---------------------------------------------------------------------------------------- */
 		

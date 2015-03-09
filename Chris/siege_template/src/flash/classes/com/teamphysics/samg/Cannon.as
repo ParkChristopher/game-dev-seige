@@ -45,6 +45,8 @@
 		
 		private var _bIsRotatingUp	:Boolean;
 		
+		private var _sShotType		:String;
+		
 		private var _nRotationAmount	:Number;
 		
 		private var _aCannonBalls		:Array;
@@ -55,10 +57,19 @@
 		private var cannonBallPhysicsBody:Body;
 		
 		public var	speedCleanupSignal	:Signal = new Signal(Cannon);
+
+		public var 	changeShotTypeSignal	:Signal = new Signal(String);
+
 		public var	endGameSignal	:Signal = new Signal();
 		public var 	cannonFireSignal	:Signal = new Signal();
 
 		public var s:CannonBall;
+
+		
+		private var multiS1	:CannonBall;
+		private var multiS2	:CannonBall;
+		private var multiS3	:CannonBall;
+
 		
 		public function Cannon() 
 		{
@@ -69,6 +80,15 @@
 			backPoint = new Point();
 			_height = this.mcCannonBarrel.height;//cannon must start horizontal
 			_length = this.mcCannonBarrel.width;
+
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function show()
+		{
+			this.visible = true;
+
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -96,6 +116,8 @@
 			}
 			_aCannonBalls = new Array();
 			
+			_sShotType = "single";
+			
 			_nSpeedBonus = 0;
 			
 			
@@ -105,12 +127,15 @@
 			
 			if (bOwnerIsP1)
 			{
-				KeyboardManager.instance.addKeyDownListener(KeyCode.A, addCannonBall);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.A, firePressed);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.Q, changeShotType);
+				
 			}
 			else 
 			{
 				this.scaleX = -1;
-				KeyboardManager.instance.addKeyDownListener(KeyCode.L, addCannonBall);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.L, firePressed);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.P, changeShotType);
 			}
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
@@ -169,7 +194,8 @@
 			ballCollisionType = $collisionType;
 		}
 		
-		private function addCannonBall()
+
+		private function firePressed()
 		{	
 			if (_bIsRotating)
 			{
@@ -190,6 +216,151 @@
 				}
 				
 				mcPowerBar.stopMoving();
+
+				if (_sShotType == "single")
+				{
+					shootSingleShot();
+				}
+				else
+				{
+					shootMultiShot();
+				}
+				
+				_bIsRotating = true;
+				mcPowerBar.end();
+					
+				_nSpeedBonus = 0;
+				this.speedCleanupSignal.dispatch(this);
+				
+				justFired();
+			}
+			
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		private function shootMultiShot()
+		{
+			multiS1 = new CannonBall();
+			multiS2 = new CannonBall();
+			multiS3 = new CannonBall();
+			multiS1.scaleX = multiS1.scaleY = .6;
+			multiS2.scaleX = multiS2.scaleY = .6;
+			multiS3.scaleX = multiS3.scaleY = .6;
+			
+			multiS1.gameOverSignal.add(kingKilled);
+			multiS2.gameOverSignal.add(kingKilled);
+			multiS3.gameOverSignal.add(kingKilled);
+			
+			multiS1.x = this.mcCannonBarrel.x;
+			multiS1.y = this.mcCannonBarrel.y;
+			multiS2.x = this.mcCannonBarrel.x;
+			multiS2.y = this.mcCannonBarrel.y;
+			multiS3.x = this.mcCannonBarrel.x;
+			multiS3.y = this.mcCannonBarrel.y;
+			
+			multiS1.bOwnerIsP1 = this.bOwnerIsP1;
+			multiS2.bOwnerIsP1 = this.bOwnerIsP1;
+			multiS3.bOwnerIsP1 = this.bOwnerIsP1;
+			
+			_aCannonBalls.push(multiS1);
+			_aCannonBalls.push(multiS2);
+			_aCannonBalls.push(multiS3);
+			
+				
+			CollisionManager.instance.add(multiS1);
+			CollisionManager.instance.add(multiS2);
+			CollisionManager.instance.add(multiS3);
+			
+			multiS1.cleanupSignal.add(removeObject);
+			multiS2.cleanupSignal.add(removeObject);
+			multiS3.cleanupSignal.add(removeObject);
+			
+			StageRef.stage.addChildAt(multiS1, 1);
+			StageRef.stage.addChildAt(multiS2, 1);
+			StageRef.stage.addChildAt(multiS3, 1);
+			
+			multiS1.begin();
+			multiS2.begin();
+			multiS3.begin();
+				
+				/*trace("Left?: " + bOwnerIsP1);
+				trace(frontPoint.x + ", " + frontPoint.y);
+				trace(backPoint.x + ", " + backPoint.y);*/
+			var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
+			var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
+				
+				//trace("speed bonus: " +_nSpeedBonus);
+			velocityVec = velocityVec.mul(scaler);
+			
+			multiS1.setCbType(ballCollisionType);
+			multiS2.setCbType(ballCollisionType);
+			multiS3.setCbType(ballCollisionType);
+			
+			if (bOwnerIsP1)
+			{
+				ScoreManager.instance.nP1ShotsFired += 1;
+				multiS1.buildBall(this.x, this.y,  1);
+				multiS2.buildBall(this.x, this.y,  1);
+				multiS3.buildBall(this.x, this.y,  1);
+			}
+			else 
+			{
+				ScoreManager.instance.nP2ShotsFired += 1;
+				multiS1.buildBall(this.x, this.y, 2);
+				multiS2.buildBall(this.x, this.y, 2);
+				multiS3.buildBall(this.x, this.y, 2);
+			}
+			
+			multiS1.body.mass = .6;
+			multiS2.body.mass = .6;
+			multiS3.body.mass = .6;
+			
+			multiS1.setVelocity(velocityVec);
+			velocityVec = velocityVec.rotate(2 * Math.PI / 180);
+			multiS2.setVelocity(velocityVec);
+			velocityVec = velocityVec.rotate( -4 * Math.PI / 180);
+			multiS3.setVelocity(velocityVec);
+			justFired();
+		}
+		
+		private function shootSingleShot()
+		{
+			s = new CannonBall();
+			s.gameOverSignal.add(kingKilled);
+			s.x = this.mcCannonBarrel.x;
+			s.y = this.mcCannonBarrel.y;
+			
+			s.bOwnerIsP1 = this.bOwnerIsP1;
+			
+			_aCannonBalls.push(s);
+				
+			CollisionManager.instance.add(s);
+			s.cleanupSignal.add(removeObject);
+			StageRef.stage.addChildAt(s, 1);
+			s.begin();
+				
+				/*trace("Left?: " + bOwnerIsP1);
+				trace(frontPoint.x + ", " + frontPoint.y);
+				trace(backPoint.x + ", " + backPoint.y);*/
+			var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
+			var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
+				
+				//trace("speed bonus: " +_nSpeedBonus);
+			velocityVec = velocityVec.mul(scaler);
+				
+			s.setCbType(ballCollisionType);
+				
+			if (bOwnerIsP1)
+			{
+				ScoreManager.instance.nP1ShotsFired += 1;
+				s.buildBall(this.x, this.y,  1);
+			}
+			else 
+			{
+				ScoreManager.instance.nP2ShotsFired += 1;
+				s.buildBall(this.x, this.y, 2);
+
 				s = new CannonBall();
 				s.gameOverSignal.add(kingKilled);
 				s.x = this.mcCannonBarrel.x;
@@ -235,10 +406,9 @@
 				
 				justFired();
 			}
-			
+			s.body.mass = 2;
+			s.setVelocity(velocityVec);
 		}
-		
-		/* ---------------------------------------------------------------------------------------- */
 		
 		private function justFired()
 		{
@@ -256,6 +426,20 @@
 			//_bIsRotatingUp = true; //?
 			_bIsRotating = true;
 			SoundManager.instance.playLock();
+		}
+		
+		private function changeShotType()
+		{
+			if (_sShotType == "single")
+			{
+				changeShotTypeSignal.dispatch("multi");
+				_sShotType = "multi";
+			}
+			else //shotType == "multi"
+			{
+				changeShotTypeSignal.dispatch("single");
+				_sShotType = "single";
+			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -314,8 +498,10 @@
 		{
 			super.end();
 			
-			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, addCannonBall);
-			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, addCannonBall);
+
+			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, firePressed);
+			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
+
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		

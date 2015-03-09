@@ -93,6 +93,7 @@
 		public function setCbType($cType:CbType)
 		{
 			this.ballCollisionType = $cType;
+
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -100,10 +101,12 @@
 		public function setVelocity($vVelocityVec:Vec2)
 		{
 			physicsBody.velocity = $vVelocityVec;
+
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+
 		public function buildBall($xPos:int, $yPos:int, $collisionGroup:int)
 		{
 			//trace($xPos + ", " + $yPos);
@@ -250,19 +253,29 @@
 						if (physicsBody.velocity.length > 500)
 						{
 							trace("massive damage");
-							block.health -= 33;
+
+
+							block.health-= 40;
+
+							
 							trace("block.health: " + block.health);
 						}
 						else if (physicsBody.velocity.length > 300)
 						{
 							trace("standard damage");
-							block.health = block.health - 20;
+
+							block.health = block.health - 30;
+
+							//block.health = block.health - 20;
+
 							trace("block.health: " + block.health);
 						}
 						else if (physicsBody.velocity.length > 100)
 						{
 							trace("min damage");
-							block.health -= 5;
+
+							block.health -= 15;
+
 							trace("block.health: " + block.health);
 						}
 						
@@ -309,6 +322,7 @@
 				}
 				
 			}
+
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -320,22 +334,25 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function removeCannonBall():void
-		{
-			this.cleanupSignal.dispatch(this);
-		}
-		/* ---------------------------------------------------------------------------------------- */
-		
 		protected function resetTimer($e:TimerEvent):void
 		{
 			this.hitTimerReset.reset();
 			this.isSoundReset = true;
+
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function removeCannonBall():void
+		{
+			this.cleanupSignal.dispatch(this);
 		}
 		
 		public function cleanCannonBall():void
 		{
 			this.physicsBody.space = null;
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 	}

@@ -40,9 +40,6 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */				
-		/**
-		 * Calls the CollectibleManager to create a Vector of collectibles and then randomly places them using the pickRandomStartingLocation function
-		 */
 		override public function begin() :void
 		{
 			super.begin();
@@ -55,7 +52,9 @@
 			s.width = _nWidth
 			s.height = _nHeight;
 			this.addChild(s);
-			var material :Material = new Material(.1,1,1,1);
+
+			var material :Material = new Material(); //Material(.1,1,1,1);
+
 			
 			body = new Body(BodyType.DYNAMIC);
 			var polygon:Polygon = new Polygon(Polygon.box(_nWidth, _nHeight), material);

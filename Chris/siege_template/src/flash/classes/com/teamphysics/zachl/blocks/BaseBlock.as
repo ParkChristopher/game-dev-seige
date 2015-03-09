@@ -39,7 +39,11 @@
 			super();
 			//this._sObjectType = GameObjectType.TYPE_BLOCK;
 			//this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
+
+			_nBlockHealth = 100;
+
 			health = 100;
+
 			parseXML();
 			this.stop();
 		}
@@ -48,6 +52,7 @@
 		override public function begin() :void
 		{
 			this.play();
+			//_nBlockHealth = 100;
 			this.visible = true;
 		}
 		

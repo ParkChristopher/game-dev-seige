@@ -2,17 +2,28 @@
 {
 	
 	
+
+	import com.teamphysics.util.GameObjectType;
+
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
+
 	import com.teamphysics.util.SpaceRef;
 	import flash.display.SimpleButton;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+
 	import nape.phys.Body;
 	import nape.phys.BodyType;
+	import nape.phys.Material;
 	import nape.shape.Polygon;
+
+	import org.osflash.signals.*;
+	import org.osflash.signals.Signal;
+
 	import org.osflash.signals.Signal;
 	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
@@ -20,6 +31,7 @@
 	import com.teamphysics.util.CollisionManager;
 	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.chrisp.AbstractGameObject; 
+
 	
 	//import nape.shape.
 
@@ -39,12 +51,21 @@
 			this.mouseEnabled = false;
 			this._nHeight = 50;
 			this._nWidth = 25;
+
+			this._sObjectType = GameObjectType.TYPE_KING_BLOCK
+			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
+			{
+				//trace("Correctly set as king");
+				//trace(this._sObjectType);
+				//trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
+			}
 			this._sObjectType = GameObjectType.TYPE_KING_BLOCK;
 			if(this._sObjectType == GameObjectType.TYPE_KING_BLOCK)
 			{
 				trace("Correctly set as king");
 				trace(this._sObjectType);
 				trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
+
 			}
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this.stop();
