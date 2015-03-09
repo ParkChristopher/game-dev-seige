@@ -532,6 +532,7 @@
 			{
 				this.bIsPaused = false;
 				this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				SoundManager.instance.resumeSound();
 				return;
 			}
 			
@@ -539,6 +540,7 @@
 			{
 				this.bIsPaused = true;
 				this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				SoundManager.instance.pauseSound();
 				return;
 			}
 		}

@@ -202,6 +202,19 @@ package com.teamphysics.util
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function pauseSound():void
+		{
+			SoundAS.pauseAll();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function resumeSound():void
+		{
+			SoundAS.resumeAll();
+		}
+		/* ---------------------------------------------------------------------------------------- */
+		
 		//Returns an instance to this class.
 		public static function get instance():SoundManager
 		{
