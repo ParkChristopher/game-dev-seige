@@ -345,7 +345,9 @@
 		public function cleanPlaceMentBlocks()
 		{
 			var block:KingPlacementBlock;
-			for (var i:int = 0; i < kingPlacementBlocks.length; i++)
+			var len:int = kingPlacementBlocks.length;
+			trace("kingPlacementBlocks.length: " + kingPlacementBlocks.length);
+			for (var i:int = 0; i < len; i++)
 			{
 				block = kingPlacementBlocks.pop();
 				block.end();
