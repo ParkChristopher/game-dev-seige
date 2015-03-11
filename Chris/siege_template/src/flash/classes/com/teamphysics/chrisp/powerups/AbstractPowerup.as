@@ -48,7 +48,7 @@ package com.teamphysics.chrisp.powerups
 			this.y = MIN_POS_Y + Math.random() * (MAX_POS_Y - MIN_POS_Y);
 			
 			
-			/******NOTE CURRENTLY USED REMOVE IF NECESSARY***********/
+			/******NOTE NOT CURRENTLY USED REMOVE IF NECESSARY***********/
 			//Create body and set position somewhere between castles.
 			this.physicsBody = new Body(BodyType.KINEMATIC);
 			physicsBody.shapes.add(new Circle(this.width * 0.5, null));

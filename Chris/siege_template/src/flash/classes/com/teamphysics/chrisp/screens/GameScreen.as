@@ -8,10 +8,10 @@
 	import com.teamphysics.chrisp.powerups.ShieldPowerup;
 	import com.teamphysics.chrisp.powerups.SpeedPowerup;
 
-	import com.teamphysics.chrisp.ShieldBlock;
+	import com.teamphysics.chrisp.powerups.ShieldBlock;
 
 	import com.teamphysics.chrisp.screens.AbstractScreen;
-	import com.teamphysics.chrisp.ShieldBlock;
+	import com.teamphysics.chrisp.powerups.ShieldBlock;
 	import com.teamphysics.chrisp.screens.CastleSelectScreen;
 
 	import com.teamphysics.samg.Cannon;
@@ -136,7 +136,7 @@
 		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = false;
+		public var debugToggle				:Boolean = true;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -327,10 +327,16 @@
 			if ($playerNum == 1)
 			{
 				player2Castle.resetBlocks();
+				
+				if (shieldBlockP2 != null)
+					this.shieldBlockP2.bHasBeenCollidedWith = false;
 			}
 			else
 			{
 				player1Castle.resetBlocks();
+				
+				if (shieldBlockP1 != null)
+					this.shieldBlockP1.bHasBeenCollidedWith = false;
 			}
 		}
 		
@@ -551,8 +557,8 @@
 					SoundManager.instance.playPowerupGet();
 					$object.activate(this);
 					
-					this.createShield($object.bOwnerIsP1);
 					$object.cleanupSignal.remove(removeObject);
+					this.createShield($object.bOwnerIsP1);
 						
 					this.bPowerupActive = false;
 				}
@@ -590,13 +596,13 @@
 			shield = new ShieldBlock($isPlayerOne);
 			
 			if ($isPlayerOne)
-			{
+			{		
 				shieldBlockP1 = shield;
 				this.mcP1Shield.visible = true;
 				shieldBlockP1.removeShieldSignal.add(removeShield);
 			}
 			else
-			{
+			{		
 				shieldBlockP2 = shield;
 				this.mcP2Shield.visible = true;
 				shieldBlockP2.removeShieldSignal.add(removeShield);

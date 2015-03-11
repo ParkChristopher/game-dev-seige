@@ -26,7 +26,7 @@
 		protected var _nWidth			:int;
 		protected var tempSprite		:Sprite;
 		protected var collisionGroup	:int = 0;
-		public var bHasBeenCollidedWith	:Boolean;
+		//public var bHasBeenCollidedWith	:Boolean; Moved to abstractGameObject
 		
 		//Bodies
 		private var body		:Body = new Body(BodyType.DYNAMIC);

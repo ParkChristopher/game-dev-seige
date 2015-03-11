@@ -26,6 +26,8 @@ package com.teamphysics.chrisp
 		
 		public var bOwnerIsP1			:Boolean;
 		
+		public var bHasBeenCollidedWith	:Boolean;
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -37,6 +39,7 @@ package com.teamphysics.chrisp
 			
 			this.mouseEnabled	= false;
 			this.mouseChildren	= false;
+			this.bHasBeenCollidedWith = false;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		

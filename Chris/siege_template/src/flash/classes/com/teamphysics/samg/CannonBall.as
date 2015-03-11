@@ -30,6 +30,7 @@
 	import com.greensock.TweenMax;
 	import com.teamphysics.util.SoundManager;
 	import com.teamphysics.util.ScoreManager;
+	import com.teamphysics.chrisp.powerups.ShieldBlock;
 	
 	/**
 	 * ...
@@ -144,18 +145,23 @@
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function collidedWith($object:AbstractGameObject):void
-		{
-			//trace($object.objectType);
-			
+		{	
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_WALL)
 			{
-				//if this wall belongs to owner of cannonball do nothing
-				if ($object.bOwnerIsP1 == this.bOwnerIsP1)
+				var tempShieldBlock = ShieldBlock($object);
+				
+				if (tempShieldBlock.bOwnerIsP1 == this.bOwnerIsP1)
 					return;
 				
-				//removal from collision happens in end for this object
-				$object.end();
-				SoundManager.instance.playShieldDown();
+				tempShieldBlock.bHasBeenCollidedWith = true;
+				tempShieldBlock.nShieldHealth --;
+				trace(tempShieldBlock.nShieldHealth);
+				
+				if (tempShieldBlock.nShieldHealth <= 0)
+				{
+					tempShieldBlock.end();
+					SoundManager.instance.playShieldDown();
+				}
 			}
 			
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)
@@ -225,7 +231,7 @@
 					block = KingBlock($object);
 				}
 				
-				trace("OBJECT FIRED CANNONBALL OWNER IS: " + bOwnerIsP1 + " Block is : " + block.getCollisionGroup);
+				//trace("OBJECT FIRED CANNONBALL OWNER IS: " + bOwnerIsP1 + " Block is : " + block.getCollisionGroup);
 				//If cannonball is owned by p1 and the block collisiongroup is 2 or the reverse
 				if(this.bOwnerIsP1 == true && block.getCollisionGroup == 2 || this.bOwnerIsP1 == false && block.getCollisionGroup == 1)
 				{
