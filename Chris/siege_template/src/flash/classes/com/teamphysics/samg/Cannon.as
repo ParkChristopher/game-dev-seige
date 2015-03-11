@@ -96,6 +96,7 @@
 		override public function begin():void
 		{
 			super.begin();
+			
 			if (bOwnerIsP1)
 			{
 				backPoint.x = this.mcCannonBarrel.x - (this.mcCannonBarrel.width / 2);

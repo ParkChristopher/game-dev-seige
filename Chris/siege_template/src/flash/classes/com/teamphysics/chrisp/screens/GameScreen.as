@@ -136,7 +136,7 @@
 		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = true;
+		public var debugToggle				:Boolean = false;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -181,6 +181,8 @@
 			
 			this.mcPlayer1AmmoSelector.visible = false;
 			this.mcPlayer2AmmoSelector.visible = false;
+			this.player1ChangeShotIndicator("single");
+			this.player2ChangeShotIndicator("single");
 			
 			//Set up and start the powerup timer.
 			this.powerupTimer = new Timer(5000);
@@ -266,9 +268,8 @@
 			player1Cannon.y = 450;
 			player1Cannon.setBallCollision(ballCollisionType);
 			player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
-
 			player1Cannon.changeShotTypeSignal.add(player1ChangeShotIndicator);
-
+			
 			aOnScreenObjects.push(player1Cannon);
 			this.addChild(player1Cannon);
 			player1Cannon.bOwnerIsP1 = true;
@@ -414,12 +415,16 @@
 		{
 			if ($sToType == "single")
 			{
-				SoundManager.instance.playItemSelect();
+				if (this.mcPlayer1AmmoSelector.visible)
+					SoundManager.instance.playItemSelect();
+					
 				TweenMax.to(this.mcPlayer1AmmoSelector, .5, { y:536 } );
 			}
 			else
 			{
-				SoundManager.instance.playItemSelect();
+				if (this.mcPlayer1AmmoSelector.visible)
+					SoundManager.instance.playItemSelect();
+				
 				TweenMax.to(this.mcPlayer1AmmoSelector, .5, { y:580 } );
 			}
 		}
@@ -428,12 +433,16 @@
 		{
 			if ($sToType == "single")
 			{
-				SoundManager.instance.playItemSelect();
+				if (this.mcPlayer2AmmoSelector.visible)
+					SoundManager.instance.playItemSelect();
+					
 				TweenMax.to(this.mcPlayer2AmmoSelector, .5, { y:536 } );
 			}
 			else
 			{
-				SoundManager.instance.playItemSelect();
+				if (this.mcPlayer2AmmoSelector.visible)
+					SoundManager.instance.playItemSelect();
+					
 				TweenMax.to(this.mcPlayer2AmmoSelector, .5, { y:580 } );
 			}
 		}
