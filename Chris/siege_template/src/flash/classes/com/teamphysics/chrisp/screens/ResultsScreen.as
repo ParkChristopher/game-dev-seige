@@ -58,8 +58,8 @@ package com.teamphysics.chrisp.screens {
 			this.btResultsToTitle.addEventListener(MouseEvent.CLICK, toTitleClicked);
 			this.btResultsCredits.addEventListener(MouseEvent.CLICK, creditsClicked);
 			
-			this.txtPlayerOne.text = "Player One";
-			this.txtPlayerTwo.text = "Player Two";
+			this.txtPlayerOne.text = "One";
+			this.txtPlayerTwo.text = "Two";
 			this.txtPlayerOne.visible = false;
 			this.txtPlayerTwo.visible = false;
 			
