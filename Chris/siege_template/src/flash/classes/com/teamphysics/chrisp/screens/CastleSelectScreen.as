@@ -50,6 +50,9 @@
 		public var mcCastle5ImageP2			:MovieClip;
 		public var mcCastle6ImageP2			:MovieClip;
 		
+		public var mcCastleSelectIndicatorP1:MovieClip;
+		public var mcCastleSelectIndicatorP2:MovieClip;
+		
 		//Signals
 		public var backClickedSignal		:Signal = new Signal();
 		public var continueClickedSignal	:Signal = new Signal();
@@ -59,7 +62,6 @@
 		public var iPlayerTwoCastleNumber	:int = 0;
 		public var txtP1Choice				:TextField;
 		public var txtP2Choice				:TextField;
-		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -76,6 +78,9 @@
 		override public function begin():void
 		{
 			super.begin();
+			
+			this.mcCastleSelectIndicatorP1.visible = false;
+			this.mcCastleSelectIndicatorP2.visible = false;
 			
 			this.iPlayerOneCastleNumber = 0;
 			this.iPlayerTwoCastleNumber = 0;
@@ -198,7 +203,7 @@
 			
 			if ($e.target == btCastleOneP1)
 				this.iPlayerOneCastleNumber = 1;
-			
+				
 			if ($e.target == btCastleTwoP1)
 				iPlayerOneCastleNumber = 2;
 			
@@ -213,16 +218,18 @@
 			
 			if ($e.target == btCastleSixP1)
 				iPlayerOneCastleNumber = 6;
-				
+			
 			if ($e.target == btRandomP1)
 				iPlayerOneCastleNumber = 1 + Math.random() * 5;
-			
+				
 			trace("Castle Select: P1 castle selected." + iPlayerOneCastleNumber);
 			
 			if ($e.target == btRandomP1)
 				this.txtP1Choice.text = " ?";
 			else
 				this.txtP1Choice.text = iPlayerOneCastleNumber.toString();
+				
+			this.setSelection(1, SimpleButton($e.target));
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -259,11 +266,37 @@
 				this.txtP2Choice.text = " ?";
 			else
 				this.txtP2Choice.text = iPlayerTwoCastleNumber.toString();
-			
-			
+				
+			this.setSelection(2, SimpleButton($e.target));
 		}
+		/* ---------------------------------------------------------------------------------------- */
 
-
+			/* ---------------------------------------------------------------------------------------- */
+		
+		//Helper function for selection indicator on castle select
+		protected function setSelection($nPlayer:Number, $btButton:SimpleButton):void
+		{
+			if ($nPlayer == 1)
+			{
+				this.mcCastleSelectIndicatorP1.x = $btButton.x;
+				this.mcCastleSelectIndicatorP1.y = $btButton.y;
+				this.mcCastleSelectIndicatorP1.width = $btButton.width;
+				this.mcCastleSelectIndicatorP1.height = $btButton.height;
+				this.mcCastleSelectIndicatorP1.visible = true;
+			}
+			
+			if ($nPlayer == 2)
+			{
+				this.mcCastleSelectIndicatorP2.x = $btButton.x;
+				this.mcCastleSelectIndicatorP2.y = $btButton.y;
+				this.mcCastleSelectIndicatorP2.width = $btButton.width;
+				this.mcCastleSelectIndicatorP2.height = $btButton.height;
+				this.mcCastleSelectIndicatorP2.visible = true;
+			}
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function get p1CastleNumber(): int
 		{
 			return  iPlayerOneCastleNumber;
