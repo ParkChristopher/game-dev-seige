@@ -502,10 +502,9 @@
 		{
 			super.end();
 			
-
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, firePressed);
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
-
+			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		

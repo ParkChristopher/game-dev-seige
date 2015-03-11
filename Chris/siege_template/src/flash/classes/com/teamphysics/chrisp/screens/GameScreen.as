@@ -270,11 +270,12 @@
 			player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
 			player1Cannon.changeShotTypeSignal.add(player1ChangeShotIndicator);
 			
-			aOnScreenObjects.push(player1Cannon);
-			this.addChild(player1Cannon);
+			//aOnScreenObjects.push(player1Cannon);
+			//this.addChild(player1Cannon);
+			StageRef.stage.addChildAt(player1Cannon, StageRef.stage.numChildren);
 			player1Cannon.bOwnerIsP1 = true;
 			player1Cannon.speedCleanupSignal.add(removeSpeed);
-			player1Cannon.endGameSignal.add(kingHit)
+			player1Cannon.endGameSignal.add(kingHit);
 			player1Cannon.begin();
 			
 			//Cannon 2
@@ -285,8 +286,9 @@
 			player2Cannon.cannonFireSignal.add(resetCastleBlocksHit);
 			player2Cannon.changeShotTypeSignal.add(player2ChangeShotIndicator);
 
-			aOnScreenObjects.push(player2Cannon);
-			this.addChild(player2Cannon);
+			//aOnScreenObjects.push(player2Cannon);
+			//this.addChild(player2Cannon);
+			StageRef.stage.addChildAt(player2Cannon, StageRef.stage.numChildren);
 			player2Cannon.bOwnerIsP1 = false;
 			player2Cannon.speedCleanupSignal.add(removeSpeed);
 			player2Cannon.endGameSignal.add(kingHit);
@@ -554,6 +556,12 @@
 				this.aOnScreenObjects[i].end();
 				this.removeChild(aOnScreenObjects[i]);
 			}
+			
+			this.player1Cannon.end();
+			this.player2Cannon.end();
+			StageRef.stage.removeChild(player1Cannon);
+			StageRef.stage.removeChild(player2Cannon);
+			
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
