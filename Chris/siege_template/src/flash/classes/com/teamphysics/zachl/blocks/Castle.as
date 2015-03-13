@@ -37,9 +37,6 @@
 
 		private var player					:String;
 		private var stringCoords			:String;
-		protected var kingCollisionType		:CbType = new CbType();
-		protected var ballCollisionType		:CbType = new CbType();
-		protected var interactionListener	:InteractionListener;
 		public var kingDiedSignal 			:Signal = new Signal();
 		private var nWidth 					:int = StageRef.stage.stageWidth;
 		private var _nCollisionGroup		:int;
@@ -326,11 +323,6 @@
 			}
 			placementArray = this.stringCoords.split(" ");
 
-		}
-		
-		public function get kingHitBox():CbType
-		{
-			return kingCollisionType;
 		}
 		
 		public function cleanUp() :void

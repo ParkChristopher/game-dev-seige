@@ -132,8 +132,6 @@
 		protected var king1CollisionType	:CbType = new CbType();
 		protected var king2CollisionType	:CbType = new CbType();
 		protected var ballCollisionType		:CbType = new CbType();
-		protected var interactionListener1	:InteractionListener;
-		protected var interactionListener2	:InteractionListener;
 
 		//DEBUG SETTINGS
 		public var debugToggle				:Boolean = false;
@@ -229,31 +227,7 @@
 			p2KingLocked = false;
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			interactionListener1 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
-				ballCollisionType, king1CollisionType, kingHit);
-			space.listeners.add(interactionListener1);
 			
-			interactionListener2 = new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION,
-				ballCollisionType, king2CollisionType, kingHit);
-			space.listeners.add(interactionListener2);
-			
-			//placeKings();
-			//Start Cannons
-			//startCannons();
-			
-		}
-		
-		private function placeKings()
-		{
-			//player1Castle.placeKing();
-			//player2Castle.placeKing();
-			/*var p1KingPlaced:Boolean;
-			var p2KingPlaced:Boolean;
-			while (!p1KingPlaced && !p2KingPlaced)
-			{
-				
-			}
-			startCannons();*/
 		}
 		
 		private function startCannons()
@@ -270,8 +244,6 @@
 			player1Cannon.cannonFireSignal.add(resetCastleBlocksHit);
 			player1Cannon.changeShotTypeSignal.add(player1ChangeShotIndicator);
 			
-			//aOnScreenObjects.push(player1Cannon);
-			//this.addChild(player1Cannon);
 			StageRef.stage.addChildAt(player1Cannon, StageRef.stage.numChildren);
 			player1Cannon.bOwnerIsP1 = true;
 			player1Cannon.speedCleanupSignal.add(removeSpeed);
@@ -286,8 +258,6 @@
 			player2Cannon.cannonFireSignal.add(resetCastleBlocksHit);
 			player2Cannon.changeShotTypeSignal.add(player2ChangeShotIndicator);
 
-			//aOnScreenObjects.push(player2Cannon);
-			//this.addChild(player2Cannon);
 			StageRef.stage.addChildAt(player2Cannon, StageRef.stage.numChildren);
 			player2Cannon.bOwnerIsP1 = false;
 			player2Cannon.speedCleanupSignal.add(removeSpeed);
@@ -357,12 +327,9 @@
 			player1Castle.begin("Player1", this.p1CastleChoice);
 
 			player1Castle.kingPlacedSignal.add(player1KingSelected);
-			this.king1CollisionType = player1Castle.kingHitBox;
 
 			player2Castle.begin("Player2", this.p2CastleChoice);
 			player2Castle.kingPlacedSignal.add(player2KingSelected);
-
-			this.king1CollisionType = player1Castle.kingHitBox;
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
