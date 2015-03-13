@@ -166,8 +166,6 @@
 		
 		protected function rotateCannon():void
 		{
-			//drowns out all other sound
-			//SoundManager.instance.playRotation();
 			if (_bIsRotating)
 			{
 				if (_bIsRotatingUp)
@@ -200,7 +198,7 @@
 		{	
 			if (_bIsRotating)
 			{
-				SoundManager.instance.playPointGet();
+				SoundManager.instance.playSpeedUp();
 				_bIsRotating = false;
 				mcPowerBar.begin();
 			}
@@ -510,7 +508,38 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function pauseCannons():void
+		{
+			if (bOwnerIsP1)
+			{
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.A, firePressed);
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.Q, changeShotType);
+			}
+			else
+			{
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
+				KeyboardManager.instance.removeKeyDownListener(KeyCode.P, changeShotType);
+			}
+			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function resumeCannons():void
+		{
+			if (bOwnerIsP1)
+			{
+				KeyboardManager.instance.addKeyDownListener(KeyCode.A, firePressed);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.Q, changeShotType);
+			}
+			else
+			{
+				KeyboardManager.instance.addKeyDownListener(KeyCode.L, firePressed);
+				KeyboardManager.instance.addKeyDownListener(KeyCode.P, changeShotType);
+			}
+			
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		

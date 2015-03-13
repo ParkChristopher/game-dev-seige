@@ -29,6 +29,7 @@ package com.teamphysics.util
 		public static var SOUND_SHIELD_DOWN:String = "ShieldDown";
 		public static var SOUND_SPEED_UP:String = "VelocityUp";
 		public static var SOUND_VICTORY:String = "Victory";
+		public static var SOUND_SHIELD_BOUNCE:String = "Shield Bounce";
 		
 		public static var MUSIC_TITLE_SCREEN:String = "TitleScreenLoop";
 		public static var MUSIC_RESULTS_SCREEN:String = "ResultsScreenLoop";
@@ -73,7 +74,16 @@ package com.teamphysics.util
 			SoundAS.loadSound("../src/audio/ShieldDown.mp3", SOUND_SHIELD_DOWN);
 			SoundAS.loadSound("../src/audio/VelocityUp.mp3", SOUND_SPEED_UP);
 			SoundAS.loadSound("../src/audio/Victory.mp3", SOUND_VICTORY);
+			SoundAS.loadSound("../src/audio/ShieldBounce.mp3", SOUND_SHIELD_BOUNCE);
+			
 		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playShieldBounce():void
+		{
+			SoundAS.playFx(SOUND_SHIELD_BOUNCE, .5);
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playItemSelect():void
@@ -99,7 +109,7 @@ package com.teamphysics.util
 		
 		public function playRotation():void
 		{
-			SoundAS.playFx(SOUND_CANNON_ROTATION, .05);
+			SoundAS.playFx(SOUND_CANNON_ROTATION, .01);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -113,7 +123,7 @@ package com.teamphysics.util
 		
 		public function playSpeedUp():void
 		{
-			SoundAS.playFx(SOUND_SPEED_UP, .5);
+			SoundAS.playFx(SOUND_SPEED_UP, .1);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -158,7 +168,7 @@ package com.teamphysics.util
 		
 		public function playShieldDown():void
 		{
-			SoundAS.playFx(SOUND_SHIELD_DOWN, .5);
+			SoundAS.playFx(SOUND_SHIELD_DOWN, .2);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

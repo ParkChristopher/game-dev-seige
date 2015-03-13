@@ -161,7 +161,10 @@
 				{
 					tempShieldBlock.end();
 					SoundManager.instance.playShieldDown();
+					return;
 				}
+				
+				SoundManager.instance.playShieldBounce();
 			}
 			
 			if ($object.objectType == GameObjectType.TYPE_SHIELD_POWERUP)

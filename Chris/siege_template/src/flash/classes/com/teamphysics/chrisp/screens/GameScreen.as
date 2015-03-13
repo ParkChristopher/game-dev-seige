@@ -627,6 +627,13 @@
 			{
 				this.bIsPaused = false;
 				this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+				
+				if (player1Cannon != null && player2Cannon != null) 
+				{
+					player1Cannon.resumeCannons();
+					player2Cannon.resumeCannons();
+				}
+				SoundManager.instance.playPause();
 				SoundManager.instance.resumeSound();
 				return;
 			}
@@ -635,7 +642,16 @@
 			{
 				this.bIsPaused = true;
 				this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-				SoundManager.instance.pauseSound();
+				
+				if (player1Cannon != null && player2Cannon != null) 
+				{
+					player1Cannon.pauseCannons();
+					player2Cannon.pauseCannons();
+				}
+				
+				SoundManager.instance.playPause();
+				TweenMax.delayedCall(.5, SoundManager.instance.pauseSound);
+				//SoundManager.instance.pauseSound();
 				return;
 			}
 		}
