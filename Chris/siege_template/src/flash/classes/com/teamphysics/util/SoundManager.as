@@ -30,6 +30,7 @@ package com.teamphysics.util
 		public static var SOUND_SPEED_UP:String = "VelocityUp";
 		public static var SOUND_VICTORY:String = "Victory";
 		public static var SOUND_SHIELD_BOUNCE:String = "Shield Bounce";
+		public static var SOUND_SPEED_SHOT:String = "Speed Shot";
 		
 		public static var MUSIC_TITLE_SCREEN:String = "TitleScreenLoop";
 		public static var MUSIC_RESULTS_SCREEN:String = "ResultsScreenLoop";
@@ -75,8 +76,16 @@ package com.teamphysics.util
 			SoundAS.loadSound("../src/audio/VelocityUp.mp3", SOUND_SPEED_UP);
 			SoundAS.loadSound("../src/audio/Victory.mp3", SOUND_VICTORY);
 			SoundAS.loadSound("../src/audio/ShieldBounce.mp3", SOUND_SHIELD_BOUNCE);
+			SoundAS.loadSound("../src/audio/SpeedShot.mp3", SOUND_SPEED_SHOT);
 			
 		}
+		/* ---------------------------------------------------------------------------------------- */
+		
+		public function playSpeedShot():void
+		{
+			SoundAS.playFx(SOUND_SPEED_SHOT, .2);
+		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function playShieldBounce():void

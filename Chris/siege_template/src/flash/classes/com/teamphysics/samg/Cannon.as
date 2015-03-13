@@ -227,6 +227,9 @@
 				
 				_bIsRotating = true;
 				mcPowerBar.end();
+				
+				if (_nSpeedBonus != 0)
+					SoundManager.instance.playSpeedShot();
 					
 				_nSpeedBonus = 0;
 				this.speedCleanupSignal.dispatch(this);
