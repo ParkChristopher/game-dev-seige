@@ -204,6 +204,7 @@
 			}
 			else if(!_bIsRotating && mcPowerBar.bIsMoving)
 			{
+				trace("player 1: " + bOwnerIsP1 + " , cannon fired");
 				SoundManager.instance.playCannonFire();
 				if (bOwnerIsP1)
 				{
@@ -365,51 +366,6 @@
 			{
 				ScoreManager.instance.nP2ShotsFired += 1;
 				s.buildBall(this.x, this.y, 2);
-
-				s = new CannonBall();
-				s.gameOverSignal.add(kingKilled);
-				s.x = this.mcCannonBarrel.x;
-				s.y = this.mcCannonBarrel.y;
-				
-				s.bOwnerIsP1 = this.bOwnerIsP1;
-				
-				_aCannonBalls.push(s);
-				
-				CollisionManager.instance.add(s);
-				s.cleanupSignal.add(removeObject);
-				StageRef.stage.addChildAt(s, 1);
-				s.begin();
-				
-				/*trace("Left?: " + bOwnerIsP1);
-				trace(frontPoint.x + ", " + frontPoint.y);
-				trace(backPoint.x + ", " + backPoint.y);*/
-				velocityVec = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
-				scaler = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
-				
-				//trace("speed bonus: " +_nSpeedBonus);
-				velocityVec = velocityVec.mul(scaler);
-				
-				s.setCbType(ballCollisionType);
-				if (bOwnerIsP1)
-				{
-					ScoreManager.instance.nP1ShotsFired += 1;
-					s.buildBall(this.x, this.y,  1);
-				}
-				else 
-				{
-					ScoreManager.instance.nP2ShotsFired += 1;
-					s.buildBall(this.x, this.y, 2);
-				}
-				s.setVelocity(velocityVec);
-					
-				
-				_bIsRotating = true;
-				mcPowerBar.end();
-					
-				_nSpeedBonus = 0;
-				this.speedCleanupSignal.dispatch(this);
-				
-				justFired();
 			}
 			s.body.mass = 2;
 			s.setVelocity(velocityVec);
