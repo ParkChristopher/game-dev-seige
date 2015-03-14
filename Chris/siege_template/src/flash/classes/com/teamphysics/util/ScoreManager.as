@@ -15,18 +15,16 @@ package com.teamphysics.util
 		/** Stores a reference to the singleton instance. */  
 		private static const _instance	:ScoreManager = new ScoreManager( SingletonLock );
 		
-		public var nP1Score			:Number;
-		public var nP2Score			:Number;
-		public var nP1ShotsFired	:Number;
-		public var nP2ShotsFired	:Number;
-		public var nP1Accuracy		:Number;
-		public var nP2Accuracy		:Number;
-		public var nHighScore		:Number;
-		public var nP1ShotsLanded	:Number;
-		public var nP2ShotsLanded	:Number;
-		
-		public var sWinner			:String;
-		
+		public var nP1Score				:Number;
+		public var nP2Score				:Number;
+		public var nP1ShotsFired		:Number;
+		public var nP2ShotsFired		:Number;
+		public var nP1Accuracy			:Number;
+		public var nP2Accuracy			:Number;
+		public var nHighScore			:Number;
+		public var nP1ShotsLanded		:Number;
+		public var nP2ShotsLanded		:Number;
+		public var sWinner				:String;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
