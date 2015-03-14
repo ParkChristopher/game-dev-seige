@@ -584,13 +584,19 @@
 			shield = new ShieldBlock($isPlayerOne);
 			
 			if ($isPlayerOne)
-			{		
+			{	
+				if (this.shieldBlockP1 != null)
+					shieldBlockP1.end();
+				
 				shieldBlockP1 = shield;
 				this.mcP1Shield.visible = true;
 				shieldBlockP1.removeShieldSignal.add(removeShield);
 			}
 			else
-			{		
+			{	
+				if (this.shieldBlockP2 != null)
+					shieldBlockP2.end();
+					
 				shieldBlockP2 = shield;
 				this.mcP2Shield.visible = true;
 				shieldBlockP2.removeShieldSignal.add(removeShield);

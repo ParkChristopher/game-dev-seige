@@ -23,7 +23,7 @@ package com.teamphysics.chrisp.powerups {
 		protected var physicsBody		:Body;
 		protected var poly				:Polygon;
 		protected var tempTexture		:Sprite;
-		
+		protected var bRemoved			:Boolean;
 		public var nShieldHealth	:Number;
 		
 		public var removeShieldSignal	:Signal = new Signal(Boolean);
@@ -45,6 +45,7 @@ package com.teamphysics.chrisp.powerups {
 		
 		protected function init()
 		{
+			this.bRemoved = false;
 			this._sObjectType = GameObjectType.TYPE_SHIELD_WALL;
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			CollisionManager.instance.add(this);
@@ -97,6 +98,10 @@ package com.teamphysics.chrisp.powerups {
 		
 		public function cleanUp() :void
 		{
+			if (bRemoved)
+				return;
+				
+			this.bRemoved  = true;
 			CollisionManager.instance.remove(this);
 			StageRef.stage.removeChild(this);
 			this.physicsBody.space = null;
