@@ -37,7 +37,6 @@
 
 	public class KingBlock extends BaseBlock
 	{
-		private var body		:Body;
 		/** A variable to track when the hero has died. */
 		private var collisionGroupHolder 	:int;
 		private var kingDiedSignal 	:Signal = new Signal();

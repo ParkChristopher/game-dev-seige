@@ -25,6 +25,8 @@
 	import nape.callbacks.InteractionListener;
 	import nape.phys.Body;
 	import org.osflash.signals.Signal;
+	import nape.phys.Material;
+	import flash.display.DisplayObject;
 
 	public class Castle extends MovieClip
 	{
@@ -147,7 +149,7 @@
 				CollisionManager.instance.add(block);
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
-			TweenMax.delayedCall(5, allowRotation);
+			TweenMax.delayedCall(2, allowRotation);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -162,10 +164,20 @@
 		
 		public function swapKingPosition(e:Event)
 		{
+			var graphic: DisplayObject;
+			if(curKingPlacementBlock != null)
+			{
+				trace("not null");
+				if(curKingPlacementBlock.blockBody.userData.graphic != null)
+				{
+					graphic = this.curKingPlacementBlock.blockBody.userData.graphic;
+					graphic.visible = false;
+				}
+			}
 			_nCurKingPlacementIndex = (_nCurKingPlacementIndex + 1) % kingPlacementBlocks.length;
-			curKingPlacementBlock.mcKing.visible = false;
 			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
-			curKingPlacementBlock.mcKing.visible = false;
+			graphic = this.curKingPlacementBlock.blockBody.userData.graphic;
+			graphic.visible = true;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -176,7 +188,6 @@
 			king = new KingBlock();
 			StageRef.stage.addChild(king);
 			king.buildBlock(this.curKingPlacementBlock.xCoordinate, this.curKingPlacementBlock.yCoordinate, _nCollisionGroup);
-			trace("after king.buildblock");
 			
 			aOnScreenObjects.push(king);
 			arrayOfBlocks.push(king);
@@ -200,7 +211,6 @@
 				if(this.king.x < 0 || this.king.x > 900 && this.toggle == false)
 				{
 					this.kingOutOfBounds.dispatch();
-					trace("Dispatched");
 					this.toggle = true;
 				}
 			}
@@ -212,7 +222,6 @@
 			{
 				SpaceRef.space.bodies.at(i).allowRotation = true;
 			}
-			tKingPlacementTimer.addEventListener(TimerEvent.TIMER, swapKingPosition);
 			
 			if (player == "Player1")
 			{
@@ -224,6 +233,7 @@
 			}
 			_nCurKingPlacementIndex = 0;
 			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
+			tKingPlacementTimer.addEventListener(TimerEvent.TIMER, swapKingPosition);
 			tKingPlacementTimer.start();
 		}
 		

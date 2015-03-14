@@ -22,7 +22,6 @@
 	
 	public class HorizontalRectangleBlock extends BaseBlock
 	{
-		private var body		:Body;
 		private var collisionGroupHolder 	:int;
 
 		/* ---------------------------------------------------------------------------------------- */				

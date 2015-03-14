@@ -29,7 +29,7 @@
 		//public var bHasBeenCollidedWith	:Boolean; Moved to abstractGameObject
 		
 		//Bodies
-		private var body		:Body = new Body(BodyType.DYNAMIC);
+		protected var body		:Body = new Body(BodyType.DYNAMIC);
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Constructs the BaseCollectible object.

@@ -23,7 +23,6 @@
 	
 	public class LargeStoneSquareBlock extends BaseBlock
 	{
-		private var body		:Body;
 		private var collisionGroupHolder 	:int;
 
 		/* ---------------------------------------------------------------------------------------- */				

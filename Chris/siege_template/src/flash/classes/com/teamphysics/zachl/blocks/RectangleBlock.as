@@ -4,6 +4,7 @@
 	import com.natejc.input.KeyboardManager;
 	import com.natejc.input.KeyCode;
 	import com.teamphysics.util.SpaceRef;
+	import flash.display.DisplayObject;	
 	import flash.display.SimpleButton;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -22,7 +23,6 @@
 	
 	public class RectangleBlock extends BaseBlock
 	{
-		private var body					:Body;
 		private var collisionGroupHolder 	:int;
 
 		/* ---------------------------------------------------------------------------------------- */				

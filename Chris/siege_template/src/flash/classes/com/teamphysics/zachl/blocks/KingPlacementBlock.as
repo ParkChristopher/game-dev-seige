@@ -10,12 +10,10 @@
 	import nape.shape.Polygon;
 	import org.osflash.signals.*;
 	import org.osflash.signals.Signal;
-	
+	import flash.display.DisplayObject;
 	
 	public class KingPlacementBlock extends BaseBlock 
 	{
-		
-		private var body		:Body;
 		/** A variable to track when the hero has died. */
 		private var collisionGroupHolder 	:int;
 		
@@ -71,6 +69,9 @@
 			body.space = SpaceRef.space;
 			
 			body.userData.graphic = s;	
+			
+			//var graphic:DisplayObject = body.userData.graphic;
+			//graphic.visible = false;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */	
