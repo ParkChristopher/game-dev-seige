@@ -134,7 +134,7 @@
 		protected var ballCollisionType		:CbType = new CbType();
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = false;
+		public var debugToggle				:Boolean = true;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -198,7 +198,6 @@
 			
 			this.btQuit.addEventListener(MouseEvent.CLICK, quitClicked);
 			this.btPause.addEventListener(MouseEvent.CLICK, pauseClicked);
-			
 			//Create the space
 			space = new Space(new Vec2(0, 450));
 			//DEBUG CODE
@@ -227,6 +226,9 @@
 			p2KingLocked = false;
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			
+			this.player1Castle.kingOutOfBounds.add(kingHit);
+			this.player2Castle.kingOutOfBounds.add(kingHit);
 			
 		}
 		
@@ -359,8 +361,13 @@
 		public function kingHit():void
 		{
 			this.screenCompleteSignal.dispatch();
+			this.player1Castle.kingOutOfBounds.remove(kingHit);
+			this.player2Castle.kingOutOfBounds.remove(kingHit);
+			trace("After dispatch");
 			this.space.clear();
+			trace("After space.clear");
 			this.cleanScreen();
+			trace("cleanScreen()");
 			
 		}
 		/* ---------------------------------------------------------------------------------------- */
@@ -511,15 +518,16 @@
 		{
 			this.player1Castle.end();
 			this.player2Castle.end();
-			
+			trace("After Castle end");
 			if (this.shieldBlockP1 != null && this.shieldBlockP1.visible == true)
 				this.shieldBlockP1.end();
 				
 			if (this.shieldBlockP2 != null && this.shieldBlockP2.visible == true)
 				this.shieldBlockP2.end();
-			
+			trace("aOnScreenObjects.length " + aOnScreenObjects.length);
 			for (var i:uint = 0; i < aOnScreenObjects.length; i++)
 			{
+				trace("i: " + i);
 				this.aOnScreenObjects[i].end();
 				this.removeChild(aOnScreenObjects[i]);
 			}

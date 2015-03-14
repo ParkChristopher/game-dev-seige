@@ -47,9 +47,10 @@
 		private var curKingPlacementBlock	:KingPlacementBlock;
 		private var _nCurKingPlacementIndex	:int;
 		public var kingPlacedSignal			:Signal = new Signal();
+		public var kingOutOfBounds			:Signal = new Signal();
 		private var king					:KingBlock;
 		private var tKingPlacementTimer		:Timer;
-		
+		private var toggle					:Boolean = false;
 
 		//Bodies
 		private var body		:Body;
@@ -78,6 +79,7 @@
 			tKingPlacementTimer = new Timer(100);
 
 			this.buildCastle();
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -150,6 +152,14 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function enterFrameHandler(e:Event)
+		{
+			this.checkKingX();
+		}
+		
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function swapKingPosition(e:Event)
 		{
 			_nCurKingPlacementIndex = (_nCurKingPlacementIndex + 1) % kingPlacementBlocks.length;
@@ -183,7 +193,18 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
+		public function checkKingX():void
+		{
+			if(this.king != null)
+			{
+				if(this.king.x < 0 || this.king.x > 900 && this.toggle == false)
+				{
+					this.kingOutOfBounds.dispatch();
+					trace("Dispatched");
+					this.toggle = true;
+				}
+			}
+		}
 
 		public function allowRotation():void
 		{

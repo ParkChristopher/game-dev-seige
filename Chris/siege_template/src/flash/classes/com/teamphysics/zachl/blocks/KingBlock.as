@@ -100,6 +100,11 @@
 			body.space = null;
 		}
 		
+		override public function get x(): Number
+		{
+			return this.body.position.x;
+		}
+		
 		override public function get getCollisionGroup(): int
 		{
 			return this.collisionGroupHolder;
