@@ -134,7 +134,7 @@
 		protected var ballCollisionType		:CbType = new CbType();
 
 		//DEBUG SETTINGS
-		public var debugToggle				:Boolean = true;
+		public var debugToggle				:Boolean = false;
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
@@ -363,12 +363,8 @@
 			this.screenCompleteSignal.dispatch();
 			this.player1Castle.kingOutOfBounds.remove(kingHit);
 			this.player2Castle.kingOutOfBounds.remove(kingHit);
-			trace("After dispatch");
 			this.space.clear();
-			trace("After space.clear");
-			this.cleanScreen();
-			trace("cleanScreen()");
-			
+			this.cleanScreen();			
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -617,11 +613,13 @@
 		protected function quitClicked($e:MouseEvent):void
 		{
 			trace("Game Screen: Quit Clicked.");
-			SoundManager.instance.playButtonClick();
-			//this.space.clear();
-			this.cleanScreen();
-			this.space.clear();
-			this.quitClickedSignal.dispatch();
+			if(this.p1KingLocked == true && this.p2KingLocked == true)
+			{
+				SoundManager.instance.playButtonClick();
+				this.cleanScreen();
+				this.space.clear();
+				this.quitClickedSignal.dispatch();
+			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
