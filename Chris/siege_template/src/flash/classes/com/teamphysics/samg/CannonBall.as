@@ -329,13 +329,14 @@
 						ScoreManager.instance.sWinner = "P2";
 						
 					SoundManager.instance.playKingDied();
-					//trace("KING WAS HIT");
-					TweenMax.delayedCall(.5, this.endGame);
+					trace("KING WAS HIT");
+					//TweenMax.delayedCall(.5, this.endGame);
 				
 					$object.end();
 					CollisionManager.instance.remove($object);
 					$object.cleanupSignal.dispatch($object);
 					this.cleanupSignal.dispatch(this);
+					this.endGame();
 				}
 				
 			}
