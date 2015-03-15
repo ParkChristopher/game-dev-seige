@@ -360,7 +360,7 @@
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-		public function removeCannonBall():void
+		public function removeCannonBall(e:TimerEvent = null):void
 		{
 			this.cleanupSignal.dispatch(this);
 		}
