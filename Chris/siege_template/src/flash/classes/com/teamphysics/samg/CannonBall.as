@@ -322,13 +322,12 @@
 					//trace(!$object.bOwnerIsP1 && !this.bOwnerIsP1);
 					//trace(($object.bOwnerIsP1 && this.bOwnerIsP1) || (!$object.bOwnerIsP1 && !this.bOwnerIsP1));
 				if (($object.bOwnerIsP1 && !this.bOwnerIsP1) || (!$object.bOwnerIsP1 && this.bOwnerIsP1))
-				{
+				{	
 					if (this.bOwnerIsP1)
 						ScoreManager.instance.sWinner = "P1";
 					else
 						ScoreManager.instance.sWinner = "P2";
-						
-					SoundManager.instance.playKingDied();
+					
 					trace("KING WAS HIT");
 					//TweenMax.delayedCall(.5, this.endGame);
 				

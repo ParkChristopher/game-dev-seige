@@ -360,6 +360,7 @@
 		
 		public function kingHit():void
 		{
+			SoundManager.instance.playKingDied();
 			this.screenCompleteSignal.dispatch();
 			this.player1Castle.kingOutOfBounds.remove(kingHit);
 			this.player2Castle.kingOutOfBounds.remove(kingHit);
