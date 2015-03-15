@@ -133,6 +133,7 @@ package com.teamphysics.chrisp.screens {
 			this.btResultsPlayAgain.removeEventListener(MouseEvent.CLICK, playAgainClicked);
 			this.btResultsToTitle.removeEventListener(MouseEvent.CLICK, toTitleClicked);
 			this.btResultsCredits.removeEventListener(MouseEvent.CLICK, creditsClicked);
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

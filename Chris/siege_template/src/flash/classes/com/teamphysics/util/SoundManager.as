@@ -5,6 +5,7 @@ package com.teamphysics.util
 	//
 	import adobe.utils.CustomActions;
 	import treefortress.sound.SoundAS;
+	import treefortress.sound.SoundInstance;
 	
 	/**
 	 * @author Chris Park
@@ -38,6 +39,7 @@ package com.teamphysics.util
 		
 		
 		public static var SE_VOLUME:Number = 1;
+		public var titleMusicInstance			:SoundInstance;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -155,6 +157,7 @@ package com.teamphysics.util
 		
 		public function playVictory():void
 		{
+			
 			SoundAS.stopAll();
 			SoundAS.playFx(SOUND_VICTORY, .1);
 		}
@@ -211,9 +214,13 @@ package com.teamphysics.util
 		
 		public function playTitleMusic():void
 		{
-			SoundAS.fadeAllTo(0);
-			SoundAS.fadeFrom(MUSIC_TITLE_SCREEN, 0, .2);
-			SoundAS.playLoop(MUSIC_TITLE_SCREEN, .2);
+			if (titleMusicInstance == null || !titleMusicInstance.isPlaying)
+			{
+				
+				SoundAS.fadeAllTo(0);
+				SoundAS.fadeFrom(MUSIC_TITLE_SCREEN, 0, .2);
+				titleMusicInstance = SoundAS.playLoop(MUSIC_TITLE_SCREEN, .2);
+			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
