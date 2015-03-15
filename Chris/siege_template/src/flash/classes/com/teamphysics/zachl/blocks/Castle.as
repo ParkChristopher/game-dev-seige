@@ -168,7 +168,6 @@
 			var graphic: DisplayObject;
 			if(curKingPlacementBlock != null)
 			{
-				trace("not null");
 				if(curKingPlacementBlock.blockBody.userData.graphic != null)
 				{
 					graphic = this.curKingPlacementBlock.blockBody.userData.graphic;
