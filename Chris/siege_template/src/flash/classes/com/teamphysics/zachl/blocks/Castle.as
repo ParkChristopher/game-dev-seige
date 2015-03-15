@@ -70,6 +70,7 @@
 		public function begin($player:String, $castleNumber: int) :void
 		{
 			this.play();
+			toggle = false;
 			this.visible = true;
 			this.player = $player;
 			this.castleNumber = $castleNumber
