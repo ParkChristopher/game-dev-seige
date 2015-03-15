@@ -152,6 +152,9 @@
 				
 				if (tempShieldBlock.bOwnerIsP1 == this.bOwnerIsP1)
 					return;
+					
+				if (tempShieldBlock.bHasBeenCollidedWith)
+					return;
 				
 				if (this.bOwnerIsP1)
 					ScoreManager.instance.nP1ShotsLanded += 1;
