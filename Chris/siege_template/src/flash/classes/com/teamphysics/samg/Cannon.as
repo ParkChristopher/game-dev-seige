@@ -462,6 +462,11 @@
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.A, firePressed);
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
 			
+			for (var i:int = 0; i < _aCannonBalls.length; i++)
+			{
+				_aCannonBalls[i].end();
+			}
+			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		

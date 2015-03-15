@@ -81,6 +81,7 @@
 		
 		override public function end():void
 		{
+			TweenMax.killAll(false, false, true);
 			tMaxLifeSpanTimer.stop();
 			this.hitTimerReset.stop();
 			this.isSoundReset = false;
