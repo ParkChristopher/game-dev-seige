@@ -1,13 +1,12 @@
-package com.teamphysics.chrisp.screens {
-	import com.teamphysics.chrisp.screens.AbstractScreen;
+package com.teamphysics.chrisp.screens 
+{
+	import com.greensock.easing.*;
+	import com.greensock.TweenMax;
+	import com.teamphysics.util.SoundManager;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-	import com.teamphysics.util.SoundManager;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.*;
-
 	
 	/**
 	 * Title Screen Class
@@ -75,15 +74,10 @@ package com.teamphysics.chrisp.screens {
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
-		/*NOTE: Override show and hide in base class for tweening here*/
-		
-		/* ---------------------------------------------------------------------------------------- */
 		// [ BUTTON EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
 		protected function playClicked($e:MouseEvent):void
 		{
-			trace("Title: Play Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.playClickedSignal.dispatch();
 		}
@@ -92,7 +86,6 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function creditsClicked($e:MouseEvent):void
 		{
-			trace("Title: Credits Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.creditsClickedSignal.dispatch();
 		}
@@ -101,14 +94,12 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function instructionsClicked($e:MouseEvent):void
 		{
-			trace("Title: Instructions Clicked");
 			SoundManager.instance.playButtonClick();
 			this.instructionsClickedSignal.dispatch();
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		// [ / BUTTON EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
-		
 	}
 }
 

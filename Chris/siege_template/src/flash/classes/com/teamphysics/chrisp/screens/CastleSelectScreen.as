@@ -1,12 +1,13 @@
-﻿package com.teamphysics.chrisp.screens {
+﻿package com.teamphysics.chrisp.screens 
+{
+	import com.greensock.easing.*;
+	import com.greensock.TweenMax;
+	import com.teamphysics.util.SoundManager;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import org.osflash.signals.Signal;
-	import com.teamphysics.util.SoundManager;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.*;
 	
 	/**
 	 * Castle select screen
@@ -70,7 +71,6 @@
 		public function CastleSelectScreen()
 		{
 			super();
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		
@@ -122,7 +122,6 @@
 			this.mcCastle6ImageP2.mouseEnabled = false;
 			
 			this.activateTweens();
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -158,7 +157,6 @@
 			TweenMax.from(this.mcCastle4ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.mcCastle5ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.mcCastle6ImageP2, 1, { x: 1100, ease:Quad.easeOut } );
-			
 			
 			TweenMax.from(this.btBack, 1, { x: 1100, ease:Quad.easeOut } );
 			TweenMax.from(this.btContinue, 1, { x: 1100, ease:Quad.easeOut } );
@@ -221,8 +219,6 @@
 			
 			if ($e.target == btRandomP1)
 				iPlayerOneCastleNumber = 1 + Math.random() * 5;
-				
-			trace("Castle Select: P1 castle selected." + iPlayerOneCastleNumber);
 			
 			if ($e.target == btRandomP1)
 				this.txtP1Choice.text = " ?";
@@ -260,8 +256,6 @@
 			if ($e.target == btRandomP2)
 				iPlayerTwoCastleNumber = 1 + Math.random() * 5;
 			
-			trace("Castle Select: P2 castle selected." + iPlayerTwoCastleNumber);
-			
 			if ($e.target == btRandomP2)
 				this.txtP2Choice.text = " ?";
 			else
@@ -269,9 +263,8 @@
 				
 			this.setSelection(2, SimpleButton($e.target));
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
-
-			/* ---------------------------------------------------------------------------------------- */
 		
 		//Helper function for selection indicator on castle select
 		protected function setSelection($nPlayer:Number, $btButton:SimpleButton):void
@@ -310,7 +303,6 @@
 		
 		protected function backClicked($e:MouseEvent):void
 		{
-			trace("Castle Select: Back Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.backClickedSignal.dispatch();
 		}
@@ -320,14 +312,9 @@
 		protected function continueClicked($e:MouseEvent):void
 		{
 			SoundManager.instance.playButtonClick();
-			//If castles have not been selected, don't dispatch a signal.
 			if (iPlayerOneCastleNumber == 0 || iPlayerTwoCastleNumber == 0)
-			{
-					trace("Castle Select: Castle Not Selected");
-					return;
-			}
+				return;
 				
-			trace("Castle Select: Continue Clicked.");
 			this.continueClickedSignal.dispatch();
 		}
 		/* ---------------------------------------------------------------------------------------- */

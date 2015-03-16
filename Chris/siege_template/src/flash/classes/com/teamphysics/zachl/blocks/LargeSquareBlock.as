@@ -1,31 +1,21 @@
 ﻿package com.teamphysics.zachl.blocks
 {
 	
-	import com.natejc.input.KeyboardManager;
-	import com.natejc.input.KeyCode;
+	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.util.SpaceRef;
-	import flash.display.SimpleButton;
-	import flash.display.MovieClip;
+	import com.teamphysics.zachl.blocks.BaseBlock;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
-	import nape.shape.Polygon;
-	import nape.shape.Shape;
-	import org.osflash.signals.Signal;
-	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
-	import com.teamphysics.zachl.blocks.BaseBlock;
-	import com.teamphysics.util.CollisionManager;
-	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.chrisp.AbstractGameObject;
+	import nape.shape.Polygon;
 	
 	public class LargeSquareBlock extends BaseBlock
 	{
 		private var collisionGroupHolder 	:int;
-
-		/* ---------------------------------------------------------------------------------------- */				
+		
+		/* ---------------------------------------------------------------------------------------- */	
+		
 		/**
 		 * Constructs the Token object.
 		 */
@@ -39,9 +29,11 @@
 			this._nHeight = this._nWidth = 50;
 		}
 		
-		/* ---------------------------------------------------------------------------------------- */				
+		/* ---------------------------------------------------------------------------------------- */		
+		
 		/**
-		 * Calls the CollectibleManager to create a Vector of collectibles and then randomly places them using the pickRandomStartingLocation function
+		 * Calls the CollectibleManager to create a Vector of collectibles 
+		 * and then randomly places them using the pickRandomStartingLocation function
 		 */
 		override public function begin() :void
 		{
@@ -49,6 +41,7 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			var s:Sprite = new LargeSquareBlockGraphic();
@@ -63,11 +56,10 @@
 			
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
-			
 			body.space = SpaceRef.space;
-			
 			body.userData.graphic = s;	
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function end():void
@@ -75,6 +67,8 @@
 			super.end();
 			body.space = null;
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function get getCollisionGroup(): int
 		{
@@ -89,5 +83,7 @@
 		{
 			super.destroy();
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 	}
 }

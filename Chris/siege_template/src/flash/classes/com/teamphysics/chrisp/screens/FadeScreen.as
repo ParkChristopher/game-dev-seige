@@ -3,7 +3,6 @@ package com.teamphysics.chrisp.screens
 	import com.greensock.*;
 	import com.greensock.easing.*;
 
-	
 	/**
 	 * Screen with fading behavior
 	 * 
@@ -20,7 +19,6 @@ package com.teamphysics.chrisp.screens
 		public function FadeScreen()
 		{
 			super();
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -41,10 +39,7 @@ package com.teamphysics.chrisp.screens
 		 */
 		override protected function hide():void
 		{
-			
 			TweenMax.fromTo(this, .5, { alpha:1 }, { autoAlpha:0, ease:Linear.easeNone } );
-			//Commenting this out smoothed out transitions
-			//super.hide();
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

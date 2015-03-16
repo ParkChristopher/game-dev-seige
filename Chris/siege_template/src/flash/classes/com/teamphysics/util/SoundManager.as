@@ -1,9 +1,5 @@
 package com.teamphysics.util
 {
-	
-	//TO ADD: Ground Hit
-	//
-	import adobe.utils.CustomActions;
 	import treefortress.sound.SoundAS;
 	import treefortress.sound.SoundInstance;
 	
@@ -15,37 +11,36 @@ package com.teamphysics.util
 		/** Stores a reference to the singleton instance. */  
 		private static const _instance	:SoundManager = new SoundManager( SingletonLock );
 		
-		public static var SOUND_BUTTON_CLICK:String = "ButtonClick";
-		public static var SOUND_CANNON_FIRE:String = "CannonFire";
-		public static var SOUND_POWERUP_GET:String = "PowerupGet";
-		public static var SOUND_GET_POINT:String = "GetPoint";
-		public static var SOUND_GROUND_HIT:String = "GroundHit";
-		public static var SOUND_HIT_BLOCK:String = "HitBlock";
-		public static var SOUND_ITEM_SELECT:String = "ItemSelect";
-		public static var SOUND_KING_DIED:String = "KingDied";
-		public static var SOUND_CANNON_LOCK:String = "Lock";
-		public static var SOUND_GAME_PAUSE:String = "Pause";
-		public static var SOUND_CANNON_ROTATION:String = "Rotation";
-		public static var SOUND_SHIELD_ACTIVATE:String = "ShieldActivate";
-		public static var SOUND_SHIELD_DOWN:String = "ShieldDown";
-		public static var SOUND_SPEED_UP:String = "VelocityUp";
-		public static var SOUND_VICTORY:String = "Victory";
-		public static var SOUND_SHIELD_BOUNCE:String = "Shield Bounce";
-		public static var SOUND_SPEED_SHOT:String = "Speed Shot";
+		public static var SOUND_BUTTON_CLICK			:String = "ButtonClick";
+		public static var SOUND_CANNON_FIRE				:String = "CannonFire";
+		public static var SOUND_POWERUP_GET				:String = "PowerupGet";
+		public static var SOUND_GET_POINT				:String = "GetPoint";
+		public static var SOUND_GROUND_HIT				:String = "GroundHit";
+		public static var SOUND_HIT_BLOCK				:String = "HitBlock";
+		public static var SOUND_ITEM_SELECT				:String = "ItemSelect";
+		public static var SOUND_KING_DIED				:String = "KingDied";
+		public static var SOUND_CANNON_LOCK				:String = "Lock";
+		public static var SOUND_GAME_PAUSE				:String = "Pause";
+		public static var SOUND_CANNON_ROTATION			:String = "Rotation";
+		public static var SOUND_SHIELD_ACTIVATE			:String = "ShieldActivate";
+		public static var SOUND_SHIELD_DOWN				:String = "ShieldDown";
+		public static var SOUND_SPEED_UP				:String = "VelocityUp";
+		public static var SOUND_VICTORY					:String = "Victory";
+		public static var SOUND_SHIELD_BOUNCE			:String = "Shield Bounce";
+		public static var SOUND_SPEED_SHOT				:String = "Speed Shot";
 		
-		public static var MUSIC_TITLE_SCREEN:String = "TitleScreenLoop";
-		public static var MUSIC_RESULTS_SCREEN:String = "ResultsScreenLoop";
-		public static var MUSIC_GAME_SCREEN:String = "GameScreenLoop";
+		public static var MUSIC_TITLE_SCREEN			:String = "TitleScreenLoop";
+		public static var MUSIC_RESULTS_SCREEN			:String = "ResultsScreenLoop";
+		public static var MUSIC_GAME_SCREEN				:String = "GameScreenLoop";
 		
 		
-		public static var SE_VOLUME:Number = 1;
-		public var titleMusicInstance			:SoundInstance;
+		public static var SE_VOLUME						:Number = 1;
+		public var titleMusicInstance					:SoundInstance;
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		/**
 		 * Constructs the SingletonExample object.
-		 * 
 		 * @param	lock	This class is a singleton and should not be externally instantiated.
 		 */
 		public function SoundManager($lock:Class)
@@ -227,7 +222,6 @@ package com.teamphysics.util
 		
 		public function playGameMusic():void
 		{
-			
 			SoundAS.fadeAllTo(0);
 			SoundAS.fadeFrom(MUSIC_GAME_SCREEN, 0, .1);
 			SoundAS.playLoop(MUSIC_GAME_SCREEN, .1);
@@ -248,6 +242,13 @@ package com.teamphysics.util
 		}
 		/* ---------------------------------------------------------------------------------------- */
 		
+		public function stopSound():void
+		{
+			SoundAS.stopAll();
+		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		//Returns an instance to this class.
 		public static function get instance():SoundManager
 		{
@@ -255,7 +256,6 @@ package com.teamphysics.util
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
 	}
 }
 

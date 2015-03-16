@@ -1,46 +1,23 @@
 ﻿package com.teamphysics.zachl.blocks
 {
-	
-	
-
 	import com.teamphysics.util.GameObjectType;
-
-	import com.natejc.input.KeyboardManager;
-	import com.natejc.input.KeyCode;
-
 	import com.teamphysics.util.SpaceRef;
-	import flash.display.SimpleButton;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
-
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.phys.Material;
 	import nape.shape.Polygon;
-
 	import org.osflash.signals.*;
 	import org.osflash.signals.Signal;
-
-	import org.osflash.signals.Signal;
-	import com.natejc.utils.StageRef;
-	import nape.phys.Material;
-	import org.osflash.signals.*;
-	import com.teamphysics.util.CollisionManager;
-	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.chrisp.AbstractGameObject; 
-
-	
-	//import nape.shape.
 
 	public class KingBlock extends BaseBlock
 	{
 		/** A variable to track when the hero has died. */
 		private var collisionGroupHolder 	:int;
 		private var kingDiedSignal 	:Signal = new Signal();
-		/* ---------------------------------------------------------------------------------------- */				
+		
+		/* ---------------------------------------------------------------------------------------- */		
+		
 		/**
 		 * Constructs the Token object.
 		 */
@@ -63,14 +40,11 @@
 			s.height = _nHeight;
 			this.addChild(s);
 			var material :Material = new Material(.1, 10, 2, 10);
+			
 			if ($collisionType == 1)
-			{
 				bOwnerIsP1 = true;
-			}
 			else
-			{
 				bOwnerIsP1 = false;
-			}
 			
 			body = new Body(BodyType.DYNAMIC);
 			
@@ -80,12 +54,12 @@
 			
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
-
 			body.space = SpaceRef.space;
-			
 			body.userData.graphic = s;	
 		}
-		/* ---------------------------------------------------------------------------------------- */				
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function begin() :void
 		{
 			super.begin();
@@ -99,22 +73,29 @@
 			body.space = null;
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function get x(): Number
 		{
 			return this.body.position.x;
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function get getCollisionGroup(): int
 		{
 			return this.collisionGroupHolder;
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
+		
 		public function setXYCoordinates($x:int, $y:int):void
 		{
 			body.position.setxy($x, $y);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */				
+		
 		/**
 		 * Calls CollectibleManagers destroy function
 		 */
@@ -122,5 +103,8 @@
 		{
 			super.destroy();
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 	}
 }

@@ -1,11 +1,10 @@
 package com.teamphysics.chrisp.screens {
-	import com.teamphysics.chrisp.screens.AbstractScreen;
+	import com.greensock.easing.*;
+	import com.greensock.TweenMax;
+	import com.teamphysics.util.SoundManager;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-	import com.teamphysics.util.SoundManager;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.*;
 	
 	/**
 	 * Instructions Screen Class
@@ -32,9 +31,7 @@ package com.teamphysics.chrisp.screens {
 		override public function begin():void
 		{
 			super.begin();
-			
 			this.btReturn.addEventListener(MouseEvent.CLICK, returnClicked);
-			
 			this.activateTweens();
 		}
 		
@@ -50,20 +47,14 @@ package com.teamphysics.chrisp.screens {
 		override public function end():void
 		{
 			super.end();
-			
 			this.btReturn.removeEventListener(MouseEvent.CLICK, returnClicked);
 		}
-		
-		/* ---------------------------------------------------------------------------------------- */
-		
-		/*NOTE: Override show and hide in base class for tweening here*/
 		
 		/* ---------------------------------------------------------------------------------------- */
 		// [ BUTTON EVENT TRIGGERS ]
 		/* ---------------------------------------------------------------------------------------- */
 		protected function returnClicked($e:MouseEvent):void
 		{
-			trace("Instructions: Return Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.returnClickedSignal.dispatch();
 		}

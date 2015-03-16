@@ -9,15 +9,14 @@
 	import nape.phys.Material;
 	import nape.shape.Polygon;
 	import org.osflash.signals.*;
-	import org.osflash.signals.Signal;
-	import flash.display.DisplayObject;
 	
 	public class KingPlacementBlock extends BaseBlock 
 	{
 		/** A variable to track when the hero has died. */
 		private var collisionGroupHolder 	:int;
+		public var mcKing					:KingBlock;
 		
-		public var mcKing		:KingBlock;
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function KingPlacementBlock() 
 		{
@@ -27,12 +26,6 @@
 			this._nHeight = 60;
 			this._nWidth = 33;
 			this._sObjectType = GameObjectType.TYPE_KING_PLACEMENT_BLOCK
-			if(this._sObjectType == GameObjectType.TYPE_KING_PLACEMENT_BLOCK)
-			{
-				//trace("Correctly set as king");
-				//trace(this._sObjectType);
-				//trace("GameObjectType.TYPE_KING_BLOCK: " + GameObjectType.TYPE_KING_BLOCK);
-			}
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
 			this.mcKing = new KingBlock();
 			this.mcKing.visible = false;
@@ -48,14 +41,11 @@
 			s.height = _nHeight;
 			this.addChild(s);
 			var material :Material = new Material(); //Material(.1, 10, 2, 10);
+			
 			if ($collisionType == 1)
-			{
 				bOwnerIsP1 = true;
-			}
 			else
-			{
 				bOwnerIsP1 = false;
-			}
 			
 			body = new Body(BodyType.DYNAMIC);
 			
@@ -65,13 +55,8 @@
 			
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
-
 			body.space = SpaceRef.space;
-			
 			body.userData.graphic = s;	
-			
-			//var graphic:DisplayObject = body.userData.graphic;
-			//graphic.visible = false;
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */	
@@ -89,15 +74,20 @@
 			return this.collisionGroupHolder;
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function get xCoordinate():int
 		{
 			return this.body.position.x;
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function get yCoordinate():int
 		{
 			return this.body.position.y;
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
 	}
-
 }

@@ -1,7 +1,7 @@
 ﻿package com.teamphysics.util
 {
-	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.natejc.utils.StageRef;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import flash.events.Event;
 
 	/**
@@ -130,8 +130,7 @@
 				if (aObjectsOfSameType != null)
 				{
 					for (var i:uint = 0; i < aObjectsOfSameType.length; i++)
-						this.testSingleCollision(aObjectsOfSameType[i]);
-					
+						this.testSingleCollision(aObjectsOfSameType[i]);	
 				}
 			}
 		}
@@ -166,7 +165,6 @@
 							
 						if ($object.Hitbox.hitTestObject(mcObjectInstance.Hitbox))
 							$object.collidedWith(mcObjectInstance);
-						
 					}
 				}
 			}

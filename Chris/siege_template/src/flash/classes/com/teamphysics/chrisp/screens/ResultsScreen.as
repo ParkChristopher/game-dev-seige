@@ -1,13 +1,13 @@
-package com.teamphysics.chrisp.screens {
+package com.teamphysics.chrisp.screens 
+{
+	import com.greensock.easing.*;
+	import com.greensock.TweenMax;
+	import com.teamphysics.util.ScoreManager;
+	import com.teamphysics.util.SoundManager;
 	import flash.display.SimpleButton;
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import org.osflash.signals.Signal;
-	import com.teamphysics.util.SoundManager;
-	import com.greensock.TweenMax;
-	import com.greensock.easing.*;
-	import com.teamphysics.util.ScoreManager;
 	
 	/**
 	 * Results Screen
@@ -106,8 +106,6 @@ package com.teamphysics.chrisp.screens {
 			
 			this.txtP1Accuracy.text = p1Acc.toString() + " %";
 			this.txtP2Accuracy.text = p2Acc.toString() + " %";
-			
-			
 			this.txtHighScore.text  = ScoreManager.instance.nHighScore.toString();
 			
 			if (ScoreManager.instance.sWinner == "P1")
@@ -142,7 +140,6 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function playAgainClicked($e:MouseEvent):void
 		{
-			trace("Results: Play Again Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.playAgainClickedSignal.dispatch();
 		}
@@ -151,7 +148,6 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function toTitleClicked($e:MouseEvent):void
 		{
-			trace("Results: To Title Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.toTitleClickedSignal.dispatch();
 		}
@@ -160,7 +156,6 @@ package com.teamphysics.chrisp.screens {
 		
 		protected function creditsClicked($e:MouseEvent):void
 		{
-			trace("Results: Credits Clicked.");
 			SoundManager.instance.playButtonClick();
 			this.creditsClickedSignal.dispatch();
 		}

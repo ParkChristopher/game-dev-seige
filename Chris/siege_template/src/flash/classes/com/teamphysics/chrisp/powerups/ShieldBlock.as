@@ -1,14 +1,14 @@
-package com.teamphysics.chrisp.powerups {
+package com.teamphysics.chrisp.powerups 
+{
+	import com.natejc.utils.StageRef;
 	import com.teamphysics.chrisp.AbstractGameObject;
+	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.SpaceRef;
 	import flash.display.Sprite;
 	import nape.phys.Body;
-	import nape.shape.Polygon;
 	import nape.phys.BodyType;
-	import com.teamphysics.util.SpaceRef;
-	import com.natejc.utils.StageRef;
-	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.util.CollisionManager;
-	import com.greensock.TweenMax;
+	import nape.shape.Polygon;
 	import org.osflash.signals.Signal;
 
 	
@@ -24,8 +24,7 @@ package com.teamphysics.chrisp.powerups {
 		protected var poly				:Polygon;
 		protected var tempTexture		:Sprite;
 		protected var bRemoved			:Boolean;
-		public var nShieldHealth	:Number;
-		
+		public var nShieldHealth		:Number;
 		public var removeShieldSignal	:Signal = new Signal(Boolean);
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -76,14 +75,12 @@ package com.teamphysics.chrisp.powerups {
 			this.physicsBody.userData.graphic = this.tempTexture;
 			
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function begin():void
 		{
 			super.begin();
-			
-			
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

@@ -10,7 +10,7 @@ package com.teamphysics.util
 		
 		
 	// **********************************************************************************
-
+		
 		
 		/**
 		 * Constructs the SpaceRef object. This class is a static class and should not be instantiated.
@@ -18,13 +18,13 @@ package com.teamphysics.util
 		public function SpaceRef()
 		{
 			throw new Error("SpaceRef is a static class and should not be instantiated.");
-
+		
 		} // END CONSTRUCTOR
 		
 		
 	// **********************************************************************************
-	
-	
+		
+		
 		/**
 		 * Gets/Sets the space reference.
 		 *
@@ -35,11 +35,11 @@ package com.teamphysics.util
 		{
 			return _space;
 		} // END FUNCTION GET stage
-	
+		
 		
 	// **********************************************************************************
 		
-	
+		
 		public static function set space(spaceRef:Space):void
 		{
 			_space = spaceRef;

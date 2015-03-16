@@ -1,9 +1,7 @@
 package com.teamphysics.chrisp.screens 
 {
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
 	import org.osflash.signals.Signal;
-
 	
 	/**
 	 * Base screen class for all screens
@@ -28,7 +26,6 @@ package com.teamphysics.chrisp.screens
 			this.mouseChildren	= true;
 			this.bActive = false;
 			this.visible = false;
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */		

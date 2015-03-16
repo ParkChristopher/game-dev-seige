@@ -11,18 +11,19 @@ package com.teamphysics.samg
 	public class PowerBar extends AbstractGameObject 
 	{
 		public var bPowerBarFilling		:Boolean;
-		
 		public var bIsMoving			:Boolean;
-		
 		public var mcMask				:MovieClip;
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function PowerBar() 
 		{
 			super();
 			this.scaleX = 0;
 			mcMask.visible = false;
-			
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function begin():void
 		{
@@ -35,16 +36,21 @@ package com.teamphysics.samg
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public override function end():void
 		{
 			super.end();
-			//this.scaleX = 0;
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function stopMoving()
 		{
 			this.bIsMoving = false;
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		private function enterFrameHandler(e:Event)
 		{
@@ -67,28 +73,9 @@ package com.teamphysics.samg
 					this.bPowerBarFilling = true;
 				}
 			}
-			
-			/*if (this.bIsMoving)
-			{
-				if (this.bPowerBarFilling && this.scaleX < 1.0)
-				{
-					this.scaleX += .03;
-				}
-				else if (this.bPowerBarFilling && this.scaleX >= 1.0)
-				{
-					this.bPowerBarFilling = false;
-				}
-				else if (!this.bPowerBarFilling && this.scaleX > 0)
-				{
-					this.scaleX -= .03;
-				}
-				else if (!this.bPowerBarFilling && this.scaleX <= 0)
-				{
-					this.bPowerBarFilling = true;
-				}
-			}*/
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 	}
-
 }

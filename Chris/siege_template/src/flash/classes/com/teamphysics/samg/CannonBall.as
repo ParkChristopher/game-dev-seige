@@ -1,10 +1,22 @@
 ﻿package com.teamphysics.samg 
 {
+	import com.greensock.TweenMax;
 	import com.teamphysics.chrisp.AbstractGameObject;
-	import com.teamphysics.util.GameObjectType;
-	import com.natejc.utils.StageRef;
+	import com.teamphysics.chrisp.powerups.ShieldBlock;
 	import com.teamphysics.util.CollisionManager;
+	import com.teamphysics.util.GameObjectType;
+	import com.teamphysics.util.ScoreManager;
+	import com.teamphysics.util.SoundManager;
 	import com.teamphysics.util.SpaceRef;
+	import com.teamphysics.zachl.blocks.BaseBlock;
+	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
+	import com.teamphysics.zachl.blocks.KingBlock;
+	import com.teamphysics.zachl.blocks.LargeSquareBlock;
+	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
+	import com.teamphysics.zachl.blocks.LongBlock;
+	import com.teamphysics.zachl.blocks.RectangleBlock;
+	import com.teamphysics.zachl.blocks.SquareBlock;
+	import com.teamphysics.zachl.blocks.StoneSquareBlock;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import nape.callbacks.CbType;
@@ -15,22 +27,6 @@
 	import nape.shape.Circle;
 	import nape.shape.Shape;
 	import org.osflash.signals.*;
-	import com.teamphysics.zachl.blocks.BaseBlock;
-	import com.teamphysics.zachl.blocks.LargeSquareBlock;
-	import com.teamphysics.zachl.blocks.LongBlock;
-	import com.teamphysics.zachl.blocks.RectangleBlock;
-	import com.teamphysics.zachl.blocks.SquareBlock;
-	import com.teamphysics.zachl.blocks.LargeStoneSquareBlock;
-	import com.teamphysics.zachl.blocks.StoneSquareBlock;
-	import com.teamphysics.zachl.blocks.HorizontalRectangleBlock;
-	import com.teamphysics.zachl.blocks.KingBlock;
-	import com.greensock.events.LoaderEvent;
-	import com.greensock.loading.LoaderMax;
-	import com.greensock.loading.XMLLoader;
-	import com.greensock.TweenMax;
-	import com.teamphysics.util.SoundManager;
-	import com.teamphysics.util.ScoreManager;
-	import com.teamphysics.chrisp.powerups.ShieldBlock;
 	
 	/**
 	 * ...
@@ -39,20 +35,15 @@
 	public class CannonBall extends AbstractGameObject 
 	{
 		public var 		gameOverSignal 				:Signal = new Signal();
-		
 		private var 	physicsBody					:Body;
-		
 		private var		shape						:Shape;
-		
 		private var 	material					:Material;
-		
 		private var 	ballCollisionType			:CbType;
-		
-		private var 		tMaxLifeSpanTimer			:Timer = new Timer(10000);
-		
+		private var 	tMaxLifeSpanTimer			:Timer = new Timer(10000);
 		private var		hitTimerReset				:Timer = new Timer(5000);
-		
 		private var 	isSoundReset				:Boolean;
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function CannonBall() 
 		{
@@ -66,6 +57,8 @@
 			this.addCollidableType(GameObjectType.TYPE_KING_BLOCK);
 			this.addCollidableType(GameObjectType.TYPE_SHIELD_WALL);
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function begin():void
 		{
@@ -95,7 +88,6 @@
 		public function setCbType($cType:CbType)
 		{
 			this.ballCollisionType = $cType;
-
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -103,15 +95,12 @@
 		public function setVelocity($vVelocityVec:Vec2)
 		{
 			physicsBody.velocity = $vVelocityVec;
-
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
-
 		public function buildBall($xPos:int, $yPos:int, $collisionGroup:int)
 		{
-			//trace($xPos + ", " + $yPos);
 			physicsBody = new Body(BodyType.DYNAMIC, new Vec2($xPos, $yPos));
 			material = new Material(0.5, 1, 1, 5);
 			shape = new Circle(this.width / 2, null, material);
@@ -135,14 +124,15 @@
 			
 			physicsBody.userData.graphic = this;
 			physicsBody.mass = 1;
-			
-
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function get body():Body
 		{
 			return this.physicsBody;
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function collidedWith($object:AbstractGameObject):void
@@ -242,13 +232,10 @@
 					block = KingBlock($object);
 				}
 				
-				//trace("OBJECT FIRED CANNONBALL OWNER IS: " + bOwnerIsP1 + " Block is : " + block.getCollisionGroup);
-				//If cannonball is owned by p1 and the block collisiongroup is 2 or the reverse
 				if(this.bOwnerIsP1 == true && block.getCollisionGroup == 2 || this.bOwnerIsP1 == false && block.getCollisionGroup == 1)
 				{
 					if (!block.bHasBeenCollidedWith)
 					{
-						//Guessing on score placement here
 						if (this.bOwnerIsP1)
 						{
 							ScoreManager.instance.nP1Score += 50;
@@ -268,64 +255,22 @@
 						
 						var massTimesVelocity:Number = physicsBody.mass * physicsBody.velocity.length;
 						
-						trace("ball velocity * mass: " + massTimesVelocity);
-						
 						if (massTimesVelocity > 1000)
 						{
 							block.health = block.health - (massTimesVelocity / 33);
-							trace("block.health: " + block.health);
 						}
 						else if (massTimesVelocity > 600)
 						{
 							block.health = block.health - (massTimesVelocity / 29);
-							trace("block.health: " + block.health);
 						}
 						else if (massTimesVelocity > 300)
 						{
 							block.health = block.health - (massTimesVelocity / 24);
-							trace("block.health: " + block.health);
 						}
 						else 
 						{
 							block.health = block.health - (massTimesVelocity / 15);
-							trace("block.health: " + block.health);
 						}
-						
-						/*if (massTimesVelocity > 850)
-						{
-							trace("massive damage");
-
-
-							block.health-= 40;
-
-							
-							trace("block.health: " + block.health);
-						}
-						else if (massTimesVelocity > 450)
-						{
-							trace("standard damage");
-
-							block.health = block.health - 30;
-
-							//block.health = block.health - 20;
-
-							trace("block.health: " + block.health);
-						}
-						else if (massTimesVelocity > 200)
-						{
-							block.health = block.health - 20;
-						}
-						else if (massTimesVelocity > 100)
-						{
-							trace("min damage");
-
-							block.health -= 15;
-
-							trace("block.health: " + block.health);
-						}*/
-						
-						//block.health--;
-						//trace("block.health: " + block.health);
 					
 						if(block.health <= 0)
 						{
@@ -333,31 +278,22 @@
 							CollisionManager.instance.remove($object);
 							$object.cleanupSignal.dispatch($object);
 						}
-						//CollisionManager.instance.remove(this);
 							
-					
 						block.bHasBeenCollidedWith = true;
 					}
 				}
-				TweenMax.delayedCall(5, this.removeCannonBall);
 				
+				TweenMax.delayedCall(5, this.removeCannonBall);
 			}
+			
 			if ($object.objectType == GameObjectType.TYPE_KING_BLOCK)
 			{
-				
-				//trace("king is player1?: " + $object.bOwnerIsP1);
-					//trace("ball is player1: " + this.bOwnerIsP1);
-					//trace(!$object.bOwnerIsP1 && !this.bOwnerIsP1);
-					//trace(($object.bOwnerIsP1 && this.bOwnerIsP1) || (!$object.bOwnerIsP1 && !this.bOwnerIsP1));
 				if (($object.bOwnerIsP1 && !this.bOwnerIsP1) || (!$object.bOwnerIsP1 && this.bOwnerIsP1))
 				{	
 					if (this.bOwnerIsP1)
 						ScoreManager.instance.sWinner = "P1";
 					else
 						ScoreManager.instance.sWinner = "P2";
-					
-					trace("KING WAS HIT");
-					//TweenMax.delayedCall(.5, this.endGame);
 				
 					$object.end();
 					CollisionManager.instance.remove($object);
@@ -365,10 +301,9 @@
 					this.cleanupSignal.dispatch(this);
 					this.endGame();
 				}
-				
 			}
-
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		public function endGame():void

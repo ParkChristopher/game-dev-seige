@@ -7,21 +7,15 @@
 	import com.natejc.utils.StageRef;
 	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.util.CollisionManager;
-	import com.teamphysics.util.SpaceRef;
+	import com.teamphysics.util.ScoreManager;
+	import com.teamphysics.util.SoundManager;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import nape.callbacks.CbType;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
-	import nape.phys.BodyType;
-	import nape.phys.Material;
-	import nape.shape.Circle;
-	import com.natejc.utils.StageRef;
-	import com.teamphysics.util.SoundManager;
-	import org.osflash.signals.natives.base.SignalBitmap;
 	import org.osflash.signals.Signal;
-	import com.teamphysics.util.ScoreManager;
 	
 	/**
 	 * ...
@@ -29,46 +23,35 @@
 	 */
 	public class Cannon extends AbstractGameObject
 	{	
-		public var backPoint		:Point;
+		public var backPoint				:Point;
+		public var frontPoint				:Point;
 		
-		public var frontPoint		:Point;
+		private var _height					:Number;
+		private var _length					:Number;
+		private var _nSpeedBonus			:Number;
 		
-		private var _height			:Number;
+		private var _bIsRotating			:Boolean;
+		private var _bIsRotatingUp			:Boolean;
 		
-		private var _length			:Number;
+		public var mcCannonBarrel			:MovieClip;
+		public var mcPowerBar				:PowerBar;
 		
-		public var mcCannonBarrel	:MovieClip;
-		
-		public var mcPowerBar		:PowerBar;
-		
-		private var _bIsRotating	:Boolean;
-		
-		private var _bIsRotatingUp	:Boolean;
-		
-		private var _sShotType		:String;
-		
-		private var _nRotationAmount	:Number;
-		
-		private var _aCannonBalls		:Array;
-		
+		private var _sShotType				:String;
+		private var _nRotationAmount		:Number;
+		private var _aCannonBalls			:Array;
 		protected var ballCollisionType		:CbType;
 		
-		private var _nSpeedBonus		:Number;
-		private var cannonBallPhysicsBody:Body;
+		private var cannonBallPhysicsBody	:Body;
 		
-		public var	speedCleanupSignal	:Signal = new Signal(Cannon);
-
+		public var	speedCleanupSignal		:Signal = new Signal(Cannon);
 		public var 	changeShotTypeSignal	:Signal = new Signal(String);
-
-		public var	endGameSignal	:Signal = new Signal();
-		public var 	cannonFireSignal	:Signal = new Signal();
-
-		public var s:CannonBall;
-
+		public var	endGameSignal			:Signal = new Signal();
+		public var 	cannonFireSignal		:Signal = new Signal();
 		
-		private var multiS1	:CannonBall;
-		private var multiS2	:CannonBall;
-		private var multiS3	:CannonBall;
+		public var s						:CannonBall;
+		private var multiS1					:CannonBall;
+		private var multiS2					:CannonBall;
+		private var multiS3					:CannonBall;
 
 		
 		public function Cannon() 
@@ -78,9 +61,8 @@
 			this.mouseEnabled = false;
 			frontPoint = new Point();
 			backPoint = new Point();
-			_height = this.mcCannonBarrel.height;//cannon must start horizontal
+			_height = this.mcCannonBarrel.height;
 			_length = this.mcCannonBarrel.width;
-
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -88,7 +70,6 @@
 		public function show()
 		{
 			this.visible = true;
-
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -118,10 +99,7 @@
 			_aCannonBalls = new Array();
 			
 			_sShotType = "single";
-			
 			_nSpeedBonus = 0;
-			
-			
 			_bIsRotating = true;
 			_bIsRotatingUp = true;
 			_nRotationAmount = 0;
@@ -138,13 +116,13 @@
 				KeyboardManager.instance.addKeyDownListener(KeyCode.L, firePressed);
 				KeyboardManager.instance.addKeyDownListener(KeyCode.P, changeShotType);
 			}
+			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		public function kingKilled():void
 		{
-			trace("King was killed");
 			this.endGameSignal.dispatch();
 		}
 		
@@ -193,7 +171,8 @@
 			ballCollisionType = $collisionType;
 		}
 		
-
+		/* ---------------------------------------------------------------------------------------- */
+		
 		private function firePressed()
 		{	
 			if (_bIsRotating)
@@ -204,27 +183,19 @@
 			}
 			else if(!_bIsRotating && mcPowerBar.bIsMoving)
 			{
-				trace("player 1: " + bOwnerIsP1 + " , cannon fired");
 				SoundManager.instance.playCannonFire();
+				
 				if (bOwnerIsP1)
-				{
 					cannonFireSignal.dispatch(1);
-				}
 				else
-				{
 					cannonFireSignal.dispatch(2);
-				}
 				
 				mcPowerBar.stopMoving();
-
+				
 				if (_sShotType == "single")
-				{
 					shootSingleShot();
-				}
 				else
-				{
 					shootMultiShot();
-				}
 				
 				_bIsRotating = true;
 				mcPowerBar.end();
@@ -237,7 +208,6 @@
 				
 				justFired();
 			}
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -269,7 +239,6 @@
 			_aCannonBalls.push(multiS1);
 			_aCannonBalls.push(multiS2);
 			_aCannonBalls.push(multiS3);
-			
 				
 			CollisionManager.instance.add(multiS1);
 			CollisionManager.instance.add(multiS2);
@@ -279,21 +248,17 @@
 			multiS2.cleanupSignal.add(removeObject);
 			multiS3.cleanupSignal.add(removeObject);
 			
-			StageRef.stage.addChildAt(multiS1, 1);
-			StageRef.stage.addChildAt(multiS2, 1);
-			StageRef.stage.addChildAt(multiS3, 1);
+			StageRef.stage.addChildAt(multiS1, StageRef.stage.numChildren);
+			StageRef.stage.addChildAt(multiS2, StageRef.stage.numChildren);
+			StageRef.stage.addChildAt(multiS3, StageRef.stage.numChildren);
 			
 			multiS1.begin();
 			multiS2.begin();
 			multiS3.begin();
 				
-				/*trace("Left?: " + bOwnerIsP1);
-				trace(frontPoint.x + ", " + frontPoint.y);
-				trace(backPoint.x + ", " + backPoint.y);*/
 			var velocityVec:Vec2 = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
 			var scaler:Number = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
 				
-				//trace("speed bonus: " +_nSpeedBonus);
 			velocityVec = velocityVec.mul(scaler);
 			
 			multiS1.setCbType(ballCollisionType);
@@ -327,32 +292,28 @@
 			justFired();
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		private function shootSingleShot()
 		{
-			trace("shoot single shot");
 			var velocityVec:Vec2;
 			var scaler:Number;
 			s = new CannonBall();
 			s.gameOverSignal.add(kingKilled);
 			s.x = this.mcCannonBarrel.x;
 			s.y = this.mcCannonBarrel.y;
-			
 			s.bOwnerIsP1 = this.bOwnerIsP1;
 			
 			_aCannonBalls.push(s);
 				
 			CollisionManager.instance.add(s);
 			s.cleanupSignal.add(removeObject);
-			StageRef.stage.addChildAt(s, 1);
+			StageRef.stage.addChildAt(s, StageRef.stage.numChildren);
 			s.begin();
 				
-				/*trace("Left?: " + bOwnerIsP1);
-				trace(frontPoint.x + ", " + frontPoint.y);
-				trace(backPoint.x + ", " + backPoint.y);*/
 			velocityVec = new Vec2(frontPoint.x - backPoint.x, frontPoint.y - backPoint.y);
 			scaler = 4 + (this.mcPowerBar.mcMask.scaleX * 4) + _nSpeedBonus;
 				
-				//trace("speed bonus: " +_nSpeedBonus);
 			velocityVec = velocityVec.mul(scaler);
 				
 			s.setCbType(ballCollisionType);
@@ -367,24 +328,27 @@
 				ScoreManager.instance.nP2ShotsFired += 1;
 				s.buildBall(this.x, this.y, 2);
 			}
+			
 			s.body.mass = 1;
 			s.setVelocity(velocityVec);
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		private function justFired()
 		{
 			_bIsRotating = false;
-			
+			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			TweenMax.to(this.mcCannonBarrel, 2, { rotation:0, ease:Elastic.easeOut, onComplete:backToZero } );
-			//not sure why this isn't working...
+			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
 		private function backToZero()
 		{
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			_nRotationAmount = 0;
-			//_bIsRotatingUp = true; //?
 			_bIsRotating = true;
 			SoundManager.instance.playLock();
 		}
@@ -408,21 +372,19 @@
 		public function removeObject($object:AbstractGameObject):void
 		{
 			var objectIndex :int = _aCannonBalls.indexOf($object);
-			
 				
 			if (objectIndex >= 0)
 			{
-				//trace("Cannon: Removing Object");
 				if(CannonBall($object))
 				{
 					var tempCannonball : CannonBall = CannonBall($object);
 					tempCannonball.cleanCannonBall();
 				}
+				
 				$object.end();
 				StageRef.stage.removeChild($object);
 				_aCannonBalls.splice(objectIndex, 1);
 			}
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -431,6 +393,7 @@
 		{
 			var sin:Number;
 			var cos:Number;
+			
 			if (bOwnerIsP1)
 			{
 				this.mcCannonBarrel.rotation = $angle;
@@ -463,9 +426,7 @@
 			KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
 			
 			for (var i:int = 0; i < _aCannonBalls.length; i++)
-			{
 				_aCannonBalls[i].end();
-			}
 			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
@@ -484,6 +445,7 @@
 				KeyboardManager.instance.removeKeyDownListener(KeyCode.L, firePressed);
 				KeyboardManager.instance.removeKeyDownListener(KeyCode.P, changeShotType);
 			}
+			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
@@ -506,8 +468,5 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
-		
-		
 	}
-
 }

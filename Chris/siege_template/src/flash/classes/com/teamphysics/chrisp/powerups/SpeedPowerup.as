@@ -1,12 +1,7 @@
 package com.teamphysics.chrisp.powerups
 {
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import nape.phys.Body;
-	import nape.phys.BodyType;
-	import nape.shape.Circle;
-	import nape.shape.Polygon;
 	import com.teamphysics.util.GameObjectType;
+	import flash.display.MovieClip;
 
 	
 	/**
@@ -24,7 +19,6 @@ package com.teamphysics.chrisp.powerups
 		public function SpeedPowerup()
 		{
 			super("Speed");
-			
 			init();
 		}
 		
@@ -57,14 +51,9 @@ package com.teamphysics.chrisp.powerups
 			super.activate($object);
 			
 			if (this.bOwnerIsP1)
-			{
 				$object.mcP1SpeedIndicator.visible = true;
-			}
 			else
-			{
 				$object.mcP2SpeedIndicator.visible = true;
-			}
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */

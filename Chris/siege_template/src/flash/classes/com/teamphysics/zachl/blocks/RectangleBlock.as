@@ -1,31 +1,20 @@
 ﻿package com.teamphysics.zachl.blocks
 {
 	
-	import com.natejc.input.KeyboardManager;
-	import com.natejc.input.KeyCode;
+	import com.teamphysics.util.GameObjectType;
 	import com.teamphysics.util.SpaceRef;
-	import flash.display.DisplayObject;	
-	import flash.display.SimpleButton;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
-	import nape.shape.Polygon;
-	import org.osflash.signals.Signal;
-	import com.natejc.utils.StageRef;
 	import nape.phys.Material;
-	import com.teamphysics.util.CollisionManager;
-	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.chrisp.AbstractGameObject; 
-	//import nape.shape.
+	import nape.shape.Polygon;
 	
 	public class RectangleBlock extends BaseBlock
 	{
 		private var collisionGroupHolder 	:int;
 
-		/* ---------------------------------------------------------------------------------------- */				
+		/* ---------------------------------------------------------------------------------------- */		
+		
 		/**
 		 * Constructs the Token object.
 		 */
@@ -40,9 +29,11 @@
 			this._nWidth = 25;
 		}
 		
-		/* ---------------------------------------------------------------------------------------- */				
+		/* ---------------------------------------------------------------------------------------- */	
+		
 		/**
-		 * Calls the CollectibleManager to create a Vector of collectibles and then randomly places them using the pickRandomStartingLocation function
+		 * Calls the CollectibleManager to create a Vector of collectibles 
+		 * and then randomly places them using the pickRandomStartingLocation function
 		 */
 		override public function begin() :void
 		{
@@ -50,6 +41,7 @@
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function buildBlock($xPlacement:int, $yPlacement:int, $collisionType:int):void
 		{	
 			var s:Sprite = new RectangleBlockGraphic();
@@ -65,11 +57,11 @@
 			this.collisionGroupHolder = polygon.filter.collisionGroup;
 			body.shapes.add(polygon);
 			body.position.setxy($xPlacement, $yPlacement);
-
 			body.space = SpaceRef.space;
-			
 			body.userData.graphic = s;	
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		override public function end():void
 		{
@@ -77,11 +69,15 @@
 			body.space = null;
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		override public function get getCollisionGroup(): int
 		{
 			return this.collisionGroupHolder;
 		}
-		/* ---------------------------------------------------------------------------------------- */				
+		
+		/* ---------------------------------------------------------------------------------------- */	
+		
 		/**
 		 * Calls CollectibleManagers destroy function
 		 */
@@ -89,5 +85,8 @@
 		{
 			super.destroy();
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 	}
 }

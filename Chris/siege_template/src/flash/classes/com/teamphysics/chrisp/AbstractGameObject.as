@@ -1,7 +1,6 @@
 package com.teamphysics.chrisp
 {
 	import flash.display.MovieClip;
-	import flash.utils.Timer;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -34,9 +33,7 @@ package com.teamphysics.chrisp
 		 * Constructs the AbstractGameObject object.
 		 */
 		public function AbstractGameObject()
-		{
-			//super();
-			
+		{	
 			this.mouseEnabled	= false;
 			this.mouseChildren	= false;
 			this.bHasBeenCollidedWith = false;

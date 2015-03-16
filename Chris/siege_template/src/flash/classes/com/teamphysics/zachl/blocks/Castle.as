@@ -16,18 +16,16 @@
 	import com.teamphysics.zachl.blocks.RectangleBlock;
 	import com.teamphysics.zachl.blocks.SquareBlock;
 	import com.teamphysics.zachl.blocks.StoneSquareBlock;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
-	import flash.geom.Point;
 	import flash.utils.Timer;
-	import nape.callbacks.CbType;
-	import nape.callbacks.InteractionListener;
 	import nape.phys.Body;
 	import org.osflash.signals.Signal;
-	import nape.phys.Material;
-	import flash.display.DisplayObject;
 
+	/* ---------------------------------------------------------------------------------------- */
+	
 	public class Castle extends MovieClip
 	{
 		
@@ -56,6 +54,7 @@
 
 		//Bodies
 		private var body		:Body;
+		
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Constructs the BaseCollectible object.
@@ -143,13 +142,14 @@
 				block.buildBlock(placementArray[i], h - ((i + 1) * 100), _nCollisionGroup);
 				
 				arrayOfBlocks.push(block);
+				
 				if(block is KingPlacementBlock == false)
-				{
 					aOnScreenObjects.push(block);
-				}
+				
 				CollisionManager.instance.add(block);
 				SpaceRef.space.bodies.at(i).allowRotation = false;
 			}
+			
 			TweenMax.delayedCall(2, allowRotation);
 		}
 		
@@ -159,7 +159,6 @@
 		{
 			this.checkKingX();
 		}
-		
 		
 		/* ---------------------------------------------------------------------------------------- */
 		
@@ -193,13 +192,10 @@
 			arrayOfBlocks.push(king);
 			CollisionManager.instance.add(king);
 			if (player == "Player1")
-			{
 				KeyboardManager.instance.removeKeyDownListener(KeyCode.A, lockKingPosition);
-			}
 			else
-			{
 				KeyboardManager.instance.removeKeyDownListener(KeyCode.L, lockKingPosition);
-			}
+			
 			kingPlacedSignal.dispatch();
 		}
 		
@@ -215,22 +211,19 @@
 				}
 			}
 		}
-
+		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function allowRotation():void
 		{
 			for(var i :uint = 0; i < SpaceRef.space.bodies.length; i++)
-			{
 				SpaceRef.space.bodies.at(i).allowRotation = true;
-			}
 			
 			if (player == "Player1")
-			{
 				KeyboardManager.instance.addKeyDownListener(KeyCode.A, lockKingPosition);
-			}
 			else
-			{
 				KeyboardManager.instance.addKeyDownListener(KeyCode.L, lockKingPosition);
-			}
+			
 			_nCurKingPlacementIndex = 0;
 			curKingPlacementBlock = kingPlacementBlocks[_nCurKingPlacementIndex];
 			tKingPlacementTimer.addEventListener(TimerEvent.TIMER, swapKingPosition);
@@ -242,9 +235,7 @@
 		public function resetBlocks()
 		{
 			for (var i:uint; i < arrayOfBlocks.length; i++)
-			{
 				arrayOfBlocks[i].bHasBeenCollidedWith = false;
-			}
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -255,6 +246,7 @@
 			this.visible = false;
 			this.cleanUp();
 		}
+		
 		/* ---------------------------------------------------------------------------------------- */				
 		/**
 		 * Loads the parameters from the XML file to the local variables in this class
@@ -262,6 +254,7 @@
 		protected function parseXML():void
 		{
 			var xConfig:XML = LoaderMax.getContent("config.xml");
+			
 			if(castleNumber == 1)
 			{
 				this.castle = String(xConfig.gameObjects.Castle1.blocks);
@@ -352,9 +345,11 @@
 					_nCollisionGroup = 2;
 				}
 			}
+			
 			placementArray = this.stringCoords.split(" ");
-
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		public function cleanUp() :void
 		{
@@ -365,11 +360,13 @@
 			}
 		}
 		
+		/* ---------------------------------------------------------------------------------------- */
+		
 		public function cleanPlaceMentBlocks()
 		{
 			var block:KingPlacementBlock;
 			var len:int = kingPlacementBlocks.length;
-			trace("kingPlacementBlocks.length: " + kingPlacementBlocks.length);
+			
 			for (var i:int = 0; i < len; i++)
 			{
 				block = kingPlacementBlocks.pop();
@@ -377,5 +374,7 @@
 				StageRef.stage.removeChild(block);
 			}
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 	}
 }

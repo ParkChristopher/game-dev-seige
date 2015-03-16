@@ -1,7 +1,6 @@
 package com.teamphysics.chrisp.powerups
 {
 	import com.teamphysics.util.GameObjectType;
-	import com.teamphysics.util.CollisionManager;
 	import flash.display.MovieClip;
 
 	
@@ -19,7 +18,6 @@ package com.teamphysics.chrisp.powerups
 		public function ShieldPowerup()
 		{
 			super("Shield");
-			
 			init();
 		}
 		
@@ -29,7 +27,6 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.init();
 			this._sObjectType = GameObjectType.TYPE_SHIELD_POWERUP;
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -52,18 +49,10 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.activate($object);
 			
-			//NOTE These are set up the same as speed indicators but are not
-			//becoming visible
-			
 			if (this.bOwnerIsP1)
-			{
 				$object.mcP1ShieldIndicator.visible = true;
-			}
 			else
-			{
 				$object.mcP2ShieldIndicator.visible = true;
-			}
-			
 		}
 	}
 }

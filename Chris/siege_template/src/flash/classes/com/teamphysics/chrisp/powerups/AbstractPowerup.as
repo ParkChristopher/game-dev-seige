@@ -1,16 +1,12 @@
 ﻿
 package com.teamphysics.chrisp.powerups
 {
-	import com.teamphysics.chrisp.AbstractGameObject;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import nape.phys.Body;
-	import nape.phys.BodyType;
-	import nape.shape.Circle;
-	import nape.shape.Polygon;
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.teamphysics.chrisp.AbstractGameObject;
 	import com.teamphysics.util.GameObjectType;
+	import flash.display.MovieClip;
+	import nape.phys.Body;
 
 	
 	/**
@@ -33,10 +29,8 @@ package com.teamphysics.chrisp.powerups
 		public function AbstractPowerup($sType:String)
 		{
 			super();
-			
 			this.sType = $sType;
 			this.visible = false;
-			
 			init();
 		}
 		
@@ -46,20 +40,7 @@ package com.teamphysics.chrisp.powerups
 		{	
 			this.x = MIN_POS_X + Math.random() * (MAX_POS_X - MIN_POS_X);
 			this.y = MIN_POS_Y + Math.random() * (MAX_POS_Y - MIN_POS_Y);
-			
-			
-			/******NOTE NOT CURRENTLY USED REMOVE IF NECESSARY***********/
-			//Create body and set position somewhere between castles.
-			this.physicsBody = new Body(BodyType.KINEMATIC);
-			physicsBody.shapes.add(new Circle(this.width * 0.5, null));
-			physicsBody.position.setxy(this.x, this.y);
-			physicsBody.userData.graphic = this;
-			/********************************************************/
-			
-			
 			this.addCollidableType(GameObjectType.TYPE_CANNONBALL);
-			
-			
 		}
 		
 		/* ---------------------------------------------------------------------------------------- */
@@ -115,6 +96,8 @@ package com.teamphysics.chrisp.powerups
 		{
 			super.activate($object);
 		}
+		
+		/* ---------------------------------------------------------------------------------------- */
 		
 		//Relinquishes all memory used by this object.
 		public function destroy():void
