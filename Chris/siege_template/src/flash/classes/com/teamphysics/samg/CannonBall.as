@@ -266,8 +266,32 @@
 							this.isSoundReset = false;
 						}
 						
-						trace("ball velocity: " + physicsBody.velocity.length);
-						if (physicsBody.velocity.length > 500)
+						var massTimesVelocity:Number = physicsBody.mass * physicsBody.velocity.length;
+						
+						trace("ball velocity * mass: " + massTimesVelocity);
+						
+						if (massTimesVelocity > 1000)
+						{
+							block.health = block.health - (massTimesVelocity / 33);
+							trace("block.health: " + block.health);
+						}
+						else if (massTimesVelocity > 600)
+						{
+							block.health = block.health - (massTimesVelocity / 29);
+							trace("block.health: " + block.health);
+						}
+						else if (massTimesVelocity > 300)
+						{
+							block.health = block.health - (massTimesVelocity / 24);
+							trace("block.health: " + block.health);
+						}
+						else 
+						{
+							block.health = block.health - (massTimesVelocity / 15);
+							trace("block.health: " + block.health);
+						}
+						
+						/*if (massTimesVelocity > 850)
 						{
 							trace("massive damage");
 
@@ -277,7 +301,7 @@
 							
 							trace("block.health: " + block.health);
 						}
-						else if (physicsBody.velocity.length > 300)
+						else if (massTimesVelocity > 450)
 						{
 							trace("standard damage");
 
@@ -287,14 +311,18 @@
 
 							trace("block.health: " + block.health);
 						}
-						else if (physicsBody.velocity.length > 100)
+						else if (massTimesVelocity > 200)
+						{
+							block.health = block.health - 20;
+						}
+						else if (massTimesVelocity > 100)
 						{
 							trace("min damage");
 
 							block.health -= 15;
 
 							trace("block.health: " + block.health);
-						}
+						}*/
 						
 						//block.health--;
 						//trace("block.health: " + block.health);

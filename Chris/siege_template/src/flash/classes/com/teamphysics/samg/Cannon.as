@@ -367,7 +367,7 @@
 				ScoreManager.instance.nP2ShotsFired += 1;
 				s.buildBall(this.x, this.y, 2);
 			}
-			s.body.mass = 2;
+			s.body.mass = 1;
 			s.setVelocity(velocityVec);
 		}
 		
