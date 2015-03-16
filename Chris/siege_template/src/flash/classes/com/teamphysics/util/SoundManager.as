@@ -54,26 +54,26 @@ package com.teamphysics.util
 		//Initialize sounds
 		public function init():void
 		{
-			SoundAS.loadSound("../src/audio/ButtonClick.mp3" ,SOUND_BUTTON_CLICK);
-			SoundAS.loadSound("../src/audio/CannonFire.mp3" ,SOUND_CANNON_FIRE);
-			SoundAS.loadSound("../src/audio/PowerupGet.mp3" ,SOUND_POWERUP_GET);
-			SoundAS.loadSound("../src/audio/TitleScreenLoop.mp3" ,MUSIC_TITLE_SCREEN);
-			SoundAS.loadSound("../src/audio/ResultsScreenLoop.mp3" ,MUSIC_RESULTS_SCREEN);
-			SoundAS.loadSound("../src/audio/KirbYourEnthusiasm.mp3" , MUSIC_GAME_SCREEN);
-			SoundAS.loadSound("../src/audio/GetPoint.mp3", SOUND_GET_POINT);
-			SoundAS.loadSound("../src/audio/GroundHit.mp3", SOUND_GROUND_HIT);
-			SoundAS.loadSound("../src/audio/HitBlock.mp3", SOUND_HIT_BLOCK);
-			SoundAS.loadSound("../src/audio/ItemSelect.mp3", SOUND_ITEM_SELECT);
-			SoundAS.loadSound("../src/audio/KingDied.mp3", SOUND_KING_DIED);
-			SoundAS.loadSound("../src/audio/Lock.mp3", SOUND_CANNON_LOCK);
-			SoundAS.loadSound("../src/audio/Pause.mp3", SOUND_GAME_PAUSE);
-			SoundAS.loadSound("../src/audio/Rotation.mp3", SOUND_CANNON_ROTATION );
-			SoundAS.loadSound("../src/audio/ShieldActivate.mp3", SOUND_SHIELD_ACTIVATE);
-			SoundAS.loadSound("../src/audio/ShieldDown.mp3", SOUND_SHIELD_DOWN);
-			SoundAS.loadSound("../src/audio/VelocityUp.mp3", SOUND_SPEED_UP);
-			SoundAS.loadSound("../src/audio/Victory.mp3", SOUND_VICTORY);
-			SoundAS.loadSound("../src/audio/ShieldBounce.mp3", SOUND_SHIELD_BOUNCE);
-			SoundAS.loadSound("../src/audio/SpeedShot.mp3", SOUND_SPEED_SHOT);
+			SoundAS.loadSound("audio/ButtonClick.mp3" ,SOUND_BUTTON_CLICK);
+			SoundAS.loadSound("audio/CannonFire.mp3" ,SOUND_CANNON_FIRE);
+			SoundAS.loadSound("audio/PowerupGet.mp3" ,SOUND_POWERUP_GET);
+			SoundAS.loadSound("audio/TitleScreenLoop.mp3" ,MUSIC_TITLE_SCREEN);
+			SoundAS.loadSound("audio/ResultsScreenLoop.mp3" ,MUSIC_RESULTS_SCREEN);
+			SoundAS.loadSound("audio/KirbYourEnthusiasm.mp3" , MUSIC_GAME_SCREEN);
+			SoundAS.loadSound("audio/GetPoint.mp3", SOUND_GET_POINT);
+			SoundAS.loadSound("audio/GroundHit.mp3", SOUND_GROUND_HIT);
+			SoundAS.loadSound("audio/HitBlock.mp3", SOUND_HIT_BLOCK);
+			SoundAS.loadSound("audio/ItemSelect.mp3", SOUND_ITEM_SELECT);
+			SoundAS.loadSound("audio/KingDied.mp3", SOUND_KING_DIED);
+			SoundAS.loadSound("audio/Lock.mp3", SOUND_CANNON_LOCK);
+			SoundAS.loadSound("audio/Pause.mp3", SOUND_GAME_PAUSE);
+			SoundAS.loadSound("audio/Rotation.mp3", SOUND_CANNON_ROTATION );
+			SoundAS.loadSound("audio/ShieldActivate.mp3", SOUND_SHIELD_ACTIVATE);
+			SoundAS.loadSound("audio/ShieldDown.mp3", SOUND_SHIELD_DOWN);
+			SoundAS.loadSound("audio/VelocityUp.mp3", SOUND_SPEED_UP);
+			SoundAS.loadSound("audio/Victory.mp3", SOUND_VICTORY);
+			SoundAS.loadSound("audio/ShieldBounce.mp3", SOUND_SHIELD_BOUNCE);
+			SoundAS.loadSound("audio/SpeedShot.mp3", SOUND_SPEED_SHOT);
 			
 		}
 		/* ---------------------------------------------------------------------------------------- */
